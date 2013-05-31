@@ -9,28 +9,49 @@
     android:layout_height="wrap_content"
     layout="@layout/header" /> 
 
-<!-- <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+ 	<LinearLayout
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content" 
+    	android:background="@drawable/background_color">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+ 		<LinearLayout 
+		    android:id="@+id/body_center"
+		    android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical|center_horizontal" >
+	        
+		    <ImageView
+		        android:id="@+id/imageView2"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+		        android:layout_alignParentTop="true"
+		        android:paddingTop="10px"
+		        android:src="@drawable/start_point" />
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10" >
+		</LinearLayout>
+		
+ 		<!-- code handle -->
+ 		<LinearLayout 
+		    android:id="@+id/body_center"
+		    android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical|center_horizontal" >
+	        
+		    <ImageView
+		        android:id="@+id/imageView3"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentLeft="true"
+		        android:layout_alignParentTop="true"
+		        android:paddingTop="10px"
+		        android:src="@drawable/vertical_line" />
 
-        <requestFocus />
-
-    </EditText>
-
-</LinearLayout> -->
+		</LinearLayout>
+ 		<!-- end :code handle -->
+    	
+	</LinearLayout>
+	
+ 	
 
 </LinearLayout>
