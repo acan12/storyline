@@ -37,22 +37,33 @@
 			</LinearLayout>
 			
 	 		<!-- code handle -->
-	 		<LinearLayout 
+	 		
+	 		
+	 		<RelativeLayout
 			    android:id="@+id/body_center2"
-			    android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
+			    android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
 		        android:gravity="center_horizontal" >
 		        
-		        
-			    <ImageView
+	 		    <ImageView
 			        android:id="@+id/imageView3"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:layout_alignParentLeft="true"
-			        android:layout_alignParentTop="true"
-			        android:src="@drawable/vertical_line" />
+			        android:layout_centerVertical="true"
+			        android:layout_centerHorizontal="true"
+			        android:src="@drawable/vertical_line"  />
+	 		    
+		        <ImageView
+			        android:id="@+id/imageView3"
+			        android:layout_width="219px"
+			        android:layout_height="wrap_content"
+			        android:src="@drawable/pointer"
+			        android:layout_centerVertical="true"
+			        android:layout_centerHorizontal="true" />
+		        
+			    
 	
-			</LinearLayout>
+			</RelativeLayout>
 	 		<!-- end :code handle -->
 	 		
 	 		<LinearLayout 
