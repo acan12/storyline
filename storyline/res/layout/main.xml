@@ -20,7 +20,7 @@
 	 	    android:orientation="vertical" >
 	
 	 		<LinearLayout 
-			    android:id="@+id/body_center1"
+			    android:id="@+id/body_header"
 			    android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:gravity="center_vertical|center_horizontal" >
@@ -38,9 +38,9 @@
 			
 	 		<!-- code handle -->
 	 		
-	 		
+	 		<!-- not fixed -->
 	 		<RelativeLayout
-			    android:id="@+id/body_center2"
+			    android:id="@+id/body_center1"
 			    android:layout_width="fill_parent"
 		        android:layout_height="fill_parent"
 		        android:gravity="center_horizontal" >
@@ -53,36 +53,99 @@
 			        android:src="@drawable/vertical_line"  />
 	 		    
 		        <ImageView
-			        android:id="@+id/imageView3"
-			        android:layout_width="219px"
+			        android:id="@+id/imageHorizontalLine"
+			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
-			        android:src="@drawable/pointer"
-			        android:layout_marginTop="50dp"
-			        android:layout_centerHorizontal="true" />
-		        
+			        android:layout_marginTop="59dp"
+			        android:layout_marginLeft="80dp"
+			        android:layout_alignParentRight="true"
+			        android:layout_alignRight="@+id/imageView3"
+			        android:src="@drawable/horizontal_line"  />
+		       
 		        <ImageView
 			        android:id="@+id/imageView4"
-			        android:layout_width="219px"
+			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
 			        android:src="@drawable/pointer"
-			        android:layout_marginTop="100dp"
-			        android:layout_centerHorizontal="true" />
-		        
-		        <ImageView
-			        android:id="@+id/imageView5"
-			        android:layout_width="219px"
-			        android:layout_height="wrap_content"
-			        android:src="@drawable/pointer"
-			        android:layout_marginTop="170dp"
-			        android:layout_centerHorizontal="true" />
-		        
-			    
+			        android:layout_centerVertical="true"
+			        android:layout_centerHorizontal="true"  />
 	
 			</RelativeLayout>
+			<!-- end: not fixed -->
+	 		
+
+	 		<RelativeLayout
+	 		    android:id="@+id/body_center2"
+	 		    android:layout_width="fill_parent"
+	 		    android:layout_height="fill_parent"
+	 		    android:gravity="center_horizontal" >
+				
+	 		    <ImageView
+			        android:id="@+id/imageView3"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_centerHorizontal="true"
+			        android:src="@drawable/vertical_line"  />
+	 		    
+		        <ImageView
+			        android:id="@+id/imageHorizontalLine"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginTop="59dp"
+			        android:layout_marginRight="80dp"
+			        android:layout_alignParentRight="true"
+			        android:layout_alignRight="@+id/imageView3"
+			        android:src="@drawable/horizontal_line"  />
+		       
+		        <ImageView
+			        android:id="@+id/imageView4"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:src="@drawable/pointer"
+			        android:layout_centerVertical="true"
+			        android:layout_centerHorizontal="true"  />
+
+
+	 		</RelativeLayout>
+	 		
+	 		<RelativeLayout
+	 		    android:id="@+id/body_center3"
+	 		    android:layout_width="fill_parent"
+	 		    android:layout_height="fill_parent"
+	 		    android:gravity="center_horizontal" >
+				
+	 		    <ImageView
+			        android:id="@+id/imageView3"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_centerHorizontal="true"
+			        android:src="@drawable/vertical_line"  />
+	 		    
+		        <ImageView
+			        android:id="@+id/imageHorizontalLine"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginTop="59dp"
+			        android:layout_marginLeft="80dp"
+			        android:layout_alignParentRight="true"
+			        android:layout_alignRight="@+id/imageView3"
+			        android:src="@drawable/horizontal_line"  />
+		       
+		        <ImageView
+			        android:id="@+id/imageView4"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:src="@drawable/pointer"
+			        android:layout_centerVertical="true"
+			        android:layout_centerHorizontal="true"  />
+
+
+	 		</RelativeLayout>
 	 		<!-- end :code handle -->
 	 		
+	 		
 	 		<LinearLayout 
-			    android:id="@+id/body_center3"
+			    android:id="@+id/body_footer"
 			    android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
 		        android:gravity="center_horizontal" >
