@@ -49,7 +49,6 @@
 			        android:id="@+id/imageView3"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:layout_centerVertical="true"
 			        android:layout_centerHorizontal="true"
 			        android:src="@drawable/vertical_line"  />
 	 		    
@@ -58,7 +57,23 @@
 			        android:layout_width="219px"
 			        android:layout_height="wrap_content"
 			        android:src="@drawable/pointer"
-			        android:layout_centerVertical="true"
+			        android:layout_marginTop="50dp"
+			        android:layout_centerHorizontal="true" />
+		        
+		        <ImageView
+			        android:id="@+id/imageView4"
+			        android:layout_width="219px"
+			        android:layout_height="wrap_content"
+			        android:src="@drawable/pointer"
+			        android:layout_marginTop="100dp"
+			        android:layout_centerHorizontal="true" />
+		        
+		        <ImageView
+			        android:id="@+id/imageView5"
+			        android:layout_width="219px"
+			        android:layout_height="wrap_content"
+			        android:src="@drawable/pointer"
+			        android:layout_marginTop="170dp"
 			        android:layout_centerHorizontal="true" />
 		        
 			    
