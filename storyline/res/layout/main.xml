@@ -10,12 +10,14 @@
     layout="@layout/header" /> 
 	<ScrollView
  	    android:id="@+id/scrollView1"
- 	    android:layout_width="match_parent"
- 	    android:layout_height="wrap_content" >
+ 	    android:layout_width="fill_parent"
+ 	    android:layout_height="fill_parent"
+ 	    android:fillViewport="true"
+ 	    android:isScrollContainer="true" >
 	
 	 	<LinearLayout
 	 	    android:layout_width="match_parent"
-	 	    android:layout_height="wrap_content"
+	 	    android:layout_height="50dp"
 	 	    android:background="@drawable/background_color"
 	 	    android:orientation="vertical" >
 	
@@ -50,18 +52,35 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_centerHorizontal="true"
-			        android:src="@drawable/vertical_line"  />
-	 		    
-		        <ImageView
+			        android:src="@drawable/vertical_line_small"  />
+	 		   
+	 		    <!-- <ImageView
 			        android:id="@+id/imageHorizontalLine"
 			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
 			        android:layout_marginTop="59dp"
-			        android:layout_marginLeft="80dp"
 			        android:layout_alignParentRight="true"
 			        android:layout_alignRight="@+id/imageView3"
-			        android:src="@drawable/horizontal_line"  />
-		       
+			        android:src="@drawable/horizontal_line"  /> -->
+	 		    
+		        <ImageButton
+		            android:id="@+id/imageBubbleRight"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_alignParentRight="true"
+		            android:layout_centerVertical="true"
+		            android:src="@drawable/bubble_small_right"
+		            android:background="@null" />
+		        
+		        <ImageButton
+		            android:id="@+id/imageBubbleLeft"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_alignParentLeft="true"
+		            android:layout_centerVertical="true"
+		            android:src="@drawable/bubble_small_left"
+		            android:background="@null" />
+		        
 		        <ImageView
 			        android:id="@+id/imageView4"
 			        android:layout_width="fill_parent"
@@ -85,9 +104,9 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_centerHorizontal="true"
-			        android:src="@drawable/vertical_line"  />
+			        android:src="@drawable/vertical_line_small"  />
 	 		    
-		        <ImageView
+		        <!-- <ImageView
 			        android:id="@+id/imageHorizontalLine"
 			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
@@ -95,8 +114,16 @@
 			        android:layout_marginRight="80dp"
 			        android:layout_alignParentRight="true"
 			        android:layout_alignRight="@+id/imageView3"
-			        android:src="@drawable/horizontal_line"  />
+			        android:src="@drawable/horizontal_line"  /> -->
 		       
+		        <ImageView
+		            android:id="@+id/imageBubbleLeft"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_alignParentLeft="true"
+		            android:layout_centerVertical="true"
+		            android:src="@drawable/bubble_small_left" />
+		        
 		        <ImageView
 			        android:id="@+id/imageView4"
 			        android:layout_width="fill_parent"
@@ -121,7 +148,7 @@
 			        android:layout_centerHorizontal="true"
 			        android:src="@drawable/vertical_line"  />
 	 		    
-		        <ImageView
+		        <!-- <ImageView
 			        android:id="@+id/imageHorizontalLine"
 			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
@@ -129,7 +156,15 @@
 			        android:layout_marginLeft="80dp"
 			        android:layout_alignParentRight="true"
 			        android:layout_alignRight="@+id/imageView3"
-			        android:src="@drawable/horizontal_line"  />
+			        android:src="@drawable/horizontal_line"  /> -->
+			        
+			    <ImageView
+		            android:id="@+id/imageBubbleRight"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_alignParentRight="true"
+		            android:layout_centerVertical="true"
+		            android:src="@drawable/bubble_big_right" />
 		       
 		        <ImageView
 			        android:id="@+id/imageView4"
