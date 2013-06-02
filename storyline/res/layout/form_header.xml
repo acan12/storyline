@@ -22,7 +22,7 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Camp in Rinjani - 05/12/2013" />
+        android:text="Your New Story" />
 	</LinearLayout>
     
 	
@@ -52,31 +52,7 @@
 
 	</LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/header_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/header_center" >
-
-        <ImageView
-	        android:id="@+id/imageView2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentTop="true"
-	        android:layout_alignParentLeft="true"
-	        android:src="@drawable/divider_header" />
-        
-        <ImageButton
-            android:id="@+id/imgAddButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/plus_icon"
-            android:background="@null" />
-    </LinearLayout>
-
+    
     
     
     </RelativeLayout>
