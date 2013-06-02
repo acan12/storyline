@@ -118,7 +118,7 @@
 	 	        android:layout_width="wrap_content"
 	 	        android:layout_height="wrap_content"
 	 	        android:text="End" />
-	 	    
+
 	 	    <LinearLayout
 	 	        android:layout_width="match_parent"
 	 	        android:layout_height="wrap_content" >
@@ -156,6 +156,14 @@
 	 	            android:text="Map" />
 
 	 	    </LinearLayout>
+	 	    
+	 	    
+	 	    <Button
+	 	        android:id="@+id/button5"
+	 	        android:layout_width="fill_parent"
+	 	        android:layout_height="wrap_content"
+	 	        android:layout_marginTop="100dp"
+	 	        android:text="Done" />
 
 	 	   
 	 	</LinearLayout>
