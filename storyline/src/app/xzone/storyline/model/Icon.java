@@ -2,6 +2,8 @@ package app.xzone.storyline.model;
 
 import org.apache.commons.lang.ArrayUtils;
 
+
+import app.xzone.storyline.R;
 import android.util.Log;
 
 
@@ -65,56 +67,56 @@ public class Icon {
 	
 	
 	private static final int[] icons = { 
-		R.drawable.acupuncture, // 1 Health
-		R.drawable.beautysalon, // 2
-		R.drawable.dentist, // 3
-		R.drawable.hospital_building, // 4
-		R.drawable.medicine, // 5
-		R.drawable.sauna, // 6
-		R.drawable.spa, // 7
-		R.drawable.therapy, // 8
+		R.drawable.health_acupuncture, // 1 Health
+		R.drawable.health_beautysalon, // 2
+		R.drawable.health_dentist, // 3
+		R.drawable.health_hospital, // 4
+		R.drawable.health_medicine, // 5
+		R.drawable.health_sauna, // 6
+		R.drawable.health_spa, // 7
+		R.drawable.health_therapy, // 8
 
-		R.drawable.cafetaria, // 9 Restaurant
-		R.drawable.fastfood, // 10
-		R.drawable.restaurant, // 11
-		R.drawable.restaurant_chinese, // 12
-		R.drawable.restaurant_italian, // 13
-		R.drawable.terrace, // 14
+		R.drawable.resto_cafetaria, // 9 Restaurant
+		R.drawable.resto_fastfood, // 10
+		R.drawable.resto_restaurant, // 11
+		R.drawable.resto_restaurant_chinese, // 12
+		R.drawable.resto_restaurant_italian, // 13
+		R.drawable.resto_terrace, // 14
 
-		R.drawable.beachvolleyball, // 15 Sport
-		R.drawable.climbing, // 16
-		R.drawable.fishing, // 17
-		R.drawable.diving, // 18
-		R.drawable.fitness, // 19
-		R.drawable.hiking, // 20
-		R.drawable.jogging, // 21
-		R.drawable.rowboat, // 22
-		R.drawable.sailing, // 23
-		R.drawable.scubadiving, // 24
-		R.drawable.snorkeling, // 25
-		R.drawable.surfing, // 26
-		R.drawable.swimming, // 27
-		R.drawable.watercraft, // 28
-		R.drawable.waterskiing, // 29
-		R.drawable.windsurfing, // 30
-		R.drawable.yoga, // 31
+		R.drawable.sport_beachvolleyball, // 15 Sport
+		R.drawable.sport_climbing, // 16
+		R.drawable.sport_fishing, // 17
+		R.drawable.sport_diving, // 18
+		R.drawable.sport_fitness, // 19
+		R.drawable.sport_hiking, // 20
+		R.drawable.sport_jogging, // 21
+		R.drawable.sport_rowboat, // 22
+		R.drawable.sport_sailing, // 23
+		R.drawable.sport_scubadiving, // 24
+		R.drawable.sport_snorkeling, // 25
+		R.drawable.sport_surfing, // 26
+		R.drawable.sport_swimming, // 27
+		R.drawable.sport_watercraft, // 28
+		R.drawable.sport_waterskiing, // 29
+		R.drawable.sport_windsurfing, // 30
+		R.drawable.sport_yoga, // 31
 
-		R.drawable.bus, // 32 Transportation
-		R.drawable.car, // 33
-		R.drawable.carwash, // 34
-		R.drawable.cycling, // 35
-		R.drawable.fillingstation, // 36
-		R.drawable.highway, // 37
-		R.drawable.repair, // 38
-		R.drawable.taxi, // 39
-		R.drawable.tunnel // 40
+		R.drawable.transport_bus, // 32 Transportation
+		R.drawable.transport_car, // 33
+		R.drawable.transport_carwash, // 34
+		R.drawable.transport_cycling, // 35
+		R.drawable.transport_fillingstation, // 36
+		R.drawable.transport_highway, // 37
+		R.drawable.transport_repair, // 38
+		R.drawable.transport_taxi, // 39
+		R.drawable.transport_tunnel // 40
 
 	};
 
-	private static final int[] bizIcons = {
-		R.drawable.seven_eleven, //1
-		R.drawable.carefour //2
-	};
+//	private static final int[] bizIcons = {
+//		R.drawable.seven_eleven, //1
+//		R.drawable.carefour //2
+//	};
 
 	
 	public static Icon getInstances(){
@@ -137,9 +139,9 @@ public class Icon {
 		return bizLabels;
 	}
 
-	public static int[] getBizIcons() {
-		return bizIcons;
-	}
+//	public static int[] getBizIcons() {
+//		return bizIcons;
+//	}
 
 	
 	/**
@@ -161,17 +163,15 @@ public class Icon {
 	 * @return
 	 */
 	public int getIconFromLabel(String label) {
-		Log.d("","----------label---"+label);
 		int index = ArrayUtils.indexOf(getLabels(), label);
-		Log.d("","----------index---"+index);
 		return icons[index];
 	}
 	
-	public int getIconFromBizLabel(String label) {
-
-		int index = ArrayUtils.indexOf(getBizLabels(), label);
-		return bizIcons[index];
-	}
+//	public int getIconFromBizLabel(String label) {
+//
+//		int index = ArrayUtils.indexOf(getBizLabels(), label);
+//		return bizIcons[index];
+//	}
 
 	
 	/**
@@ -185,9 +185,9 @@ public class Icon {
 		return labels[index];
 	}
 	
-	public String getLabelFromBizIcon(int icon) {
-
-		int index = ArrayUtils.indexOf(getBizIcons(), icon);
-		return bizLabels[index];
-	}
+//	public String getLabelFromBizIcon(int icon) {
+//
+//		int index = ArrayUtils.indexOf(getBizIcons(), icon);
+//		return bizLabels[index];
+//	}
 }
