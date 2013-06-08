@@ -8,9 +8,10 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:orientation="vertical"
-	    android:background="@drawable/bubble_small_right" >
+	    android:background="@drawable/bubble_big_right" >
 		
 		<LinearLayout
+		    android:id="@+id/linear_header"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:orientation="vertical" >
@@ -64,13 +65,65 @@
 		        android:layout_width="260dp"
 		        android:layout_height="wrap_content"
 		        android:layout_marginLeft="43dp"
-		        android:layout_weight="1"
-		        android:ellipsize="none"
 		        android:gravity="center_vertical"
-		        android:maxLines="20"
-		        android:text="1234567890 1234567890 1234567890 1234567890 1234567890 "
+		        android:text="1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 1234567890 "
 		        android:textColor="#000"
 		        android:textSize="10px" />
+		    
+		    
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="110dp"
+		    android:layout_marginLeft="30dp"
+		    android:layout_below="@+id/buble_header"
+		    android:orientation="horizontal" >
+
+		    <ImageButton
+		        android:id="@+id/pic01"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_vertical"
+		        android:layout_margin="2dp"
+		        android:background="@null"
+		        android:src="@drawable/demo_pic" />
+		    <ImageButton
+		        android:id="@+id/pic02"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_vertical"
+		        android:layout_margin="2dp"
+		        android:background="@null"
+		        android:src="@drawable/demo_pic" />
+		    
+		    <ImageButton
+		        android:id="@+id/pic03"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_vertical"
+		        android:layout_margin="2dp"
+		        android:background="@null"
+		        android:src="@drawable/demo_pic" />
+		    
+		    <ImageButton
+		        android:id="@+id/pic04"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_vertical"
+		        android:layout_margin="2dp"
+		        android:background="@null"
+		        android:src="@drawable/demo_pic" />
+		    
+		    <ImageButton
+		        android:id="@+id/pic05"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_vertical"
+		        android:layout_margin="2dp"
+		        android:background="@null"
+		        android:src="@drawable/demo_pic" />
 		</LinearLayout>
 
 	</RelativeLayout>
