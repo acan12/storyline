@@ -1,0 +1,8 @@
+<resources>
+    <string-array name="spinnerItems">
+        <item>Sport</item>
+        <item>Food</item>
+        <item>Travel</item>
+        <item>Habit</item>
+    </string-array>
+</resources>

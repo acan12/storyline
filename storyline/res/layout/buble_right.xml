@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+	<RelativeLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical" >
+
+		<Button
+		    android:id="@+id/buttonBubbleRight"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@drawable/bubble_small_right"
+		    android:text="testing" />
+
+		<ImageView
+		    android:id="@+id/imageClock"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:paddingLeft="40dp"
+		    android:paddingTop="10dp"
+		    android:src="@drawable/clock_icon" />
+		
+		<TextView 
+		    android:id="@+id/infoClock"
+		    android:layout_width="wrap_content"
+		    android:layout_height="fill_parent"
+		    android:layout_toRightOf="@+id/imageClock"
+		    android:layout_margin="6dp"
+		    android:text="Jakarta, 10.00pm"
+		    android:layout_alignParentBottom="true"
+		    android:textColor="#ababab" />
+		
+		<ImageView
+		    android:id="@+id/imageRemove"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_toRightOf="@+id/imageClock"
+		    android:paddingTop="10dp"
+		    android:paddingLeft="230dp"
+		    
+		    android:src="@drawable/delete_icon" />
+
+	</RelativeLayout>
+
+</LinearLayout>
+                
