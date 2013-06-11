@@ -27,12 +27,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.TimePicker.OnTimeChangedListener;
 
-public class FormActivity extends Activity implements OnClickListener{
+public class EventFormActivity extends Activity implements OnClickListener{
 
-	private TextView startDate;
-	private TextView startTime;
-	private TextView endDate;
-	private TextView endTime;
+	private TextView tagDate;
+	private TextView tagTime;
 	private DateTime dt = new DateTime();
 	
 	static final int DATE_DIALOG_ID = 0;
@@ -40,19 +38,15 @@ public class FormActivity extends Activity implements OnClickListener{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.form);
+		setContentView(R.layout.event_form);
 		
-		Log.d("info", "testing entrance form activity");
+		Log.d("info", "testing entrance event form activity");
 		
-		startDate = (TextView) findViewById(R.id.startDateText);
-		startTime = (TextView) findViewById(R.id.startTimeText);
-		endDate	= (TextView) findViewById(R.id.endDateText);
-		endTime = (TextView) findViewById(R.id.endTimeText);
+		tagDate = (TextView) findViewById(R.id.startDateText);
+		tagTime = (TextView) findViewById(R.id.startTimeText);
 		
-		startDate.setOnClickListener(this);
-		startTime.setOnClickListener(this);
-		endDate.setOnClickListener(this);
-		endTime.setOnClickListener(this);
+		tagDate.setOnClickListener(this);
+		tagTime.setOnClickListener(this);
 		
 	}
 
@@ -125,42 +119,7 @@ public class FormActivity extends Activity implements OnClickListener{
 			tp.show();
 			
 			break;
-		case R.id.endDateText:
-			Log.d("info", "testing endDateButton");
-			
-			dp = new DatePickerDialog(this, new OnDateSetListener() {
-				
-				@Override
-				public void onDateSet(DatePicker view, int year, int month,
-						int day) {
-					// TODO Auto-generated method stub
-					
-					DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM dd,yyyy");
-					DateTime dt2 = new DateTime(year, month, day, 0, 0, 0, 0);
-					String datetime = dt2.toString(fmt);
-					
-					EditText endDateText = (EditText) findViewById(R.id.endDateText);
-					endDateText.setText(datetime);
-					
-				}
-			}, dt.getYear(), dt.getMonthOfYear(), dt.getDayOfMonth());
-			dp.show();
-			
-			break;
-		case R.id.endTimeText:
-			tp = new TimePickerDialog(this, new OnTimeSetListener() {
-				
-				@Override
-				public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-					// TODO Auto-generated method stub
-					EditText endTimeText = (EditText) findViewById(R.id.endTimeText);
-					endTimeText.setText(hourOfDay+":"+minute);
-				}
-			}, dt.getHourOfDay(), dt.getMinuteOfHour(), true);
-			tp.show();
-			
-			
-			break;
+		
 //		case R.id.bMapPicker:
 //			Intent mapIntent = new Intent(this, MapLocationActivity.class); 
 //			mapIntent.putExtra(PARAMS_KEY, paramid);

@@ -33,6 +33,7 @@ public class HomeActivity extends Activity implements OnClickListener {
 	Handler handler = new Handler();
 	int btnWidth;
 	private ImageButton _listButton;
+	private ImageButton _addEventButton;
 
 	/** Called when the activity is first created. Testing */
 	@Override
@@ -43,9 +44,11 @@ public class HomeActivity extends Activity implements OnClickListener {
 		 Log.d("info", "testing entrance form activity");
 		
 		 _addButton = (ImageButton) findViewById(R.id.imgAddButton);
+		 _addEventButton = (ImageButton) findViewById(R.id.imgAddEvent);
 		 _listButton = (ImageButton) findViewById(R.id.menuListButton);
 		
 		 _addButton.setOnClickListener(this);
+		 _addEventButton.setOnClickListener(this);
 		 _listButton.setOnClickListener(this);
 
 		// implement sliding menu
@@ -88,6 +91,8 @@ public class HomeActivity extends Activity implements OnClickListener {
 			intent = new Intent(this, FormActivity.class);
 		}else if(v == _listButton){
 			intent = new Intent(this, HorzScrollWithListMenu.class);
+		}else if(v == _addEventButton){
+			intent = new Intent(this, EventFormActivity.class);
 		}
 
 		startActivity(intent);
