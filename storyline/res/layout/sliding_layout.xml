@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:gravity="center_horizontal"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+        <app.xzone.storyline.component.Sliding
+            android:id="@+id/sliding1"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="400dp"
+            android:gravity="left"
+            android:padding="2px"
+            android:background="@drawable/background_color">
+            
+            	<!-- title -->
+                <TextView
+		           android:id="@+id/textView1"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="Title" />
+		
+		       <EditText
+		           android:id="@+id/titleField"
+		           android:layout_width="match_parent"
+		           android:layout_height="wrap_content"
+		           android:ems="10" >
+		
+		           <requestFocus />
+		       </EditText>
+		       
+		       <!-- description -->
+
+		       <TextView
+		           android:id="@+id/textView2"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="Description" />
+		
+		       <EditText
+		           android:id="@+id/editText2"
+		           android:layout_width="match_parent"
+		           android:layout_height="100px"
+		           android:ems="10"
+		           android:inputType="textPostalAddress" />
+		
+		       <!-- Category -->
+		
+		       <TextView
+		           android:id="@+id/textView3"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:text="Category" />
+		
+		       <Spinner
+		           android:id="@+id/spinner1"
+		           android:layout_width="match_parent"
+		           android:layout_height="wrap_content"
+		           android:entries="@array/spinnerItems" />
+
+                
+		       <Button
+		           android:id="@+id/submitButton"
+		           android:layout_width="fill_parent"
+		           android:layout_height="wrap_content"
+		           android:text="Done" />
+
+        </app.xzone.storyline.component.Sliding>
+
+</LinearLayout>

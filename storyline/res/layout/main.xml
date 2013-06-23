@@ -8,6 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/header" />
+    
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/sliding_layout" />
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -62,7 +67,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/vertical_line_small" />
+                    android:src="@drawable/vertical_line" />
+                
+                
 
                 <!--
                     <ImageView
@@ -112,7 +119,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/vertical_line_small" />
+                    android:src="@drawable/vertical_line" />
 
                 <include 
                     android:layout_width="wrap_content"
@@ -140,7 +147,7 @@
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/vertical_line" />
 
@@ -286,7 +293,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/vertical_line_small" />
+                    android:src="@drawable/vertical_line" />
 
                 <!--
                     <ImageView
@@ -349,5 +356,5 @@
                     android:text="Bandung, 05 Aug 2013" />
         </LinearLayout>
     </ScrollView>
-
+    
 </LinearLayout>

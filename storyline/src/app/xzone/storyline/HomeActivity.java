@@ -3,23 +3,24 @@ package app.xzone.storyline;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.libs.CustomHorizontalScrollView;
 import app.xzone.storyline.libs.CustomHorizontalScrollView.SizeCallback;
-import app.xzone.storyline.libs.ViewUtils;
 
 public class HomeActivity extends Activity implements OnClickListener {
 	private ImageButton _addButton;
@@ -28,28 +29,41 @@ public class HomeActivity extends Activity implements OnClickListener {
 	private CustomHorizontalScrollView scrollView;
 	private View menu;
 	private View app;
-	private ImageView btnSlide;
+	private ImageView btnSlide; 
 	boolean menuOut = false;
 	Handler handler = new Handler();
 	int btnWidth;
 	private ImageButton _listButton;
 	private ImageButton _addEventButton;
+	private RelativeLayout _bubleEvent;
+	int key = 0;
+	private Sliding popup;
+	private Button _submitButton;
 
 	/** Called when the activity is first created. Testing */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		 setContentView(R.layout.main);
+		setContentView(R.layout.main);
+
+		Log.d("info", "testing entrance form activity");
 		
-		 Log.d("info", "testing entrance form activity");
+		popup = (Sliding) findViewById(R.id.sliding1);
+		popup.setVisibility(View.GONE);
+
+		_addButton = (ImageButton) findViewById(R.id.imgAddButton);
+		_addEventButton = (ImageButton) findViewById(R.id.imgAddEvent);
+		_listButton = (ImageButton) findViewById(R.id.menuListButton);
+		_bubleEvent = (RelativeLayout) findViewById(R.id.bubleEvent);
 		
-		 _addButton = (ImageButton) findViewById(R.id.imgAddButton);
-		 _addEventButton = (ImageButton) findViewById(R.id.imgAddEvent);
-		 _listButton = (ImageButton) findViewById(R.id.menuListButton);
+		_submitButton = (Button) findViewById(R.id.submitButton);
+
+		_addButton.setOnClickListener(this);
+		_addEventButton.setOnClickListener(this);
+		_listButton.setOnClickListener(this);
+		_bubleEvent.setOnClickListener(this);
 		
-		 _addButton.setOnClickListener(this);
-		 _addEventButton.setOnClickListener(this);
-		 _listButton.setOnClickListener(this);
+		_submitButton.setOnClickListener(this);
 
 		// implement sliding menu
 
@@ -81,21 +95,48 @@ public class HomeActivity extends Activity implements OnClickListener {
 		// scrollView.initViews(children, scrollToViewIdx,
 		// new SizeCallbackForMenu(btnSlide));
 
-
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		if (v == _addButton) {
+		switch (v.getId()) {
+		case R.id.imgAddButton:
 			intent = new Intent(this, FormActivity.class);
-		}else if(v == _listButton){
+			
+			startActivity(intent);
+			break;
+		case R.id.menuListButton:
 			intent = new Intent(this, HorzScrollWithListMenu.class);
-		}else if(v == _addEventButton){
+			
+			startActivity(intent);
+			break;
+
+		case R.id.imgAddEvent:
 			intent = new Intent(this, EventFormActivity.class);
+			
+			startActivity(intent);
+			break;
+			
+		case R.id.submitButton:
+			key=0;
+            popup.setVisibility(View.GONE);
+            break;
+
+		case R.id.bubleEvent:
+			
+			if(key==0){
+              key=1;
+              popup.setVisibility(View.VISIBLE);
+			}
+			else if(key==1){
+              key=0;
+              popup.setVisibility(View.GONE);
+			}
+
+			break;
 		}
 
-		startActivity(intent);
 	}
 
 	// core
