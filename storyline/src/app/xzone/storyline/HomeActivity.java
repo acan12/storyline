@@ -3,7 +3,6 @@ package app.xzone.storyline;
 import java.util.Date;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.libs.CustomHorizontalScrollView;
@@ -39,6 +37,7 @@ public class HomeActivity extends Activity implements OnClickListener {
 	int key = 0;
 	private Sliding popup;
 	private Button _submitButton;
+//	private SlidingMenuLeft popupLeft;
 
 	/** Called when the activity is first created. Testing */
 	@Override
@@ -50,6 +49,9 @@ public class HomeActivity extends Activity implements OnClickListener {
 		
 		popup = (Sliding) findViewById(R.id.sliding1);
 		popup.setVisibility(View.GONE);
+		
+//		popupLeft = (SlidingMenuLeft) findViewById(R.id.slidingLeft);
+//		popupLeft.setVisibility(View.GONE);
 
 		_addButton = (ImageButton) findViewById(R.id.imgAddButton);
 		_addEventButton = (ImageButton) findViewById(R.id.imgAddEvent);
@@ -101,17 +103,29 @@ public class HomeActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
+		case R.id.menuListButton:
+//			intent = new Intent(this, HorzScrollWithListMenu.class);
+//			
+//			startActivity(intent);
+			
+			// if(key==0){
+			// key=1;
+			// popupLeft.setVisibility(View.VISIBLE);
+			// }
+			// else if(key==1){
+			// key=0;
+			// popupLeft.setVisibility(View.GONE);
+			// }
+
+			
+			break;
+		
 		case R.id.imgAddButton:
 			intent = new Intent(this, FormActivity.class);
 			
 			startActivity(intent);
 			break;
-		case R.id.menuListButton:
-			intent = new Intent(this, HorzScrollWithListMenu.class);
-			
-			startActivity(intent);
-			break;
-
+		
 		case R.id.imgAddEvent:
 			intent = new Intent(this, EventFormActivity.class);
 			

@@ -12,7 +12,9 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        layout="@layout/sliding_layout" />
+        layout="@layout/sliding_menutop_layout" />
+    
+    
 
     <ScrollView
         android:id="@+id/scrollView1"
