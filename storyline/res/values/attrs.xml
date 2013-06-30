@@ -15,10 +15,7 @@
 -->
 
 <resources>
-	<declare-styleable name="FanView">
-        <attr name="menuSize" format="dimension" />
-    </declare-styleable>
-    
+
     <declare-styleable name="SlidingMenu">
         <attr name="mode">
             <enum name="left" value="0" />

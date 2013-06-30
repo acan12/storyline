@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import app.xzone.storyline.component.Sliding;
+import app.xzone.storyline.component.SlidingMenuLeft;
 import app.xzone.storyline.libs.CustomHorizontalScrollView;
 import app.xzone.storyline.libs.CustomHorizontalScrollView.SizeCallback;
 
@@ -27,17 +28,18 @@ public class HomeActivity extends Activity implements OnClickListener {
 	private CustomHorizontalScrollView scrollView;
 	private View menu;
 	private View app;
-	private ImageView btnSlide; 
+	private ImageView btnSlide;
 	boolean menuOut = false;
 	Handler handler = new Handler();
-	int btnWidth;
+	int btnWidth; 
 	private ImageButton _listButton;
 	private ImageButton _addEventButton;
 	private RelativeLayout _bubleEvent;
 	int key = 0;
+	int key2 = 0;
 	private Sliding popup;
 	private Button _submitButton;
-//	private SlidingMenuLeft popupLeft;
+	private SlidingMenuLeft popupLeft;
 
 	/** Called when the activity is first created. Testing */
 	@Override
@@ -46,26 +48,26 @@ public class HomeActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.main);
 
 		Log.d("info", "testing entrance form activity");
-		
+
 		popup = (Sliding) findViewById(R.id.sliding1);
 		popup.setVisibility(View.GONE);
-		
-//		popupLeft = (SlidingMenuLeft) findViewById(R.id.slidingLeft);
-//		popupLeft.setVisibility(View.GONE);
+
+		// popupLeft = (SlidingMenuLeft) findViewById(R.id.slidingLeft);
+		// popupLeft.setVisibility(View.GONE);
 
 		_addButton = (ImageButton) findViewById(R.id.imgAddButton);
 		_addEventButton = (ImageButton) findViewById(R.id.imgAddEvent);
 		_listButton = (ImageButton) findViewById(R.id.menuListButton);
-		_bubleEvent = (RelativeLayout) findViewById(R.id.bubleEvent);
-		
+
 		_submitButton = (Button) findViewById(R.id.submitButton);
 
 		_addButton.setOnClickListener(this);
 		_addEventButton.setOnClickListener(this);
 		_listButton.setOnClickListener(this);
-		_bubleEvent.setOnClickListener(this);
-		
+
 		_submitButton.setOnClickListener(this);
+		
+
 
 		// implement sliding menu
 
@@ -102,55 +104,55 @@ public class HomeActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
+
+		Log.d("debug::::", "---------- " + v.getId());
 		switch (v.getId()) {
 		case R.id.menuListButton:
-//			intent = new Intent(this, HorzScrollWithListMenu.class);
-//			
-//			startActivity(intent);
-			
-			// if(key==0){
-			// key=1;
+			intent = new Intent(this, HorzScrollWithListMenu.class);
+
+			startActivity(intent);
+
+			// if(key2==0){
+			// key2=1;
 			// popupLeft.setVisibility(View.VISIBLE);
 			// }
-			// else if(key==1){
-			// key=0;
+			// else if(key2==1){
+			// key2=0;
 			// popupLeft.setVisibility(View.GONE);
 			// }
 
-			
 			break;
-		
+
 		case R.id.imgAddButton:
 			intent = new Intent(this, FormActivity.class);
-			
+
 			startActivity(intent);
 			break;
-		
+
 		case R.id.imgAddEvent:
 			intent = new Intent(this, EventFormActivity.class);
-			
+
 			startActivity(intent);
 			break;
-			
+
 		case R.id.submitButton:
-			key=0;
-            popup.setVisibility(View.GONE);
-            break;
-
-		case R.id.bubleEvent:
-			
-			if(key==0){
-              key=1;
-              popup.setVisibility(View.VISIBLE);
-			}
-			else if(key==1){
-              key=0;
-              popup.setVisibility(View.GONE);
-			}
-
+			key = 0;
+			popup.setVisibility(View.GONE);
 			break;
+
 		}
 
+	}
+
+	// Testing functionality
+	public void handleBubleEvent(View v) {
+		if (key == 0) {
+			key = 1;
+			popup.setVisibility(View.VISIBLE);
+		} else if (key == 1) {
+			key = 0;
+			popup.setVisibility(View.GONE);
+		}
 	}
 
 	// core
