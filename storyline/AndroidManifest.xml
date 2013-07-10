@@ -36,10 +36,6 @@
         <activity android:name=".FormActivity"></activity>
         <activity android:name=".DetailActivity"></activity>
         
-        <!-- App slides right to reveal menu underneath -->
-        <activity android:name=".HorzScrollWithListMenu" android:label="HorzScrollWithListMenu">
-        </activity>
-
         <!-- Menu -->
         <activity android:name=".MenuActivity" android:label="MenuActivity">
             <intent-filter>

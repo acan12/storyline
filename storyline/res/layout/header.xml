@@ -31,7 +31,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/header_center" >
+        android:gravity="left"
+        android:paddingLeft="10dp" >
 
         <ImageButton
             android:id="@+id/menuListButton"
