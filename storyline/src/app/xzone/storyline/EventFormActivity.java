@@ -38,15 +38,15 @@ public class EventFormActivity extends Activity implements OnClickListener{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.event_form);
+		setContentView(R.layout.sliding_menu);
 		
 		Log.d("info", "testing entrance event form activity");
 		
-		tagDate = (TextView) findViewById(R.id.startDateText);
-		tagTime = (TextView) findViewById(R.id.startTimeText);
+//		tagDate = (TextView) findViewById(R.id.startDateText);
+//		tagTime = (TextView) findViewById(R.id.startTimeText);
 		
-		tagDate.setOnClickListener(this);
-		tagTime.setOnClickListener(this);
+//		tagDate.setOnClickListener(this);
+//		tagTime.setOnClickListener(this);
 		
 	}
 

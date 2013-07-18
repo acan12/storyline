@@ -28,7 +28,7 @@
 	
     <LinearLayout 
         android:id="@+id/header_left"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" 
         android:layout_centerVertical="true"
         android:gravity="left"
@@ -57,43 +57,26 @@
         android:id="@+id/header_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/header_center" >
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" >
 
-        
         <ImageView
-	        android:id="@+id/imageView2"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentTop="true"
-	        android:layout_alignParentLeft="true"
-	        android:src="@drawable/divider_header" />
-        
-        <ImageButton
-            android:id="@+id/imgAddEvent"
+            android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/notif_icon"
-            android:background="@null" />
-        
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/divider_header" />
+
         <ImageButton
             android:id="@+id/imgRemove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/trash_icon"
-            android:background="@null" />
-        <ImageButton
-            android:id="@+id/imgAddButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/plus_icon"
-            android:background="@null" />
+            android:background="@null"
+            android:paddingRight="15dp"
+            android:src="@drawable/trash_icon" />
     </LinearLayout>
-
-    
     
     </RelativeLayout>
 
