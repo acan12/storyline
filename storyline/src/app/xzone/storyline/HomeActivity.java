@@ -29,24 +29,23 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	private ImageButton _listButton;
 	private ImageButton _recomend_button;
 	private ImageButton _addEventButton;
-	
+
 	private RelativeLayout _bubleEvent;
 	int key = 0;
 	int key2 = 0;
 	private Sliding popup;
-	private Button _submitButton;
+	private Button _submitButton; 
 
 	/** Called when the activity is first created. Testing */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
-		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		
+//		getSlidingMenu().setMode(SlidingMenu.LEFT);
+//		getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+
 		setContentView(R.layout.main);
 		setBehindContentView(R.layout.sliding_menu);
-		getSlidingMenu().setSecondaryMenu(R.layout.sliding_recomendation);
-		
+//		getSlidingMenu().setSecondaryMenu(R.layout.sliding_recomendation);
 
 		getSlidingMenu().setBehindOffset(80);
 
@@ -55,15 +54,15 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		popup = (Sliding) findViewById(R.id.sliding1);
 		popup.setVisibility(View.GONE);
 
-//		_addButton = (ImageButton) findViewById(R.id.imgAddButton);
-//		_addEventButton = (ImageButton) findViewById(R.id.imgAddEvent);
+		// _addButton = (ImageButton) findViewById(R.id.imgAddButton);
+		// _addEventButton = (ImageButton) findViewById(R.id.imgAddEvent);
 		_listButton = (ImageButton) findViewById(R.id.menuListButton);
 		_recomend_button = (ImageButton) findViewById(R.id.imgRemove);
-		
+
 		_submitButton = (Button) findViewById(R.id.submitButton);
 
-//		_addButton.setOnClickListener(this);
-//		_addEventButton.setOnClickListener(this);
+		// _addButton.setOnClickListener(this);
+		// _addEventButton.setOnClickListener(this);
 		_listButton.setOnClickListener(this);
 		_recomend_button.setOnClickListener(this);
 
@@ -82,22 +81,22 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			toggle();
 			break;
 
-//		case R.id.imgAddButton:
-//			intent = new Intent(this, FormActivity.class);
-//
-//			startActivity(intent);
-//			break;
-//
-//		case R.id.imgAddEvent:
-//			intent = new Intent(this, EventFormActivity.class);
-//
-//			startActivity(intent);
-//			break;
-			
+		// case R.id.imgAddButton:
+		// intent = new Intent(this, FormActivity.class);
+		//
+		// startActivity(intent);
+		// break;
+		//
+		// case R.id.imgAddEvent:
+		// intent = new Intent(this, EventFormActivity.class);
+		//
+		// startActivity(intent);
+		// break;
+
 		case R.id.imgRemove:
-			intent = new Intent(this, EventFormActivity.class);
+			intent = new Intent(this, MapPlaceActivity.class);
 			startActivity(intent);
-			
+
 			break;
 
 		case R.id.submitButton:

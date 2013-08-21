@@ -11,31 +11,32 @@
 	
 	<LinearLayout 
 	    android:id="@+id/header_center"
-	    android:layout_width="220dp"
+	    android:layout_width="420dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" >
         
+	    
 	    <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Camp in Rinjani - 05/12/2013" />
+        android:text="@string/info" />
+	    
 	</LinearLayout>
     
 	
     <LinearLayout 
         android:id="@+id/header_left"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         android:layout_centerVertical="true"
-        android:gravity="left"
-        android:paddingLeft="10dp" >
+        android:layout_toLeftOf="@+id/header_center" >
 
         <ImageButton
-            android:id="@+id/menuListButton"
+            android:id="@+id/imgbutton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -53,30 +54,8 @@
 
 	</LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/header_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" >
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/divider_header" />
-
-        <ImageButton
-            android:id="@+id/imgRemove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@null"
-            android:paddingRight="15dp"
-            android:src="@drawable/map_icon" />
-    </LinearLayout>
+    
+    
     
     </RelativeLayout>
 

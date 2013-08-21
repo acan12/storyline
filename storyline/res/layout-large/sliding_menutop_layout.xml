@@ -12,7 +12,7 @@
             android:layout_height="400dp"
             android:gravity="left"
             android:padding="2px"
-            android:background="#000">
+            android:background="@drawable/background_color">
             
             	<!-- title -->
                 <TextView

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#364244"
-    android:fillViewport="true"
     tools:context=".HomeActivity" >
 
     
@@ -23,9 +22,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="HISTORY"
-            android:textSize="12px"
-            android:textStyle="bold"
+            android:text="History Line"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageView
@@ -40,6 +37,7 @@
 	    android:layout_height="fill_parent"
 	    android:layout_alignParentLeft="true"
 	    android:layout_below="@+id/linearLayout1"
+    	android:layout_marginTop="50dp"
 	    layout="@layout/sliding_menu_part" />
 	
 </RelativeLayout>
