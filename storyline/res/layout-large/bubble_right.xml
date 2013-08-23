@@ -20,7 +20,7 @@
 	        android:orientation="horizontal" >
 
 	        <LinearLayout
-	            android:id="@+id/buble_header1"
+	            android:id="@+id/buble_header"
 	            android:layout_width="220dp"
 	            android:layout_height="wrap_content"
 	            android:orientation="horizontal" >
@@ -47,7 +47,7 @@
 	        </LinearLayout>
 	        
 	        <LinearLayout
-	            android:id="@+id/buble_header2"
+	            android:id="@+id/buble_header"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:orientation="horizontal" >
@@ -58,7 +58,7 @@
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_marginTop="15dp"
-			        android:layout_marginLeft="48dp"
+			        android:layout_marginLeft="50dp"
 			        android:src="@drawable/delete" />
 	            
 	        </LinearLayout>
@@ -80,6 +80,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/linearLayout1"
 	        android:layout_marginLeft="62dp"
+	        android:layout_marginRight="30dp"
 	        android:layout_toRightOf="@+id/imageView4"
 	        android:text="Kuningan , South Jakarta"
 	        android:textColor="#ababab" />
@@ -90,9 +91,9 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@+id/location"
-	        android:layout_marginLeft="25dp"
-	        android:layout_marginRight="8dp"
 	        android:layout_marginTop="5dp"
+	        android:layout_marginLeft="25dp"
+	        android:layout_marginRight="25dp"
 	        android:maxLines="3"
 	        android:text="Waktu kemarin mudik setengah mati gw kangen ama Bakmi GM. Abis disana ngga ada. Kalo di Jakarta kan hampir di setiap Malla ada. Gw suka bakmi GM mostly karena menunya enak sich. "
 	        android:textColor="#636060" />
@@ -102,7 +103,7 @@
 	        android:id="@+id/bottom_line"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_marginTop="15dp"
+	        android:layout_marginTop="5dp"
 	        android:layout_marginLeft="30dp"
 	        android:layout_marginRight="25dp"
 	        android:background="@drawable/bottom_line"
@@ -120,23 +121,24 @@
             <ImageView 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="25dp"
                 android:src="@drawable/clock_icon" />
             
             <TextView
 		        android:id="@+id/time_note"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dp"
+		        android:layout_marginTop="7dp"
 		        android:layout_marginLeft="10dp"
 		        android:layout_marginRight="25dp"
 		        android:text="5,August 2013"
-		        android:textSize="12px"
 		        android:textColor="#636060" />
             
         </LinearLayout>
         <!-- info bottom section :end -->
+	    
+	    
 	</RelativeLayout>
 
 </LinearLayout>
