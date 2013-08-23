@@ -83,7 +83,7 @@
                android:layout_height="wrap_content"
                android:layout_gravity="center_vertical"
                android:background="@null"
-               android:src="@drawable/big_clock_icon" />
+               android:src="@drawable/clock_icon" />
 
            <EditText
                android:id="@+id/startDateText"
@@ -147,7 +147,7 @@
                android:layout_height="wrap_content"
                android:layout_gravity="center_vertical"
                android:background="@null"
-               android:src="@drawable/big_clock_icon" />
+               android:src="@drawable/clock_icon" />
            
            <EditText
                android:id="@+id/endDateText"

@@ -88,12 +88,8 @@
 			        android:layout_height="wrap_content"
 			        android:layout_below="@id/bubble_image"
 			        android:layout_marginLeft="20dp"
-			        layout="@layout/bubble_right"/>
+			        layout="@layout/bubble_right_via_car"/>
                 
-                
-                
-                
-
             </RelativeLayout>
             
 			<RelativeLayout
@@ -123,12 +119,65 @@
 			        android:layout_marginLeft="20dp"
 			        layout="@layout/bubble_right"/>
                 
-                
-                
-                
-
             </RelativeLayout>
  
+			<RelativeLayout
+                android:id="@+id/body_center2"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="left" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/vertical_line" />
+                 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/pointer" />
+                
+                <include
+                    android:id="@+id/bubble_event"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_below="@id/bubble_image"
+			        android:layout_marginLeft="20dp"
+			        layout="@layout/bubble_right"/>
+                
+            </RelativeLayout>
+            
+			<RelativeLayout
+                android:id="@+id/body_center2"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:gravity="left" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/vertical_line" />
+                 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/pointer" />
+                
+                <include
+                    android:id="@+id/bubble_event"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_below="@id/bubble_image"
+			        android:layout_marginLeft="20dp"
+			        layout="@layout/bubble_right_via_car"/>
+                
+            </RelativeLayout>
             <!-- end -->
 
             <LinearLayout
