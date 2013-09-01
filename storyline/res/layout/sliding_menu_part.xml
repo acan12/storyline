@@ -27,7 +27,7 @@
 		            android:layout_height="wrap_content"
 		            android:layout_gravity="left|center_vertical"
 		            android:padding="5dp"
-		            android:src="@drawable/event_icon_blue" />
+		            android:src="@drawable/event_brown" />
 		        
 		        <TextView
 		            android:id="@+id/textView1"
@@ -36,7 +36,7 @@
 		            android:layout_weight="1"
 		            android:gravity="center_vertical"
 		            android:padding="10dp"
-		            android:text="story 01" />
+		            android:text="story 01-Draft" />
 		        
 		        <ImageView
 		            android:id="@+id/story_icon2"
@@ -68,7 +68,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="left|center_vertical"
 	            android:padding="5dp"
-	            android:src="@drawable/event_icon_blue" />
+	            android:src="@drawable/event_blue" />
 	        
 	        <TextView
 	            android:id="@+id/textView1"
@@ -108,7 +108,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="left|center_vertical"
 	            android:padding="5dp"
-	            android:src="@drawable/event_icon_green" />
+	            android:src="@drawable/event_green" />
 	        
 	        <TextView
 	            android:id="@+id/textView1"
@@ -149,7 +149,7 @@
 		         android:layout_height="wrap_content"
 		         android:layout_gravity="left|center_vertical"
 		         android:padding="5dp"
-		         android:src="@drawable/event_icon_purple" />
+		         android:src="@drawable/event_purple" />
 		     
 		     <TextView
 		         android:id="@+id/textView1"
@@ -190,7 +190,7 @@
 		         android:layout_height="wrap_content"
 		         android:layout_gravity="left|center_vertical"
 		         android:padding="5dp"
-		         android:src="@drawable/event_icon_purple" />
+		         android:src="@drawable/event_purple" />
 		     
 		     <TextView
 		         android:id="@+id/textView1"
@@ -231,49 +231,7 @@
 		         android:layout_height="wrap_content"
 		         android:layout_gravity="left|center_vertical"
 		         android:padding="5dp"
-		         android:src="@drawable/event_icon_purple" />
-		     
-		     <TextView
-		         android:id="@+id/textView1"
-		         android:layout_width="fill_parent"
-		         android:layout_height="wrap_content"
-		         android:layout_weight="1"
-		         android:gravity="center_vertical"
-		         android:padding="10dp"
-		         android:text="story 04" />
-		     
-		     <ImageView
-		         android:id="@+id/story_icon2"
-		         android:layout_width="wrap_content"
-		         android:layout_height="wrap_content"
-		         android:layout_gravity="center_vertical"
-		         android:layout_marginRight="20dp"
-		         android:src="@drawable/arrow_right_menu" />
-	        
-		</LinearLayout>
-		<ImageView
-	           android:layout_width="fill_parent"
-	           android:layout_height="wrap_content"
-	           android:src="@drawable/menu_divider" />
-		
-		
-		
-		<!-- row 4 -->
-	    <LinearLayout
-		     android:layout_width="fill_parent"
-		     android:layout_height="wrap_content"
-		     android:layout_marginTop="15dp"
-		     android:layout_marginLeft="10dp"
-		     android:orientation="horizontal" >
-	        
-	           
-		     <ImageView
-		         android:id="@+id/story_icon"
-		         android:layout_width="wrap_content"
-		         android:layout_height="wrap_content"
-		         android:layout_gravity="left|center_vertical"
-		         android:padding="5dp"
-		         android:src="@drawable/event_icon_purple" />
+		         android:src="@drawable/event_purple" />
 		     
 		     <TextView
 		         android:id="@+id/textView1"
@@ -315,7 +273,7 @@
 		         android:layout_height="wrap_content"
 		         android:layout_gravity="left|center_vertical"
 		         android:padding="5dp"
-		         android:src="@drawable/event_icon_purple" />
+		         android:src="@drawable/event_purple" />
 		     
 		     <TextView
 		         android:id="@+id/textView1"
@@ -357,7 +315,7 @@
 		         android:layout_height="wrap_content"
 		         android:layout_gravity="left|center_vertical"
 		         android:padding="5dp"
-		         android:src="@drawable/event_icon_purple" />
+		         android:src="@drawable/event_purple" />
 		     
 		     <TextView
 		         android:id="@+id/textView1"
@@ -399,7 +357,49 @@
 		         android:layout_height="wrap_content"
 		         android:layout_gravity="left|center_vertical"
 		         android:padding="5dp"
-		         android:src="@drawable/event_icon_purple" />
+		         android:src="@drawable/event_purple" />
+		     
+		     <TextView
+		         android:id="@+id/textView1"
+		         android:layout_width="fill_parent"
+		         android:layout_height="wrap_content"
+		         android:layout_weight="1"
+		         android:gravity="center_vertical"
+		         android:padding="10dp"
+		         android:text="story 04" />
+		     
+		     <ImageView
+		         android:id="@+id/story_icon2"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:layout_gravity="center_vertical"
+		         android:layout_marginRight="20dp"
+		         android:src="@drawable/arrow_right_menu" />
+	        
+		</LinearLayout>
+		<ImageView
+	           android:layout_width="fill_parent"
+	           android:layout_height="wrap_content"
+	           android:src="@drawable/menu_divider" />
+		
+		
+		
+		<!-- row 4 -->
+	    <LinearLayout
+		     android:layout_width="fill_parent"
+		     android:layout_height="wrap_content"
+		     android:layout_marginTop="15dp"
+		     android:layout_marginLeft="10dp"
+		     android:orientation="horizontal" >
+	        
+	           
+		     <ImageView
+		         android:id="@+id/story_icon"
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:layout_gravity="left|center_vertical"
+		         android:padding="5dp"
+		         android:src="@drawable/event_purple" />
 		     
 		     <TextView
 		         android:id="@+id/textView1"

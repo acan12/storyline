@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="HISTORY"
+            android:text="YOUR STORIES"
             android:textStyle="bold" />
 
         <ImageView

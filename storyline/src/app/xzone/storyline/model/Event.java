@@ -5,22 +5,29 @@ import java.io.Serializable;
 public class Event extends BaseModel implements Serializable {
 	private int id;
 	private String name;
-	private String icon;
-	private String description;
-	
-//	Date Time to start & end
-	private String startDate;
-	private String startTime;
-	private String endDate;
-	private String endTime;
-	
-//	Location coord when event occur 
-	private double lat;
-	private double lng;
-	
+	private String message;
+	private String category;
+
+	// provide vehicle car, bike, flight, train
+	private String transportation;
+
+	// provide flag information if event shared or not (true/false)
 	private int status;
 
+	// provide information if story shared or not (true/false)
+	private int shared;
+
+	// Location coordinates when event occur + location name
+	private String locname;
+	private double lat;
+	private double lng;
+
+	// Date Time to start & end
+	private String startDate;
+	private String startTime;
 	
+	private Story story;
+
 	/**
 	 * @return the id
 	 */
@@ -29,7 +36,8 @@ public class Event extends BaseModel implements Serializable {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -43,94 +51,85 @@ public class Event extends BaseModel implements Serializable {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * @return the icon
+	 * @return the message
 	 */
-	public String getIcon() {
-		return icon;
+	public String getMessage() {
+		return message;
 	}
 
 	/**
-	 * @param icon the icon to set
+	 * @param message
+	 *            the message to set
 	 */
-	public void setIcon(String icon) {
-		this.icon = icon;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	/**
-	 * @return the description
+	 * @return the category
 	 */
-	public String getDescription() {
-		return description;
+	public String getCategory() {
+		return category;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param category
+	 *            the category to set
 	 */
-	public void setDescription(String description) {
-		this.description = description;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	/**
-	 * @return the startDate
+	 * @return the transportation
 	 */
-	public String getStartDate() {
-		return startDate;
+	public String getTransportation() {
+		return transportation;
 	}
 
 	/**
-	 * @param startDate the startDate to set
+	 * @param transportation
+	 *            the transportation to set
 	 */
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
+	public void setTransportation(String transportation) {
+		this.transportation = transportation;
 	}
 
 	/**
-	 * @return the startTime
+	 * @return the status
 	 */
-	public String getStartTime() {
-		return startTime;
+	public int getStatus() {
+		return status;
 	}
 
 	/**
-	 * @param startTime the startTime to set
+	 * @param status
+	 *            the status to set
 	 */
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	/**
-	 * @return the endDate
+	 * @return the locname
 	 */
-	public String getEndDate() {
-		return endDate;
+	public String getLocname() {
+		return locname;
 	}
 
 	/**
-	 * @param endDate the endDate to set
+	 * @param locname the locname to set
 	 */
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-
-	/**
-	 * @return the endTime
-	 */
-	public String getEndTime() {
-		return endTime;
-	}
-
-	/**
-	 * @param endTime the endTime to set
-	 */
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
+	public void setLocname(String locname) {
+		this.locname = locname;
 	}
 
 	/**
@@ -141,7 +140,8 @@ public class Event extends BaseModel implements Serializable {
 	}
 
 	/**
-	 * @param lat the lat to set
+	 * @param lat
+	 *            the lat to set
 	 */
 	public void setLat(double lat) {
 		this.lat = lat;
@@ -155,23 +155,63 @@ public class Event extends BaseModel implements Serializable {
 	}
 
 	/**
-	 * @param lng the lng to set
+	 * @param lng
+	 *            the lng to set
 	 */
 	public void setLng(double lng) {
 		this.lng = lng;
 	}
 
 	/**
-	 * @return the status
+	 * @return the startDate
 	 */
-	public int getStatus() {
-		return status;
+	public String getStartDate() {
+		return startDate;
 	}
 
 	/**
-	 * @param status the status to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
-	public void setStatus(int status) {
-		this.status = status;
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
 	}
+
+	/**
+	 * @return the startTime
+	 */
+	public String getStartTime() {
+		return startTime;
+	}
+
+	/**
+	 * @param startTime
+	 *            the startTime to set
+	 */
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public int getShared() {
+		return shared;
+	}
+
+	public void setShared(int shared) {
+		this.shared = shared;
+	}
+
+	/**
+	 * @return the story
+	 */
+	public Story getStory() {
+		return story;
+	}
+
+	/**
+	 * @param story the story to set
+	 */
+	public void setStory(Story story) {
+		this.story = story;
+	}
+
 }

@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:paddingRight="15dp"
-            android:src="@drawable/list_icon"
+            android:src="@drawable/list"
             android:background="@null" />
         
         <ImageView

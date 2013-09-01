@@ -9,11 +9,10 @@
     android:layout_height="56dp"
     android:background="@drawable/header_background" >
 	
-	<LinearLayout 
+	<!-- <LinearLayout 
 	    android:id="@+id/header_center"
-	    android:layout_width="220dp"
+	    android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" >
         
@@ -22,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MAP Layout" />
-	</LinearLayout>
+	</LinearLayout> -->
     
 	
     <LinearLayout 
@@ -39,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:paddingRight="15dp"
-            android:src="@drawable/list_icon"
+            android:src="@drawable/list"
             android:background="@null" />
         
         <ImageView
@@ -51,6 +50,69 @@
 	        android:src="@drawable/divider_header" />
 
 	</LinearLayout>
+	
+    <LinearLayout
+	        android:id="@+id/header_right"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentTop="true" >
+	
+	        <ImageView
+	            android:id="@+id/imageView2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:layout_alignParentTop="true"
+	            android:src="@drawable/divider_header" />
+	
+	        <ImageButton
+	            android:id="@+id/addStoryButton"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:background="@null"
+	            android:paddingRight="15dp"
+	            android:src="@drawable/resto_restaurant_chinese" />
+	        
+	        <ImageButton
+	            android:id="@+id/mapButton"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:background="@null"
+	            android:paddingRight="15dp"
+	            android:src="@drawable/transport_fillingstation" />
+	        
+	        <ImageButton
+	            android:id="@+id/mapButton"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:background="@null"
+	            android:paddingRight="15dp"
+	            android:src="@drawable/transport_bus" />
+	        
+	        <ImageButton
+	            android:id="@+id/mapButton"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:background="@null"
+	            android:paddingRight="15dp"
+	            android:src="@drawable/sport_beachvolleyball" />
+	        
+	        <ImageButton
+	            android:id="@+id/mapButton"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center_vertical"
+	            android:background="@null"
+	            android:paddingRight="15dp"
+	            android:src="@drawable/health_spa" />
+	        
+	        
+	    </LinearLayout>
 
     
     

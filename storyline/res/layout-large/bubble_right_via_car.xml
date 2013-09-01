@@ -9,6 +9,7 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_marginRight="5dp"
+	    android:layout_marginLeft="5dp"
 	    android:background="@drawable/bubble_big_right"
 	    android:onClick="handleBubleEvent"
 	    android:orientation="vertical" >
@@ -21,8 +22,9 @@
 
 	        <LinearLayout
 	            android:id="@+id/buble_header"
-	            android:layout_width="220dp"
+	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
 	            android:orientation="horizontal" >
 
 	            <ImageButton
@@ -48,18 +50,17 @@
 	        
 	        <LinearLayout
 	            android:id="@+id/buble_header"
-	            android:layout_width="fill_parent"
+	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
+	            android:layout_gravity="left|center_vertical"
 	            android:orientation="horizontal" >
 	            
-	            
 	            <ImageView
-			        android:id="@+id/imageView4"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_marginTop="15dp"
-			        android:layout_marginLeft="50dp"
-			        android:src="@drawable/delete" />
+	                android:id="@+id/imageView4"
+	                android:layout_width="72dp"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="10dp"
+	                android:src="@drawable/delete" />
 	            
 	        </LinearLayout>
 	        
@@ -72,7 +73,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_centerVertical="true"
-	        android:src="@drawable/car_pointer" />
+	        android:src="@drawable/pointer_car" />
 
 	    <TextView
 	        android:id="@+id/location"
@@ -86,25 +87,31 @@
 	        android:textColor="#ababab" />
 	    
 	    <!-- bubble note -->
-	    <TextView
-	        android:id="@+id/bubble_note"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	    <LinearLayout
+	        android:id="@+id/bubble_note" 
+	        android:layout_width="fill_parent"
+	        android:layout_height="75dp"
 	        android:layout_below="@+id/location"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginLeft="25dp"
-	        android:layout_marginRight="20dp"
-	        android:maxLines="3"
-	        android:text="Waktu kemarin mudik setengah mati gw kangen ama Bakmi GM. Abis disana ngga ada. Kalo di Jakarta kan hampir di setiap Malla ada. Gw suka bakmi GM mostly karena menunya enak sich. "
-	        android:textColor="#636060" />
+	        android:orientation="vertical" >
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_below="@+id/location"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="25dp"
+		        android:layout_marginRight="20dp"
+		        android:maxLines="4"
+		        android:text="Waktu kemarin mudik setengah mati gw kangen ama Bakmi GM. Abis disana ngga ada. Kalo di Jakarta kan hampir di setiap Malla ada. Gw suka bakmi GM mostly karena menunya enak sich."
+		        android:textColor="#636060" />
+		</LinearLayout>
 	    
 	    <!-- info bottom section -->
 	    <LinearLayout
 	        android:id="@+id/bottom_line"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginLeft="30dp"
+	        android:layout_marginTop="3dp"
+	        android:layout_marginLeft="25dp"
 	        android:layout_marginRight="25dp"
 	        android:background="@drawable/bottom_line"
 	        android:layout_below="@+id/bubble_note"
@@ -121,18 +128,18 @@
             <ImageView 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="25dp"
-                android:src="@drawable/clock_icon" />
+                android:src="@drawable/clock_black" />
             
             <TextView
 		        android:id="@+id/time_note"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dp"
+		        android:layout_marginTop="5dp"
 		        android:layout_marginLeft="10dp"
 		        android:layout_marginRight="25dp"
-		        android:text="5,August 2013"
+		        android:text="5 Aug 2013"
 		        android:textSize="12px"
 		        android:textColor="#636060" />
             

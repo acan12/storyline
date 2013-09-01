@@ -1,0 +1,142 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="280dp"
+    android:layout_height="280dp"
+    android:layout_gravity="center_horizontal|center_vertical">
+    
+    
+    <ImageView
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginBottom="10dp"
+	        android:src="@drawable/menu_divider" />
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+        
+        <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_gravity="left|top"
+	        android:text="Date Start"
+	        android:textStyle="bold" />
+        
+        <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Saturday, July 12 2013"
+	        android:layout_gravity="right|bottom" />
+    </LinearLayout>
+    
+    <ImageView
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginBottom="10dp"
+	        android:src="@drawable/menu_divider" />
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+        
+        <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_gravity="left|top"
+	        android:text="Time Start"
+	        android:textStyle="bold" />
+        
+        <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="10:00 PM"
+	        android:layout_gravity="right|bottom" />
+    </LinearLayout>
+    
+    <ImageView
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginBottom="10dp"
+	        android:src="@drawable/menu_divider" />
+    
+	<!-- end date time -->
+	<LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+        
+        <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_gravity="left|top"
+	        android:text="Date End"
+	        android:textStyle="bold" />
+        
+        <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Sunday, July 13 2013"
+	        android:layout_gravity="right|bottom" />
+    </LinearLayout>
+    
+    <ImageView
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginBottom="10dp"
+	        android:src="@drawable/menu_divider" />
+    
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+        
+        <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:layout_gravity="left|top"
+	        android:text="Time End"
+	        android:textStyle="bold" />
+        
+        <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="12:00 PM"
+	        android:layout_gravity="right|bottom" />
+    </LinearLayout>
+    
+    <ImageView
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginBottom="10dp"
+	        android:src="@drawable/menu_divider" />
+    
+    
+    <Button
+        android:id="@+id/submitDateButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:text="Done"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:padding="10dp" />
+        
+</LinearLayout>

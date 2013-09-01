@@ -83,7 +83,7 @@
                android:layout_height="wrap_content"
                android:layout_gravity="center_vertical"
                android:background="@null"
-               android:src="@drawable/clock_icon" />
+               android:src="@drawable/clock_black" />
 
            <EditText
                android:id="@+id/startDateText"
@@ -120,7 +120,7 @@
            <ImageView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:src="@drawable/map_icon" />
+               android:src="@drawable/map" />
 
            <EditText
                android:id="@+id/startMapText"
@@ -147,7 +147,7 @@
                android:layout_height="wrap_content"
                android:layout_gravity="center_vertical"
                android:background="@null"
-               android:src="@drawable/clock_icon" />
+               android:src="@drawable/clock_black" />
            
            <EditText
                android:id="@+id/endDateText"
@@ -190,7 +190,7 @@
            <ImageView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:src="@drawable/map_icon" />
+               android:src="@drawable/map" />
 
            <EditText
                android:id="@+id/endMapText"
