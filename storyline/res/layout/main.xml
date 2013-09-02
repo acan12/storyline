@@ -35,7 +35,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
-                android:text="Jakarta, 30 Jul 2013 at 13:15 PM"
+                android:text="30 Jul 2013 at 13:15 PM"
                 android:textSize="10dp"
                 android:textColor="#000" />
             
@@ -50,16 +50,12 @@
                     android:id="@+id/startPoint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:paddingTop="10px"
                     android:src="@drawable/start_point" />
                 
                 <ImageButton
                     android:id="@+id/addDateStoryButton"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:layout_toRightOf="@+id/startPoint"
                     android:onClick="showDatePopup"
                     android:background="@null"
                     android:src="@drawable/notif" />
@@ -189,7 +185,7 @@
                     android:layout_gravity="left"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="5dp"
-                    android:text="Bandung, 05 Aug 2013 At 10:15 AM"
+                    android:text="05 Aug 2013 At 10:15 AM"
                     android:textSize="10dp"
                     android:textColor="#000" />
         </LinearLayout>

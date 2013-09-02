@@ -13,6 +13,7 @@
 	        android:src="@drawable/menu_divider" />
     
     <LinearLayout 
+        android:id="@+id/pickDate"
         android:layout_width="fill_parent"
         android:layout_height="35dp"
         android:layout_marginLeft="10dp"
@@ -28,6 +29,7 @@
 	        android:textStyle="bold" />
         
         <TextView
+            android:id="@+id/valueStartDate"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="Saturday, July 12 2013"
@@ -42,6 +44,7 @@
 	        android:src="@drawable/menu_divider" />
     
     <LinearLayout 
+        android:id="@+id/pickTime"
         android:layout_width="fill_parent"
         android:layout_height="35dp"
         android:layout_marginLeft="10dp"
@@ -57,6 +60,7 @@
 	        android:textStyle="bold" />
         
         <TextView
+            android:id="@+id/valueStartTime"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="10:00 PM"
@@ -72,6 +76,7 @@
     
 	<!-- end date time -->
 	<LinearLayout 
+	    android:id="@+id/pickDateEnd"
         android:layout_width="fill_parent"
         android:layout_height="35dp"
         android:layout_marginLeft="10dp"
@@ -87,6 +92,7 @@
 	        android:textStyle="bold" />
         
         <TextView
+            android:id="@+id/valueEndDate"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="Sunday, July 13 2013"
@@ -100,7 +106,8 @@
 	        android:layout_marginBottom="10dp"
 	        android:src="@drawable/menu_divider" />
     
-    <LinearLayout 
+    <LinearLayout
+        android:id="@+id/pickTimeEnd"
         android:layout_width="fill_parent"
         android:layout_height="35dp"
         android:layout_marginLeft="10dp"
@@ -116,6 +123,7 @@
 	        android:textStyle="bold" />
         
         <TextView
+            android:id="@+id/valueEndTime"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="12:00 PM"

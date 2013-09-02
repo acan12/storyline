@@ -15,6 +15,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.helper.Helper;
@@ -136,6 +137,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 //	event handler when notif icon clicked
 	public void showDatePopup(View v){
+		LinearLayout ll = null;
 		final Dialog dialog = new Dialog(HomeActivity.this);
 
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
@@ -147,24 +149,63 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON,
 				R.drawable.clock_white);
 
+		
+//		pick date
+		ll = (LinearLayout) dialog.findViewById(R.id.pickDate);
+		ll.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Helper.showDatePicker(dialog, R.id.valueStartDate);
+			}
+		});
+		
+//		pick time
+		ll = (LinearLayout) dialog.findViewById(R.id.pickTime);
+		ll.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Helper.showTimePicker(dialog, R.id.valueStartTime);
+			}
+		});
+		
+//		pick date end
+		ll = (LinearLayout) dialog.findViewById(R.id.pickDateEnd);
+		ll.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Helper.showDatePicker(dialog, R.id.valueEndDate);
+			}
+		});
+		
+//		pick time end
+		ll = (LinearLayout) dialog.findViewById(R.id.pickTimeEnd);
+		ll.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Helper.showTimePicker(dialog, R.id.valueEndTime);
+			}
+		});		
+		
+		
+//		submit button
 		Button okButton = (Button) dialog
 				.findViewById(R.id.submitDateButton);
 		okButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				System.out.println("masuk click event");
-				// db = new DBAdapter(HomeActivity.this);
-				//
-				// Story story = Helper.buildObjectStory(
-				// new Story(), dialog);
-				// long sid = db.insertStoryRecord(story);
-				//
-				// if(sid > 0) Helper.buildUIMain(HomeActivity.this, story);
+				
+				
 				dialog.dismiss();
 			}
 		});
 	}
+	
+	
 	
 	// event handler direct from layout xml
 	public void handleBubleEvent(View v) {
