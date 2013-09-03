@@ -16,9 +16,10 @@
 
     
     <ScrollView
-        android:id="@+id/scrollView1"
+        android:id="@+id/content"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_weight="1"
         android:fillViewport="true"
         android:isScrollContainer="true" >
 
@@ -28,16 +29,6 @@
             android:background="@drawable/background_color"
             android:orientation="vertical" >
 			
-            <TextView android:id="@+id/info_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:text="30 Jul 2013 at 13:15 PM"
-                android:textSize="10dp"
-                android:textColor="#000" />
             
             <LinearLayout
                 android:id="@+id/body_header"
@@ -58,7 +49,17 @@
                     android:layout_height="fill_parent"
                     android:onClick="showDatePopup"
                     android:background="@null"
+                    android:visibility="gone"
                     android:src="@drawable/notif" />
+                
+                <TextView 
+                    android:id="@+id/info_start"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="5dp"
+	                android:layout_marginLeft="5dp"
+	                android:text="Jul 12, 2013 13:15 PM"
+	                android:textColor="@color/black" />
                 
             </LinearLayout>
 
@@ -132,6 +133,7 @@
                     android:layout_marginTop="110dp"
                     android:onClick="handleBubleEvent"
                     android:background="@null"
+                    android:visibility="gone"
                     android:src="@drawable/notif" />
                    
 				<!-- <include
@@ -170,25 +172,33 @@
                 
                 
                 <ImageButton
-                    android:id="@+id/addDateStoryButton"
+                    android:id="@+id/addDateStoryButton02"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_toRightOf="@+id/endPoint"
                     android:onClick="showDatePopup"
                     android:background="@null"
+                    android:visibility="gone"
                     android:src="@drawable/notif" />
+                
+                <TextView 
+                    android:id="@+id/infoEnd"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="5dp"
+	                android:layout_marginLeft="5dp"
+	                android:text="Jul 15, 2013 17:15 PM"
+	                android:textColor="@color/black" />
             </LinearLayout>
             
-            <TextView android:id="@+id/info_end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="5dp"
-                    android:text="05 Aug 2013 At 10:15 AM"
-                    android:textSize="10dp"
-                    android:textColor="#000" />
         </LinearLayout>
     </ScrollView>
+    
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        layout="@layout/footer" />
+    
     
 </LinearLayout>

@@ -14,9 +14,9 @@ public class Story extends BaseModel implements Serializable {
 	private int shared;
 
 	// Date Time to start & end
-	private String startDate;
+	private Long startDate;
 	private String startTime;
-	private String endDate;
+	private Long endDate;
 	private String endTime;
 	
 //	CONSTANTA
@@ -88,7 +88,7 @@ public class Story extends BaseModel implements Serializable {
 	/**
 	 * @return the startDate
 	 */
-	public String getStartDate() {
+	public Long getStartDate() {
 		return startDate;
 	}
 
@@ -96,7 +96,7 @@ public class Story extends BaseModel implements Serializable {
 	 * @param startDate
 	 *            the startDate to set
 	 */
-	public void setStartDate(String startDate) {
+	public void setStartDate(Long startDate) {
 		this.startDate = startDate;
 	}
 
@@ -118,7 +118,7 @@ public class Story extends BaseModel implements Serializable {
 	/**
 	 * @return the endDate
 	 */
-	public String getEndDate() {
+	public Long getEndDate() {
 		return endDate;
 	}
 
@@ -126,7 +126,7 @@ public class Story extends BaseModel implements Serializable {
 	 * @param endDate
 	 *            the endDate to set
 	 */
-	public void setEndDate(String endDate) {
+	public void setEndDate(Long endDate) {
 		this.endDate = endDate;
 	}
 

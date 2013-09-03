@@ -1,11 +1,12 @@
 package app.xzone.storyline;
 
+import java.text.ParseException;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
@@ -34,8 +35,8 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	boolean menuOut = false;
 	Handler handler = new Handler();
 	int btnWidth;
-	private ImageButton _listButton;
-	private ImageButton _story_button;
+	private ImageButton listButton;
+	private LinearLayout newStoryButton;
 	private ImageButton _addEventButton;
 
 	int key = 0;
@@ -43,10 +44,13 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	private Sliding popup;
 	private Button _submitButton;
 
+	private Story story;
+
 	final Context context = this;
 
 	// accessing model storage
 	DBAdapter db = null;
+	private Button cancelButton;
 
 	/** Called when the activity is first created. Testing */
 	@Override
@@ -64,23 +68,26 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		popup = (Sliding) findViewById(R.id.sliding1);
 		popup.setVisibility(View.GONE);
 
-		_listButton = (ImageButton) findViewById(R.id.menuListButton);
-		_story_button = (ImageButton) findViewById(R.id.storyButton);
+		listButton = (ImageButton) findViewById(R.id.menuListButton);
+		newStoryButton = (LinearLayout) findViewById(R.id.newStorySliding);
 		_submitButton = (Button) findViewById(R.id.submitEventButton);
+		
 
-		_listButton.setOnClickListener(this);
-		_story_button.setOnClickListener(this);
+		listButton.setOnClickListener(this);
+		newStoryButton.setOnClickListener(this);
 		_submitButton.setOnClickListener(this);
-
+		
+		
+		
 		db = new DBAdapter(context);
-		Story story = db.getLastStory();
+		story = db.getLastStory();
 		Helper.buildUIMain(HomeActivity.this, story);
 
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		MenuItem item = menu.add("Map").setOnMenuItemClickListener(
+		MenuItem item01 = menu.add("Map").setOnMenuItemClickListener(
 				new OnMenuItemClickListener() {
 
 					@Override
@@ -92,15 +99,25 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 						return true;
 					}
 				});
-		item.setIcon(R.drawable.map);
+
+		MenuItem item02 = menu.add("Edit").setOnMenuItemClickListener(
+				new OnMenuItemClickListener() {
+
+					@Override
+					public boolean onMenuItemClick(MenuItem item) {
+						Helper.modeEdit(HomeActivity.this);
+
+						
+						return true;
+					}
+				});
+		item01.setIcon(R.drawable.map);
+		item02.setIcon(R.drawable.list);
 		return true;
 	}
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-
-		Log.d("debug::::", "---------- " + v.getId());
 		switch (v.getId()) {
 		case R.id.menuListButton:
 			// put your code here
@@ -118,95 +135,137 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		//
 		// startActivity(intent);
 		// break;
-
-		case R.id.storyButton:
-
-			Helper.showPopupNewStory(HomeActivity.this);
+		
+		case R.id.newStorySliding:
+			listButton.performClick();
+			Helper.modeEdit(HomeActivity.this);
+			showDatePopup(v);
 
 			break;
+		// case R.id.storyButton:
+		//
+		// // Helper.showPopupNewStory(HomeActivity.this, story);
+		// final Dialog dialog = new Dialog(this, R.style.dialog_style);
+		//
+		// dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		// dialog.setContentView(R.layout.dialog_insert_story);
+		//
+		// dialog.show();
+		//
+		// Button okButton = (Button) dialog
+		// .findViewById(R.id.submitStoryButton);
+		// okButton.setOnClickListener(new View.OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		//
+		// // DBAdapter db = new DBAdapter(context);
+		// story = Helper.buildFromTitleStory(story, dialog);
+		//
+		// // long sid = db.insertStoryRecord(story);
+		// // if (sid > 0)
+		//
+		// System.out.println("1.name :"+story.getName());
+		// System.out.println("2.desc :"+story.getDescription());
+		// Helper.buildUIMain(HomeActivity.this, story);
+		// dialog.dismiss();
+		// }
+		// });
+		//
+		// break;
 
 		case R.id.submitEventButton:
 			key = 0;
 			popup.setVisibility(View.GONE);
 			break;
 
-		
 		}
 
 	}
 
-//	event handler when notif icon clicked
-	public void showDatePopup(View v){
+//	event handler when cancel edit button clicked
+	public void saveEdit(View v){
+		View title = (View) findViewById(R.id.titleStory);
+		story = (Story) title.getTag();
+		System.out.println("----after save cek object story="+story.getName());
+	}
+	
+	public void cancelEdit(View v){
+		Helper.modeNormal(HomeActivity.this);
+	}
+	
+	// event handler when notif icon clicked
+	public void showDatePopup(View v) {
 		LinearLayout ll = null;
 		final Dialog dialog = new Dialog(HomeActivity.this);
 
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dialog.setContentView(R.layout.dialog_insert_datetime);
 
-		dialog.setTitle("Pick DateTime");
+		dialog.setTitle("Pick Story");
 
 		dialog.show();
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON,
-				R.drawable.clock_white);
+				R.drawable.paper_plane);
 
-		
-//		pick date
+		// pick date
 		ll = (LinearLayout) dialog.findViewById(R.id.pickDate);
 		ll.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Helper.showDatePicker(dialog, R.id.valueStartDate);
 			}
 		});
-		
-//		pick time
+
+		// pick time
 		ll = (LinearLayout) dialog.findViewById(R.id.pickTime);
 		ll.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Helper.showTimePicker(dialog, R.id.valueStartTime);
 			}
 		});
-		
-//		pick date end
+
+		// pick date end
 		ll = (LinearLayout) dialog.findViewById(R.id.pickDateEnd);
 		ll.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Helper.showDatePicker(dialog, R.id.valueEndDate);
 			}
 		});
-		
-//		pick time end
+
+		// pick time end
 		ll = (LinearLayout) dialog.findViewById(R.id.pickTimeEnd);
 		ll.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Helper.showTimePicker(dialog, R.id.valueEndTime);
 			}
-		});		
-		
-		
-//		submit button
-		Button okButton = (Button) dialog
-				.findViewById(R.id.submitDateButton);
+		});
+
+		// submit button
+		Button okButton = (Button) dialog.findViewById(R.id.submitDateButton);
 		okButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				
-				
+				try {
+					story = Helper.buildFromDateTimeStory(story, dialog);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 				dialog.dismiss();
 			}
 		});
 	}
-	
-	
-	
+
 	// event handler direct from layout xml
 	public void handleBubleEvent(View v) {
 		if (key == 0) {

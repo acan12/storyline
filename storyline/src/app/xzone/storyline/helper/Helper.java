@@ -1,22 +1,25 @@
 package app.xzone.storyline.helper;
 
-import java.util.Calendar;
+import java.text.ParseException;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.DialogInterface;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
+import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import app.xzone.storyline.R;
@@ -26,80 +29,78 @@ import app.xzone.storyline.util.StringManipulation;
 import app.xzone.storyline.util.TimeUtil;
 
 public class Helper {
-	private static EditText t;
-
-	public static Story buildObjectStory(Story story, Dialog dialog) {
-
-		t = (EditText) dialog.findViewById(R.id.storyName);
-		story.setName(t.getText().toString());
-
-		t = (EditText) dialog.findViewById(R.id.storyDescription);
-		story.setDescription(t.getText().toString());
-
-		story.setStatus(0);
-		story.setShared(0);
-		story.setStartDate(String.valueOf(Calendar.getInstance()
-				.getTimeInMillis()));
-		story.setStartTime(String.valueOf(Calendar.getInstance()
-				.getTimeInMillis()));
-		story.setEndDate(String.valueOf(Calendar.getInstance()
-				.getTimeInMillis()));
-		story.setEndTime(String.valueOf(Calendar.getInstance()
-				.getTimeInMillis()));
-
-		return story;
-	}
 
 	public static void buildUIMain(Activity activity, Story story) {
 
 		if (story == null)
 			return;
 		TextView tv = (TextView) activity.findViewById(R.id.titleStory);
+
 		tv.setText(StringManipulation.ellipsis(story.getName().toUpperCase(),
 				100));
+		tv.setTag(story);
 
-		// while (c.moveToNext()) {
-		// ae = new ActivityEvent();
-		// ae.setId(c.getInt(c.getColumnIndex("id")));
-		// ae.setIcon(c.getString(c.getColumnIndex("icon")));
-		// ae.setName(c.getString(c.getColumnIndex("name")));
-		// ae.setDescription(c.getString(c.getColumnIndex("description")));
-		// ae.setLat(c.getDouble(c.getColumnIndex("lat")));
-		// ae.setLng(c.getDouble(c.getColumnIndex("lng")));
-		//
-		// ae.setStartDate(c.getString(c.getColumnIndex("st_date")));
-		// ae.setStartTime(c.getString(c.getColumnIndex("st_time")));
-		// ae.setStatus(c.getInt(c.getColumnIndex("status")));
-		//
-		//
-		// list.add(ae);
-		// }
 	}
 
-	public static void showPopupNewStory(final Activity activity) {
+	public static Story singletonStory(Story story) {
+		if (story == null) {
+			story = new Story();
+		}
+
+		return story;
+	}
+
+	// public static Story buildFromTitleStory(Story story, Dialog dialog) {
+	//
+	// story = singletonStory(story);
+	//
+	// EditText t01 = (EditText) dialog.findViewById(R.id.valueNameStory);
+	// EditText t02 = (EditText)
+	// dialog.findViewById(R.id.valueDescriptionStory);
+	//
+	// story.setName(t01.getText().toString());
+	// story.setDescription(t02.getText().toString());
+	//
+	// return story;
+	// }
+
+	public static Story buildFromDateTimeStory(Story story, Dialog dialog)
+			throws ParseException {
+
+		story = singletonStory(story);
+
+		EditText t01 = (EditText) dialog.findViewById(R.id.valueNameStory);
+		EditText t02 = (EditText) dialog
+				.findViewById(R.id.valueDescriptionStory);
+
+		TextView date01 = (TextView) dialog.findViewById(R.id.valueStartDate);
+		TextView time01 = (TextView) dialog.findViewById(R.id.valueStartTime);
+		TextView date02 = (TextView) dialog.findViewById(R.id.valueEndDate);
+		TextView time02 = (TextView) dialog.findViewById(R.id.valueEndTime);
+
+		int hour01 = Integer
+				.parseInt(time01.getText().toString().split(":")[0]);
+		int minute01 = Integer
+				.parseInt(time01.getText().toString().split(":")[1].split(" ")[0]);
+
+		int hour02 = Integer
+				.parseInt(time02.getText().toString().split(":")[0]);
+		int minute02 = Integer
+				.parseInt(time02.getText().toString().split(":")[1].split(" ")[0]);
+
+		story.setName(t01.getText().toString());
+		story.setDescription(t02.getText().toString());
+		story.setStartDate(TimeUtil.toEpochFormat(date01.getText().toString(),
+				hour01, minute01));
+		story.setEndDate(TimeUtil.toEpochFormat(date02.getText().toString(),
+				hour02, minute02));
+
+		return story;
+	}
+
+	public static void showPopupNewStory(final Activity activity,
+			final Story mstory) {
 		// launch search dialog
-		final Dialog dialog = new Dialog(activity, R.style.dialog_style);
-
-		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		dialog.setContentView(R.layout.dialog_insert_story);
-
-		dialog.show();
-
-		Button okButton = (Button) dialog.findViewById(R.id.submitStoryButton);
-		okButton.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				DBAdapter db = new DBAdapter(activity);
-				Story story = Helper.buildObjectStory(new Story(), dialog);
-				long sid = db.insertStoryRecord(story);
-
-				if (sid > 0)
-					Helper.buildUIMain(activity, story);
-				dialog.dismiss();
-			}
-		});
 
 	}
 
@@ -119,8 +120,8 @@ public class Helper {
 
 				TextView dateText = (TextView) dialog
 						.findViewById(resourceIdTarget);
-				dateText.setText((new DateTime(year, monthOfYear+1, dayOfMonth,
-						0, 0, 0, 0)).toString(fmt));
+				dateText.setText((new DateTime(year, monthOfYear + 1,
+						dayOfMonth, 0, 0, 0, 0)).toString(fmt));
 
 			}
 		}, dt.getYear(), dt.getMonthOfYear(), dt.getDayOfMonth());
@@ -140,13 +141,77 @@ public class Helper {
 				TextView timeText = (TextView) dialog
 						.findViewById(resourceIdTarget);
 				timeText.setText(hourOfDay + ":" + minute
-						+ TimeUtil.timeZone(hourOfDay));
+						+ TimeUtil.timeArea(hourOfDay));
 
 			}
 		}, dt.getHourOfDay(), dt.getMinuteOfHour(), true);
 		tp.show();
 	}
 
+	// Handle Mode screen (normal, edit)
+	public static void modeNormal(Activity ac) {
+		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
+		sb.setImageDrawable(ac.getResources().getDrawable(R.drawable.paper_plane));
+		sb.setClickable(false);
+		
+		View v = (View) ac.findViewById(R.id.footer);
+		v.setVisibility(View.GONE);
+		v = ac.findViewById(R.id.addDateStoryButton);
+		v.setVisibility(View.GONE);
+		v = ac.findViewById(R.id.addDateStoryButton02);
+		v.setVisibility(View.GONE);
+		v = ac.findViewById(R.id.addEventButton);
+		v.setVisibility(View.GONE);
+	}
+	
+	public static void modeEdit(final Activity ac) {
+		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
+		sb.setImageDrawable(ac.getResources().getDrawable(R.drawable.trash));
+		sb.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				AlertDialog.Builder builder = new AlertDialog.Builder(ac);
+				builder.setMessage("Are you sure remove this Story?");
+				builder.setCancelable(true);
+				builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						dialog.cancel();
+					}
+				});
+				builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						dialog.cancel();
+					}
+				});
+				
+				
+				builder.show();
+			}
+		});
+		
+		View v = (View) ac.findViewById(R.id.footer);
+		v.setVisibility(View.VISIBLE);
+		v = ac.findViewById(R.id.addDateStoryButton);
+		v.setVisibility(View.VISIBLE);
+		v = ac.findViewById(R.id.addDateStoryButton02);
+		v.setVisibility(View.VISIBLE);
+		v = ac.findViewById(R.id.addEventButton);
+		v.setVisibility(View.VISIBLE);
+		
+		
+	}
+
+	
+	
+	
 	public static void buildUIEventBuble(DBAdapter db) {
 
 	}

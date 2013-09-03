@@ -46,9 +46,9 @@ public class DBAdapter extends SQLiteOpenHelper {
 			+ FIELD_DESCRIPTION+" text not null, "
 			+ FIELD_STATUS+" integer default 0, "
 			+ FIELD_SHARED+" integer default 0, "
-			+ FIELD_START_DATE+" text, "
+			+ FIELD_START_DATE+" integer, "
 			+ FIELD_START_TIME+" text, "
-			+ FIELD_END_DATE+" text, "
+			+ FIELD_END_DATE+" integer, "
 			+ FIELD_END_TIME+" text); ";
  
 	private static final String TABLE_EVENT_CREATE = "create table "+DATABASE_TABLE_EVENT+"(id integer primary key autoincrement, "
@@ -61,7 +61,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 			+ FIELD_LOCNAME+" text, "
 			+ FIELD_LAT+" double, "
 			+ FIELD_LNG+" double, "
-			+ FIELD_START_DATE+" text, " 
+			+ FIELD_START_DATE+" integer, " 
 			+ FIELD_START_TIME+" text,"
 			+ FIELD_FR_EVENT_STORY+" integer,"
 			+ "FOREIGN KEY("+FIELD_FR_EVENT_STORY+") REFERENCES story(id) ) ;";
@@ -173,9 +173,9 @@ public class DBAdapter extends SQLiteOpenHelper {
 			story.setDescription(mCursor.getString(2));
 			story.setStatus(Integer.parseInt(mCursor.getString(3)));
 			story.setShared(Integer.parseInt(mCursor.getString(4)));
-			story.setStartDate(mCursor.getString(5));
+			story.setStartDate(Long.parseLong(mCursor.getString(5)) );
 			story.setStartTime(mCursor.getString(6));
-			story.setEndDate(mCursor.getString(7));
+			story.setEndDate(Long.parseLong(mCursor.getString(7)) );
 			story.setEndTime(mCursor.getString(8));
 		}else{
 			story = null;

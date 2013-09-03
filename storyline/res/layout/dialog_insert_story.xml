@@ -19,7 +19,7 @@
         android:layout_marginLeft="5dp"
         android:text="Your Story" />
     <EditText
-        android:id="@+id/storyName"
+        android:id="@+id/valueNameStory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
@@ -33,7 +33,7 @@
         android:layout_marginLeft="5dp"
         android:text="Your Description" />
     <EditText
-        android:id="@+id/storyDescription"
+        android:id="@+id/valueDescriptionStory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
