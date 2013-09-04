@@ -19,7 +19,6 @@ import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import app.xzone.storyline.R;
@@ -32,13 +31,32 @@ public class Helper {
 
 	public static void buildUIMain(Activity activity, Story story) {
 
-		if (story == null)
-			return;
 		TextView tv = (TextView) activity.findViewById(R.id.titleStory);
-
-		tv.setText(StringManipulation.ellipsis(story.getName().toUpperCase(),
-				100));
+		if (story == null)
+			tv.setText("");
+		else
+			tv.setText(story.getName().toUpperCase());
 		tv.setTag(story);
+
+		if (story == null)
+			tv.setText("");
+		else
+			tv.setText(StringManipulation.ellipsis(story.getName()
+					.toUpperCase(), 100));
+
+		tv = (TextView) activity.findViewById(R.id.infoStart);
+		if (story == null)
+			tv.setText("");
+		else
+			tv.setText(TimeUtil.dateFormat(
+					TimeUtil.fromEpochFormat(story.getStartDate())).toString());
+
+		tv = (TextView) activity.findViewById(R.id.infoEnd);
+		if (story == null)
+			tv.setText("");
+		else
+			tv.setText(TimeUtil.dateFormat(
+					TimeUtil.fromEpochFormat(story.getEndDate())).toString());
 
 	}
 
@@ -49,20 +67,6 @@ public class Helper {
 
 		return story;
 	}
-
-	// public static Story buildFromTitleStory(Story story, Dialog dialog) {
-	//
-	// story = singletonStory(story);
-	//
-	// EditText t01 = (EditText) dialog.findViewById(R.id.valueNameStory);
-	// EditText t02 = (EditText)
-	// dialog.findViewById(R.id.valueDescriptionStory);
-	//
-	// story.setName(t01.getText().toString());
-	// story.setDescription(t02.getText().toString());
-	//
-	// return story;
-	// }
 
 	public static Story buildFromDateTimeStory(Story story, Dialog dialog)
 			throws ParseException {
@@ -151,9 +155,10 @@ public class Helper {
 	// Handle Mode screen (normal, edit)
 	public static void modeNormal(Activity ac) {
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
-		sb.setImageDrawable(ac.getResources().getDrawable(R.drawable.paper_plane));
+		sb.setImageDrawable(ac.getResources().getDrawable(
+				R.drawable.paper_plane));
 		sb.setClickable(false);
-		
+
 		View v = (View) ac.findViewById(R.id.footer);
 		v.setVisibility(View.GONE);
 		v = ac.findViewById(R.id.addDateStoryButton);
@@ -162,41 +167,57 @@ public class Helper {
 		v.setVisibility(View.GONE);
 		v = ac.findViewById(R.id.addEventButton);
 		v.setVisibility(View.GONE);
+
 	}
-	
+
 	public static void modeEdit(final Activity ac) {
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(R.drawable.trash));
 		sb.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				AlertDialog.Builder builder = new AlertDialog.Builder(ac);
 				builder.setMessage("Are you sure remove this Story?");
 				builder.setCancelable(true);
-				builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						dialog.cancel();
-					}
-				});
-				builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						dialog.cancel();
-					}
-				});
-				
-				
+				builder.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								TextView tv = (TextView) ac
+										.findViewById(R.id.titleStory);
+								Story story = (Story) tv.getTag();
+
+								if (story != null) {
+									DBAdapter db = new DBAdapter(ac
+											.getApplicationContext());
+									db.deleteStoryRecord(story.getId());
+
+									ac.finish();
+									ac.startActivity(ac.getIntent());
+								}
+
+								dialog.cancel();
+							}
+						});
+				builder.setNegativeButton("No",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// TODO Auto-generated method stub
+								dialog.cancel();
+							}
+						});
+
 				builder.show();
 			}
 		});
-		
+
 		View v = (View) ac.findViewById(R.id.footer);
 		v.setVisibility(View.VISIBLE);
 		v = ac.findViewById(R.id.addDateStoryButton);
@@ -205,13 +226,9 @@ public class Helper {
 		v.setVisibility(View.VISIBLE);
 		v = ac.findViewById(R.id.addEventButton);
 		v.setVisibility(View.VISIBLE);
-		
-		
+
 	}
 
-	
-	
-	
 	public static void buildUIEventBuble(DBAdapter db) {
 
 	}

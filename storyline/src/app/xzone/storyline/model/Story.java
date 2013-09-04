@@ -9,8 +9,8 @@ public class Story extends BaseModel implements Serializable {
 
 	// provide flag information if story draft or not
 	private int status;
-	
-//	provide information if story shared or not (true/false)
+
+	// provide information if story shared or not (true/false)
 	private int shared;
 
 	// Date Time to start & end
@@ -18,12 +18,13 @@ public class Story extends BaseModel implements Serializable {
 	private String startTime;
 	private Long endDate;
 	private String endTime;
-	
-//	CONSTANTA
+
+	private boolean isExist;
+
+	// CONSTANTA
 	static final int STATUS_DRAFT = 0;
 	static final int STATUS_PROCESS = 1;
 	static final int STATUS_DONE = 2;
-	
 
 	/**
 	 * @return the id
@@ -145,14 +146,16 @@ public class Story extends BaseModel implements Serializable {
 		this.endTime = endTime;
 	}
 
-	
-	
 	public int getShared() {
 		return shared;
 	}
 
 	public void setShared(int shared) {
 		this.shared = shared;
+	}
+
+	public boolean isExist() {
+		return (this.getId() > 0);
 	}
 
 }

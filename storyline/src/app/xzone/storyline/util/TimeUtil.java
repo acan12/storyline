@@ -1,12 +1,18 @@
 package app.xzone.storyline.util;
 
 import java.sql.Time;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class TimeUtil {
+	public static String dateFormat(Date date){
+		DateFormat df = new SimpleDateFormat("EEE MMM d, yyyy h:mm a");
+		return df.format(date);
+	}
+	
 	public static String timeArea(int hourOfDay){
 		if(hourOfDay >= 12){
 			return " PM";

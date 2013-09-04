@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.helper.Helper;
@@ -71,14 +72,11 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		listButton = (ImageButton) findViewById(R.id.menuListButton);
 		newStoryButton = (LinearLayout) findViewById(R.id.newStorySliding);
 		_submitButton = (Button) findViewById(R.id.submitEventButton);
-		
 
 		listButton.setOnClickListener(this);
 		newStoryButton.setOnClickListener(this);
 		_submitButton.setOnClickListener(this);
-		
-		
-		
+
 		db = new DBAdapter(context);
 		story = db.getLastStory();
 		Helper.buildUIMain(HomeActivity.this, story);
@@ -107,7 +105,6 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 					public boolean onMenuItemClick(MenuItem item) {
 						Helper.modeEdit(HomeActivity.this);
 
-						
 						return true;
 					}
 				});
@@ -124,83 +121,50 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			toggle();
 			break;
 
-		// case R.id.imgAddButton:
-		// intent = new Intent(this, FormActivity.class);
-		//
-		// startActivity(intent);
-		// break;
-		//
-		// case R.id.imgAddEvent:
-		// intent = new Intent(this, EventFormActivity.class);
-		//
-		// startActivity(intent);
-		// break;
-		
 		case R.id.newStorySliding:
 			listButton.performClick();
+			story = null;
+			Helper.buildUIMain(HomeActivity.this, story);
 			Helper.modeEdit(HomeActivity.this);
 			showDatePopup(v);
 
 			break;
-		// case R.id.storyButton:
-		//
-		// // Helper.showPopupNewStory(HomeActivity.this, story);
-		// final Dialog dialog = new Dialog(this, R.style.dialog_style);
-		//
-		// dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		// dialog.setContentView(R.layout.dialog_insert_story);
-		//
-		// dialog.show();
-		//
-		// Button okButton = (Button) dialog
-		// .findViewById(R.id.submitStoryButton);
-		// okButton.setOnClickListener(new View.OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		//
-		// // DBAdapter db = new DBAdapter(context);
-		// story = Helper.buildFromTitleStory(story, dialog);
-		//
-		// // long sid = db.insertStoryRecord(story);
-		// // if (sid > 0)
-		//
-		// System.out.println("1.name :"+story.getName());
-		// System.out.println("2.desc :"+story.getDescription());
-		// Helper.buildUIMain(HomeActivity.this, story);
-		// dialog.dismiss();
-		// }
-		// });
-		//
-		// break;
-
 		case R.id.submitEventButton:
 			key = 0;
 			popup.setVisibility(View.GONE);
-			break;
 
+			break;
 		}
 
 	}
 
-//	event handler when cancel edit button clicked
-	public void saveEdit(View v){
+	// event handler when cancel edit button clicked
+	public void saveEdit(View v) {
 		View title = (View) findViewById(R.id.titleStory);
 		story = (Story) title.getTag();
-		System.out.println("----after save cek object story="+story.getName());
+
+		if (!story.isExist())
+			db.insertStoryRecord(story);
+		else
+			db.updateStoryRecord(story);
+
+		Helper.modeNormal(this);
 	}
-	
-	public void cancelEdit(View v){
+
+	public void cancelEdit(View v) {
+		TextView title = (TextView) findViewById(R.id.titleStory);
+		title.setText("");
+
 		Helper.modeNormal(HomeActivity.this);
 	}
-	
+
 	// event handler when notif icon clicked
 	public void showDatePopup(View v) {
 		LinearLayout ll = null;
 		final Dialog dialog = new Dialog(HomeActivity.this);
 
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dialog.setContentView(R.layout.dialog_insert_datetime);
+		dialog.setContentView(R.layout.dialog_pick_story);
 
 		dialog.setTitle("Pick Story");
 
@@ -261,6 +225,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 					e.printStackTrace();
 				}
 
+				Helper.buildUIMain(HomeActivity.this, story);
 				dialog.dismiss();
 			}
 		});

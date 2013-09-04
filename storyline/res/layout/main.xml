@@ -53,12 +53,12 @@
                     android:src="@drawable/notif" />
                 
                 <TextView 
-                    android:id="@+id/info_start"
+                    android:id="@+id/infoStart"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_marginTop="5dp"
 	                android:layout_marginLeft="5dp"
-	                android:text="Jul 12, 2013 13:15 PM"
+	                android:text=""
 	                android:textColor="@color/black" />
                 
             </LinearLayout>
@@ -187,7 +187,7 @@
 	                android:layout_height="wrap_content"
 	                android:layout_marginTop="5dp"
 	                android:layout_marginLeft="5dp"
-	                android:text="Jul 15, 2013 17:15 PM"
+	                android:text=""
 	                android:textColor="@color/black" />
             </LinearLayout>
             
