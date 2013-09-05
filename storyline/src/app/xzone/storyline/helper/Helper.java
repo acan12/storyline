@@ -29,13 +29,17 @@ import app.xzone.storyline.util.TimeUtil;
 
 public class Helper {
 
+	public static Story singletonStory(Story story) {
+		if (story == null) {
+			story = new Story();
+		}
+
+		return story;
+	}
+
 	public static void buildUIMain(Activity activity, Story story) {
 
 		TextView tv = (TextView) activity.findViewById(R.id.titleStory);
-		if (story == null)
-			tv.setText("");
-		else
-			tv.setText(story.getName().toUpperCase());
 		tv.setTag(story);
 
 		if (story == null)
@@ -60,14 +64,6 @@ public class Helper {
 
 	}
 
-	public static Story singletonStory(Story story) {
-		if (story == null) {
-			story = new Story();
-		}
-
-		return story;
-	}
-
 	public static Story buildFromDateTimeStory(Story story, Dialog dialog)
 			throws ParseException {
 
@@ -81,6 +77,10 @@ public class Helper {
 		TextView time01 = (TextView) dialog.findViewById(R.id.valueStartTime);
 		TextView date02 = (TextView) dialog.findViewById(R.id.valueEndDate);
 		TextView time02 = (TextView) dialog.findViewById(R.id.valueEndTime);
+
+		if (t01.getText().toString().equals("") || t02.getText().toString().equals("") || date01.getText().toString().equals("") || time01.getText().toString().equals("")
+				|| date02.getText().toString().equals("") || time02.getText().toString().equals(""))
+			return null;
 
 		int hour01 = Integer
 				.parseInt(time01.getText().toString().split(":")[0]);
@@ -102,11 +102,6 @@ public class Helper {
 		return story;
 	}
 
-	public static void showPopupNewStory(final Activity activity,
-			final Story mstory) {
-		// launch search dialog
-
-	}
 
 	// Helper for handle date time picker
 	public static void showDatePicker(final Dialog dialog,
@@ -192,6 +187,7 @@ public class Helper {
 								Story story = (Story) tv.getTag();
 
 								if (story != null) {
+
 									DBAdapter db = new DBAdapter(ac
 											.getApplicationContext());
 									db.deleteStoryRecord(story.getId());
@@ -201,6 +197,7 @@ public class Helper {
 								}
 
 								dialog.cancel();
+
 							}
 						});
 				builder.setNegativeButton("No",

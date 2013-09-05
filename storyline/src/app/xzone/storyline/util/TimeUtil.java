@@ -9,7 +9,12 @@ import java.util.Date;
 
 public class TimeUtil {
 	public static String dateFormat(Date date){
-		DateFormat df = new SimpleDateFormat("EEE MMM d, yyyy h:mm a");
+		DateFormat df = new SimpleDateFormat("EEE MMM d, yyyy k:mm a");
+		return df.format(date);
+	}
+	
+	public static String dateFormat(Date date, String format){
+		DateFormat df = new SimpleDateFormat(format);
 		return df.format(date);
 	}
 	

@@ -1,5 +1,7 @@
 package app.xzone.storyline.adapter;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -36,35 +38,29 @@ public class DBAdapter extends SQLiteOpenHelper {
 	private static final String FIELD_START_TIME = "start_time";
 	private static final String FIELD_END_DATE = "end_date";
 	private static final String FIELD_END_TIME = "end_time";
-	
-//	Foreign Key fields
+
+	// Foreign Key fields
 	private static final String FIELD_FR_EVENT_STORY = "event_story";
 
 	// variable assign sql command
-	private static final String TABLE_STORY_CREATE = "create table "+DATABASE_TABLE_STORY+"(id integer primary key autoincrement, "
-			+ FIELD_NAME+" text not null, "
-			+ FIELD_DESCRIPTION+" text not null, "
-			+ FIELD_STATUS+" integer default 0, "
-			+ FIELD_SHARED+" integer default 0, "
-			+ FIELD_START_DATE+" integer, "
-			+ FIELD_START_TIME+" text, "
-			+ FIELD_END_DATE+" integer, "
-			+ FIELD_END_TIME+" text); ";
- 
-	private static final String TABLE_EVENT_CREATE = "create table "+DATABASE_TABLE_EVENT+"(id integer primary key autoincrement, "
-			+ FIELD_NAME+" text not null, "
-			+ FIELD_MESSAGE+" text not null, "
-			+ FIELD_CATEGORY+" integer, "
-			+ FIELD_TRANSPORT+" text, "
-			+ FIELD_STATUS+" integer default 0, "
-			+ FIELD_SHARED+" integer default 0, "
-			+ FIELD_LOCNAME+" text, "
-			+ FIELD_LAT+" double, "
-			+ FIELD_LNG+" double, "
-			+ FIELD_START_DATE+" integer, " 
-			+ FIELD_START_TIME+" text,"
-			+ FIELD_FR_EVENT_STORY+" integer,"
-			+ "FOREIGN KEY("+FIELD_FR_EVENT_STORY+") REFERENCES story(id) ) ;";
+	private static final String TABLE_STORY_CREATE = "create table "
+			+ DATABASE_TABLE_STORY + "(id integer primary key autoincrement, "
+			+ FIELD_NAME + " text not null, " + FIELD_DESCRIPTION
+			+ " text not null, " + FIELD_STATUS + " integer default 0, "
+			+ FIELD_SHARED + " integer default 0, " + FIELD_START_DATE
+			+ " integer, " + FIELD_START_TIME + " text, " + FIELD_END_DATE
+			+ " integer, " + FIELD_END_TIME + " text); ";
+
+	private static final String TABLE_EVENT_CREATE = "create table "
+			+ DATABASE_TABLE_EVENT + "(id integer primary key autoincrement, "
+			+ FIELD_NAME + " text not null, " + FIELD_MESSAGE
+			+ " text not null, " + FIELD_CATEGORY + " integer, "
+			+ FIELD_TRANSPORT + " text, " + FIELD_STATUS
+			+ " integer default 0, " + FIELD_SHARED + " integer default 0, "
+			+ FIELD_LOCNAME + " text, " + FIELD_LAT + " double, " + FIELD_LNG
+			+ " double, " + FIELD_START_DATE + " integer, " + FIELD_START_TIME
+			+ " text," + FIELD_FR_EVENT_STORY + " integer," + "FOREIGN KEY("
+			+ FIELD_FR_EVENT_STORY + ") REFERENCES story(id) ) ;";
 
 	public DBAdapter(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -118,7 +114,8 @@ public class DBAdapter extends SQLiteOpenHelper {
 		initialValues.put(FIELD_LNG, event.getLng());
 		initialValues.put(FIELD_START_DATE, event.getStartDate());
 		initialValues.put(FIELD_START_TIME, event.getStartTime());
-		initialValues.put(FIELD_FR_EVENT_STORY, Integer.valueOf(event.getStory().getId()));
+		initialValues.put(FIELD_FR_EVENT_STORY,
+				Integer.valueOf(event.getStory().getId()));
 
 		long rowid = sqliteDB.insert(DATABASE_TABLE_EVENT, null, initialValues);
 		this.close();
@@ -144,17 +141,43 @@ public class DBAdapter extends SQLiteOpenHelper {
 		return rows;
 	}
 
+	public ArrayList<Story> getAllStory() {
+		ArrayList<Story> items = new ArrayList<Story>();
+		Story story;
+
+		this.open();
+		String query = "SELECT * FROM stories ORDER BY id desc";
+		
+		Cursor c = sqliteDB.rawQuery(query, null);
+
+		while (c.moveToNext()) {
+			story = new Story();
+			story.setId(c.getInt(c.getColumnIndex("id")));
+			story.setName(c.getString(c.getColumnIndex("name")));
+			story.setDescription(c.getString(c.getColumnIndex("description")));
+			story.setStatus(c.getInt(c.getColumnIndex("status")));
+			story.setShared(c.getInt(c.getColumnIndex("shared")));
+			story.setStartDate(c.getLong(c.getColumnIndex("start_date")));
+			story.setEndDate(c.getLong(c.getColumnIndex("end_date")));
+
+			items.add(story);
+		}
+
+		this.close();
+		return items;
+	}
+
 	public Story getLastStory() throws SQLException {
 		this.open();
 		String query = "SELECT id FROM stories ORDER BY id desc LIMIT 1";
 		Cursor c = sqliteDB.rawQuery(query, null);
-		
-		if(c!= null && c.moveToLast()){
+
+		if (c != null && c.moveToLast()) {
 			return getStoryRecord(c.getLong(0));
 		}
 		return null;
 	}
-	
+
 	public Story getStoryRecord(long rowId) throws SQLException {
 		this.open();
 		Cursor mCursor = sqliteDB.query(true, DATABASE_TABLE_STORY,
@@ -163,24 +186,23 @@ public class DBAdapter extends SQLiteOpenHelper {
 						FIELD_START_TIME, FIELD_END_DATE, FIELD_END_TIME },
 				FIELD_ID + "=" + rowId, null, null, null, null, null);
 
-		
 		Story story = new Story();
-		
-		if(mCursor.moveToFirst()){
+
+		if (mCursor.moveToFirst()) {
 			mCursor.moveToFirst();
 			story.setId(Integer.parseInt(mCursor.getString(0)));
 			story.setName(mCursor.getString(1));
 			story.setDescription(mCursor.getString(2));
 			story.setStatus(Integer.parseInt(mCursor.getString(3)));
 			story.setShared(Integer.parseInt(mCursor.getString(4)));
-			story.setStartDate(Long.parseLong(mCursor.getString(5)) );
+			story.setStartDate(Long.parseLong(mCursor.getString(5)));
 			story.setStartTime(mCursor.getString(6));
-			story.setEndDate(Long.parseLong(mCursor.getString(7)) );
+			story.setEndDate(Long.parseLong(mCursor.getString(7)));
 			story.setEndTime(mCursor.getString(8));
-		}else{
+		} else {
 			story = null;
 		}
-		
+
 		return story;
 	}
 
@@ -191,8 +213,8 @@ public class DBAdapter extends SQLiteOpenHelper {
 						FIELD_CATEGORY, FIELD_TRANSPORT, FIELD_STATUS,
 						FIELD_SHARED, FIELD_LOCNAME, FIELD_LAT, FIELD_LNG,
 						FIELD_START_DATE, FIELD_START_TIME, FIELD_END_DATE,
-						FIELD_END_TIME, FIELD_FR_EVENT_STORY }, FIELD_ID + "=" + rowId, null, null,
-				null, null, null);
+						FIELD_END_TIME, FIELD_FR_EVENT_STORY }, FIELD_ID + "="
+						+ rowId, null, null, null, null, null);
 
 		return mCursor;
 	}

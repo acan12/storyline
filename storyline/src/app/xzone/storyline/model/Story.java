@@ -22,9 +22,9 @@ public class Story extends BaseModel implements Serializable {
 	private boolean isExist;
 
 	// CONSTANTA
-	static final int STATUS_DRAFT = 0;
-	static final int STATUS_PROCESS = 1;
-	static final int STATUS_DONE = 2;
+	public static final int STATUS_DRAFT = 0;
+	public static final int STATUS_PROCESS = 1;
+	public static final int STATUS_DONE = 2;
 
 	/**
 	 * @return the id
