@@ -24,7 +24,6 @@ public class Event extends BaseModel implements Serializable {
 
 	// Date Time to start & end
 	private String startDate;
-	private String startTime;
 	
 	private Story story;
 
@@ -175,21 +174,6 @@ public class Event extends BaseModel implements Serializable {
 	 */
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
-	}
-
-	/**
-	 * @return the startTime
-	 */
-	public String getStartTime() {
-		return startTime;
-	}
-
-	/**
-	 * @param startTime
-	 *            the startTime to set
-	 */
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
 	}
 
 	public int getShared() {

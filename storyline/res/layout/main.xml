@@ -8,13 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/header" />
-    
+
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/sliding_menutop_layout" />
 
-    
     <ScrollView
         android:id="@+id/content"
         android:layout_width="fill_parent"
@@ -28,132 +27,63 @@
             android:layout_height="50dp"
             android:background="@drawable/background_color"
             android:orientation="vertical" >
-			
-            
+
             <LinearLayout
                 android:id="@+id/body_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|left" >
 
-                
                 <ImageView
                     android:id="@+id/startPoint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/start_point" />
-                
+
                 <ImageButton
                     android:id="@+id/addDateStoryButton"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:onClick="showDatePopup"
                     android:background="@null"
-                    android:visibility="gone"
-                    android:src="@drawable/notif" />
-                
-                <TextView 
+                    android:onClick="showDatePopup"
+                    android:src="@drawable/notif"
+                    android:visibility="gone" />
+
+                <TextView
                     android:id="@+id/infoStart"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="5dp"
-	                android:layout_marginLeft="5dp"
-	                android:text=""
-	                android:textColor="@color/black" />
-                
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:textColor="@color/black" />
             </LinearLayout>
 
             <!-- code handle:start -->
-			<!-- <RelativeLayout
-                android:id="@+id/body_center1"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:gravity="left" >
 
-                <ImageView
-                    android:id="@+id/vertical_line"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/vertical_line" />
-                 
-                <ImageView
-                    android:id="@+id/pointer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="110dp"
-                    android:src="@drawable/pointer" />
-                   
-				<include
-				    android:id="@+id/bubble_image"
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:layout_alignParentLeft="true"
-			        android:layout_marginLeft="25dp"
-			        layout="@layout/bubble_image_right"/>
-				
-				
-                <include
-                    android:id="@+id/bubble_event"
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:layout_below="@id/bubble_image"
-			        android:layout_marginLeft="20dp"
-			        layout="@layout/bubble_right_via_car"/>
-                
-            </RelativeLayout> -->
-            
-            <RelativeLayout
-                android:id="@+id/body_center2"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:gravity="left" >
+            <LinearLayout
+                android:id="@+id/body_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|left"
+                android:orientation="vertical" >
 
-                <ImageView
-                    android:id="@+id/vertical_line"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/vertical_line" />
-                 
-                <ImageView
-                    android:id="@+id/pointer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="110dp"
-                    android:src="@drawable/pointer" />
-                
-                <ImageButton
-                    android:id="@+id/addEventButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_toRightOf="@+id/pointer"
-                    android:layout_marginTop="110dp"
-                    android:onClick="handleBubleEvent"
-                    android:background="@null"
-                    android:visibility="gone"
-                    android:src="@drawable/notif" />
-                   
-				<!-- <include
-				    android:id="@+id/bubble_image"
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:layout_alignParentLeft="true"
-			        android:layout_marginLeft="25dp"
-			        layout="@layout/bubble_image_right"/>
-				
-				
+                <!-- <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/main_bubble_right_images" /> -->
+
+                <!-- <include
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/main_bubble_right" /> -->
+
                 <include
-                    android:id="@+id/bubble_event"
-			        android:layout_width="fill_parent"
-			        android:layout_height="wrap_content"
-			        android:layout_below="@id/bubble_image"
-			        android:layout_marginLeft="20dp"
-			        layout="@layout/bubble_right_via_car"/> -->
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/main_add_event" />
                 
-            </RelativeLayout>
+            </LinearLayout>
             <!-- end -->
 
             <LinearLayout
@@ -169,36 +99,33 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:src="@drawable/end_point" />
-                
-                
+
                 <ImageButton
                     android:id="@+id/addDateStoryButton02"
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_toRightOf="@+id/endPoint"
-                    android:onClick="showDatePopup"
                     android:background="@null"
-                    android:visibility="gone"
-                    android:src="@drawable/notif" />
-                
-                <TextView 
+                    android:onClick="showDatePopup"
+                    android:src="@drawable/notif"
+                    android:visibility="gone" />
+
+                <TextView
                     android:id="@+id/infoEnd"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_marginTop="5dp"
-	                android:layout_marginLeft="5dp"
-	                android:text=""
-	                android:textColor="@color/black" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text=""
+                    android:textColor="@color/black" />
             </LinearLayout>
-            
         </LinearLayout>
     </ScrollView>
-    
+
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         layout="@layout/footer" />
-    
-    
+
 </LinearLayout>

@@ -21,7 +21,9 @@ import android.widget.TextView;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.helper.AdapterHelper;
+import app.xzone.storyline.helper.EventHelper;
 import app.xzone.storyline.helper.Helper;
+import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
 import app.xzone.storyline.util.TimeUtil;
 
@@ -39,14 +41,17 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	int key = 0;
 	int key2 = 0;
 	private Sliding popup;
-	private Button _submitButton;
-
+	private Button submitEventButton;
+	private Button cancelEventButton;
+	
 	private Story story;
+	private Event event;
 
 	final Context context = this;
 
 	// accessing model storage
 	DBAdapter db = null;
+	
 
 	/** Called when the activity is first created. Testing */
 	@Override
@@ -66,13 +71,17 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		listButton = (ImageButton) findViewById(R.id.menuListButton);
 		newStoryButton = (LinearLayout) findViewById(R.id.newStorySliding);
-		_submitButton = (Button) findViewById(R.id.submitEventButton);
+		submitEventButton = (Button) findViewById(R.id.submitEventButton);
+		cancelEventButton = (Button) findViewById(R.id.cancelEventButton);
 
 		listButton.setOnClickListener(this);
 		newStoryButton.setOnClickListener(this);
-		_submitButton.setOnClickListener(this);
-
+		submitEventButton.setOnClickListener(this);
+		cancelEventButton.setOnClickListener(this);
+		
 		db = new DBAdapter(context);
+		
+		event = new Event();
 		story = db.getLastStory();
 		Helper.buildUIMain(HomeActivity.this, story);
 
@@ -126,7 +135,17 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			showDatePopup(v);
 
 			break;
+			
 		case R.id.submitEventButton:
+			key = 0;
+			popup.setVisibility(View.GONE);
+			// event handler for save event to storage
+			event = EventHelper.buildEvent(this, event);
+			System.out.println(">>>>>>>>>  event name:"+event.getName());
+			
+			AdapterHelper.buildBubbleEventAdapter(this, event);
+			break;	
+		case R.id.cancelEventButton:
 			key = 0;
 			popup.setVisibility(View.GONE);
 
