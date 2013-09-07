@@ -16,6 +16,7 @@ import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -148,7 +149,7 @@ public class Helper {
 	}
 
 	// Handle Mode screen (normal, edit)
-	public static void modeNormal(Activity ac) {
+	public static void modeNormal(Activity ac, ViewGroup viewGroup) {
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(
 				R.drawable.paper_plane));
@@ -162,10 +163,16 @@ public class Helper {
 		v.setVisibility(View.GONE);
 		v = ac.findViewById(R.id.addEventButton);
 		v.setVisibility(View.GONE);
+		
+		// hide pointer add new event button
+		if(viewGroup != null){
+			View bubble = ac.findViewById(R.id.body_content);
+			bubble.setVisibility(View.GONE);
+		}
 
 	}
 
-	public static void modeEdit(final Activity ac) {
+	public static void modeEdit(final Activity ac, ViewGroup viewGroup) {
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(R.drawable.trash));
 		sb.setOnClickListener(new OnClickListener() {
@@ -223,7 +230,15 @@ public class Helper {
 		v.setVisibility(View.VISIBLE);
 		v = ac.findViewById(R.id.addEventButton);
 		v.setVisibility(View.VISIBLE);
-
+		
+		
+		// show pointer add new event button
+//		if(viewGroup == null){
+		View bubble = ac.findViewById(R.id.body_content);
+		viewGroup = (ViewGroup) bubble.getParent();
+		bubble.setVisibility(View.VISIBLE);
+//		}
+		
 	}
 
 	public static void buildUIEventBuble(DBAdapter db) {

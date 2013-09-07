@@ -4,5 +4,6 @@
     <string name="hello">Hello World, HomeActivity</string>
     <string name="app_name">Storyline</string>
     <string name="info">Info</string>
+    <string name="pick_story">Pick Story</string>
 
 </resources>

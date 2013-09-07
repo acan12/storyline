@@ -48,7 +48,7 @@ public class AdapterHelper {
 		});
 	}
 
-	public static void buildBubbleEventAdapter(final Activity a, Event event) {
+	public static ViewGroup buildBubbleEventAdapter(final Activity a, Event event) {
 
 		LayoutInflater inflater = (LayoutInflater) a.getApplicationContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -87,10 +87,14 @@ public class AdapterHelper {
 		ViewGroup parent = (ViewGroup) bubble.getParent();
 		int index = parent.indexOfChild(bubble);
 		
+		
 		parent.addView(vi, index, new ViewGroup.LayoutParams(
 				ViewGroup.LayoutParams.FILL_PARENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT));
 
-
+		System.out.println("---------  index :"+index);
+		System.out.println("---------  getChildCount :"+parent.getChildCount());
+		
+		return parent;
 	}
 }

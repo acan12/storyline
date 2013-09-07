@@ -7,49 +7,66 @@
     android:fillViewport="true"
     tools:context=".HomeActivity" >
 
-    
     <LinearLayout
         android:id="@+id/newStorySliding"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/headMenu"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
-        <ImageView 
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="left|center_vertical"
-            android:paddingTop="2dp"
             android:paddingLeft="18dp"
+            android:paddingTop="2dp"
             android:src="@drawable/plus" />
-        
+
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-			android:paddingLeft="10dp"
-			android:paddingTop="5dp"
-			android:paddingBottom="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
             android:text="NEW STORIES"
             android:textStyle="bold" />
-
-        
     </LinearLayout>
-    
-	<ImageView
-            android:id="@+id/head_devider"
+
+    <ImageView
+        android:id="@+id/head_devider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newStorySliding"
+        android:src="@drawable/menu_divider" />
+
+    <LinearLayout
+        android:id="@+id/infoItemsStory"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/head_devider"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/newStorySliding"
-            android:src="@drawable/menu_divider" />
-	<include
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:layout_alignParentLeft="true"
-	    android:layout_below="@+id/head_devider"
-	    layout="@layout/sliding_menu_part" />
-	
+            android:gravity="center_vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:text="YOUR STORIES"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/infoItemsStory"
+        layout="@layout/sliding_menu_part" />
+
 </RelativeLayout>

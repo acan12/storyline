@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +28,7 @@ import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
 import app.xzone.storyline.util.TimeUtil;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 
 public class HomeActivity extends SlidingActivity implements OnClickListener {
@@ -36,14 +38,17 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	int btnWidth;
 	private ImageButton listButton;
 	private LinearLayout newStoryButton;
-	private ImageButton _addEventButton;
+	private ViewGroup viewGroup;
+
+	private int noBubble = 0; // index last saved bubble
+	private int countBubble = 0; // count of bubble ready to save
 
 	int key = 0;
 	int key2 = 0;
 	private Sliding popup;
 	private Button submitEventButton;
 	private Button cancelEventButton;
-	
+
 	private Story story;
 	private Event event;
 
@@ -51,18 +56,20 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	// accessing model storage
 	DBAdapter db = null;
-	
+
+	// constanta
+	private int OFFSET_VIEWGROUP = 3;
 
 	/** Called when the activity is first created. Testing */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// getSlidingMenu().setMode(SlidingMenu.LEFT);
-		// getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+//		 getSlidingMenu().setMode(SlidingMenu.LEFT);
+//		 getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
 		setContentView(R.layout.main);
 		setBehindContentView(R.layout.sliding_menu);
-		// getSlidingMenu().setSecondaryMenu(R.layout.sliding_recomendation);
+//		getSlidingMenu().setSecondaryMenu(R.layout.sliding_recomendation);
 
 		getSlidingMenu().setBehindOffset(80);
 
@@ -78,9 +85,9 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		newStoryButton.setOnClickListener(this);
 		submitEventButton.setOnClickListener(this);
 		cancelEventButton.setOnClickListener(this);
-		
+
 		db = new DBAdapter(context);
-		
+
 		event = new Event();
 		story = db.getLastStory();
 		Helper.buildUIMain(HomeActivity.this, story);
@@ -109,7 +116,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
-						Helper.modeEdit(HomeActivity.this);
+						Helper.modeEdit(HomeActivity.this, viewGroup);
 
 						return true;
 					}
@@ -131,21 +138,23 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			listButton.performClick();
 			story = null;
 			Helper.buildUIMain(HomeActivity.this, story);
-			Helper.modeEdit(HomeActivity.this);
+			Helper.modeEdit(HomeActivity.this, viewGroup);
 			showDatePopup(v);
 
 			break;
-			
+
 		case R.id.submitEventButton:
 			key = 0;
 			popup.setVisibility(View.GONE);
 			// event handler for save event to storage
 			event = EventHelper.buildEvent(this, event);
-			System.out.println(">>>>>>>>>  event name:"+event.getName());
-			
-			AdapterHelper.buildBubbleEventAdapter(this, event);
-			break;	
+
+			viewGroup = AdapterHelper.buildBubbleEventAdapter(this, event);
+			countBubble++;
+
+			break;
 		case R.id.cancelEventButton:
+
 			key = 0;
 			popup.setVisibility(View.GONE);
 
@@ -159,16 +168,24 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		View title = (View) findViewById(R.id.titleStory);
 		story = (Story) title.getTag();
 
-//		enter code show alert => your story not valid 
-		if(story == null) return;
-		
+		// enter code show alert => your story not valid
+		if (story == null)
+			return;
+
 		if (!story.isExist())
 			db.insertStoryRecord(story);
 		else
 			db.updateStoryRecord(story);
-		Helper.modeNormal(this);
 
+		Helper.modeNormal(this, viewGroup);
 		AdapterHelper.buildListViewAdapter(HomeActivity.this);
+
+		// reset viewGroup into null value
+		noBubble = viewGroup.getChildCount() - OFFSET_VIEWGROUP;
+		countBubble = 0;
+
+		viewGroup = null;
+
 	}
 
 	public void cancelEdit(View v) {
@@ -176,51 +193,68 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		story = (Story) title.getTag();
 
-		if (story == null){
+		if (story == null) {
 			story = db.getLastStory();
-		}else{
+		} else {
 			story = db.getStoryRecord(story.getId());
 		}
-			
+
+		// remove bubble event still draft
+		if (viewGroup != null) {
+			viewGroup.removeViews((noBubble + 1), countBubble);
+			countBubble = 0;
+
+			// reset viewGroup into null value
+			if (noBubble == 0)
+				viewGroup = null;
+		}
+
 		Helper.buildUIMain(this, story);
-		Helper.modeNormal(HomeActivity.this);
+		Helper.modeNormal(HomeActivity.this, viewGroup);
+
 	}
 
 	// event handler when notif icon clicked
 	public void showDatePopup(View v) {
 		TextView title = (TextView) findViewById(R.id.titleStory);
 		story = (Story) title.getTag();
-		
+
 		LinearLayout ll = null;
 		final Dialog dialog = new Dialog(HomeActivity.this);
 
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dialog.setContentView(R.layout.dialog_pick_story);
 
-		dialog.setTitle("Pick Story");
+		dialog.setTitle(R.string.pick_story);
 
 		dialog.show();
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON,
 				R.drawable.paper_plane);
-		
-		if(story != null){
+
+		if (story != null) {
 			EditText t = (EditText) dialog.findViewById(R.id.valueNameStory);
 			t.setText(story.getName());
 			t = (EditText) dialog.findViewById(R.id.valueDescriptionStory);
 			t.setText(story.getDescription());
-			
-			TextView tv = (TextView) dialog.findViewById(R.id.valueStartDate); 
-			tv.setText( TimeUtil.dateFormat(TimeUtil.fromEpochFormat(story.getStartDate()), "EEE MMM d, yyyy") );
+
+			TextView tv = (TextView) dialog.findViewById(R.id.valueStartDate);
+			tv.setText(TimeUtil.dateFormat(
+					TimeUtil.fromEpochFormat(story.getStartDate()),
+					"EEE MMM d, yyyy"));
 			tv = (TextView) dialog.findViewById(R.id.valueStartTime);
-			tv.setText( TimeUtil.dateFormat(TimeUtil.fromEpochFormat(story.getStartDate()), "k:mm a") );
-			
+			tv.setText(TimeUtil.dateFormat(
+					TimeUtil.fromEpochFormat(story.getStartDate()), "k:mm a"));
+
 			tv = (TextView) dialog.findViewById(R.id.valueEndDate);
-			tv.setText( TimeUtil.dateFormat(TimeUtil.fromEpochFormat(story.getEndDate()), "EEE MMM d, yyyy") );
+			tv.setText(TimeUtil.dateFormat(
+					TimeUtil.fromEpochFormat(story.getEndDate()),
+					"EEE MMM d, yyyy"));
 			tv = (TextView) dialog.findViewById(R.id.valueEndTime);
-			tv.setText( TimeUtil.dateFormat(TimeUtil.fromEpochFormat(story.getEndDate()), "k:mm a") );
-			
+			tv.setText(TimeUtil.dateFormat(
+					TimeUtil.fromEpochFormat(story.getEndDate()), "k:mm a"));
+
 		}
-		
+
 		// pick date
 		ll = (LinearLayout) dialog.findViewById(R.id.pickDate);
 		ll.setOnClickListener(new View.OnClickListener() {
@@ -270,14 +304,15 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 				Story s = null;
 				try {
 					s = Helper.buildFromDateTimeStory(story, dialog);
-					
+
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
-				if(s != null) Helper.buildUIMain(HomeActivity.this, s);
-				
+				if (s != null)
+					Helper.buildUIMain(HomeActivity.this, s);
+
 				dialog.dismiss();
 			}
 		});
