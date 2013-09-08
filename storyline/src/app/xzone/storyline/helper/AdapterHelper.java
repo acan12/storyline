@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -58,6 +59,16 @@ public class AdapterHelper {
 		if(event.getTransportation().equals("Car") || event.getTransportation().equals("Bus") || event.getTransportation().equals("Walk"))
 			vi = inflater.inflate(R.layout.main_bubble_right_images, null);
 
+		vi.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				System.out.println("------ masuk after click bubble event!!");
+				 
+			}
+		});
+		
+		
 //		construct UI element for bubble event
 		TextView title = (TextView) vi.findViewById(R.id.titleEvent);
 		ImageView trans = (ImageView) vi.findViewById(R.id.transport);

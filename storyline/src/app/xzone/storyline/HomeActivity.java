@@ -64,12 +64,12 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		 getSlidingMenu().setMode(SlidingMenu.LEFT);
+		 getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
 //		 getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
 		setContentView(R.layout.main);
 		setBehindContentView(R.layout.sliding_menu);
-//		getSlidingMenu().setSecondaryMenu(R.layout.sliding_recomendation);
+		getSlidingMenu().setSecondaryMenu(R.layout.sliding_recomendation);
 
 		getSlidingMenu().setBehindOffset(80);
 
@@ -180,11 +180,13 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		Helper.modeNormal(this, viewGroup);
 		AdapterHelper.buildListViewAdapter(HomeActivity.this);
 
-		// reset viewGroup into null value
-		noBubble = viewGroup.getChildCount() - OFFSET_VIEWGROUP;
-		countBubble = 0;
-
-		viewGroup = null;
+		if(viewGroup!=null){
+			// reset viewGroup into null value
+			noBubble = viewGroup.getChildCount() - OFFSET_VIEWGROUP;
+			countBubble = 0;
+	
+			viewGroup = null;
+		}
 
 	}
 
