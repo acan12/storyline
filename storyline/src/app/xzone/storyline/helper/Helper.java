@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import app.xzone.storyline.HomeActivity;
 import app.xzone.storyline.R;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.model.Story;
@@ -149,11 +150,17 @@ public class Helper {
 	}
 
 	// Handle Mode screen (normal, edit)
-	public static void modeNormal(Activity ac, ViewGroup viewGroup) {
+	public static void modeNormal(final Activity ac, ViewGroup viewGroup) {
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(
 				R.drawable.paper_plane));
-		sb.setClickable(false);
+		sb.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				((HomeActivity) ac).showSecondaryMenu();
+			}
+		});
 
 		View v = (View) ac.findViewById(R.id.footer);
 		v.setVisibility(View.GONE);

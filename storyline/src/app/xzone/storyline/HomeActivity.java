@@ -37,6 +37,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	Handler handler = new Handler();
 	int btnWidth;
 	private ImageButton listButton;
+	private ImageButton storyButton;
 	private LinearLayout newStoryButton;
 	private ViewGroup viewGroup;
 
@@ -59,6 +60,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	// constanta
 	private int OFFSET_VIEWGROUP = 3;
+	
 
 	/** Called when the activity is first created. Testing */
 	@Override
@@ -77,11 +79,13 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		popup.setVisibility(View.GONE);
 
 		listButton = (ImageButton) findViewById(R.id.menuListButton);
+		storyButton = (ImageButton) findViewById(R.id.storyButton);
 		newStoryButton = (LinearLayout) findViewById(R.id.newStorySliding);
 		submitEventButton = (Button) findViewById(R.id.submitEventButton);
 		cancelEventButton = (Button) findViewById(R.id.cancelEventButton);
 
 		listButton.setOnClickListener(this);
+		storyButton.setOnClickListener(this);
 		newStoryButton.setOnClickListener(this);
 		submitEventButton.setOnClickListener(this);
 		cancelEventButton.setOnClickListener(this);
@@ -134,6 +138,10 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			toggle();
 			break;
 
+		case R.id.storyButton:
+			showSecondaryMenu();
+			break; 
+			
 		case R.id.newStorySliding:
 			listButton.performClick();
 			story = null;
