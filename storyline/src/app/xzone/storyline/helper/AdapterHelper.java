@@ -72,7 +72,7 @@ public class AdapterHelper {
 			
 			@Override
 			public void onClick(View v) {
-				System.out.println("------ masuk after click bubble event!!");
+				// Put here the code handle event when bubble clicked
 				 
 			}
 		});
@@ -111,9 +111,6 @@ public class AdapterHelper {
 		parent.addView(vi, index, new ViewGroup.LayoutParams(
 				ViewGroup.LayoutParams.FILL_PARENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT));
-
-		System.out.println("---------  index :"+index);
-		System.out.println("---------  getChildCount :"+parent.getChildCount());
 		
 		return parent;
 	}
