@@ -1,6 +1,7 @@
 package app.xzone.storyline.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Story extends BaseModel implements Serializable {
 	private int id;
@@ -18,9 +19,11 @@ public class Story extends BaseModel implements Serializable {
 	private String startTime;
 	private Long endDate;
 	private String endTime;
-
+	
+	private ArrayList<Event> events = new ArrayList<Event>();
 	private boolean isExist;
 
+	
 	// CONSTANTA
 	public static final int STATUS_DRAFT = 0;
 	public static final int STATUS_PROCESS = 1;
@@ -158,4 +161,18 @@ public class Story extends BaseModel implements Serializable {
 		return (this.getId() > 0);
 	}
 
+	/**
+	 * @return the events
+	 */
+	public ArrayList<Event> getEvents() {
+		return events;
+	}
+
+	/**
+	 * @param events the events to set
+	 */
+	public void setEvents(Event e) {
+		events.add(e);
+		this.events = events;
+	}
 }

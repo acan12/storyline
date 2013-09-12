@@ -6,10 +6,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import app.xzone.storyline.R;
 import app.xzone.storyline.model.Event;
+import app.xzone.storyline.model.Story;
 
 public class EventHelper {
 
-	public static Event buildEvent(Activity a, Event event){
+	public static Event buildEvent(Activity a, Event event, Story story){
 		EditText t01 = (EditText) a.findViewById(R.id.titleFieldEvent);
 		EditText t02 = (EditText) a.findViewById(R.id.messageFieldEvent);
 		Spinner sp01 = (Spinner) a.findViewById(R.id.categorySpinnerEvent);
@@ -22,6 +23,8 @@ public class EventHelper {
 		event.setCategory(sp01.getSelectedItem().toString());
 		event.setTransportation(sp02.getSelectedItem().toString());
 		event.setLocname(location.getText().toString());
+		
+		event.setStory(story);
 		
 //		event.setLat(lat)
 //		event.setLng(lng)

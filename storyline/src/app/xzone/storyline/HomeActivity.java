@@ -1,6 +1,7 @@
 package app.xzone.storyline;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -52,6 +53,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	private Story story;
 	private Event event;
+	private ArrayList<Event> events;
 
 	final Context context = this;
 
@@ -60,14 +62,13 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	// constanta
 	private int OFFSET_VIEWGROUP = 3;
-	
 
 	/** Called when the activity is first created. Testing */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		 getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
-//		 getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
+		// getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
 		setContentView(R.layout.main);
 		setBehindContentView(R.layout.sliding_menu);
@@ -92,12 +93,39 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		db = new DBAdapter(context);
 
-		event = new Event();
-		story = db.getLastStory();
-		Helper.buildUIMain(HomeActivity.this, story);
+		// read parameters passing to activity
+		Bundle b = getIntent().getExtras();
+		if (b == null) {
+			if (story == null)
+				story = db.getLastStory();
+		} else {
+			story = (Story) b.getSerializable("app.story");
+		}
 
+		events = new ArrayList<Event>();
+
+		Helper.buildUIMain(HomeActivity.this, story);
 		AdapterHelper.buildListViewAdapter(HomeActivity.this);
 
+		if (story != null && story.getEvents() != null) {
+			loadFirstTime();
+		}
+
+	}
+
+	public void loadFirstTime() {
+		for (int i = 0; i < story.getEvents().size(); i++) {
+			viewGroup = AdapterHelper.buildBubbleEventAdapter(this, story
+					.getEvents().get(i));
+		}
+		Helper.modeNormal(this, viewGroup);
+
+		// reset viewGroup into null value
+		noBubble = viewGroup.getChildCount() - OFFSET_VIEWGROUP;
+		countBubble = 0;
+
+		View bubble = findViewById(R.id.body_content);
+		bubble.setVisibility(View.GONE);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -140,25 +168,37 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		case R.id.storyButton:
 			showSecondaryMenu();
-			break; 
-			
+			break;
+
 		case R.id.newStorySliding:
 			listButton.performClick();
 			story = null;
 			Helper.buildUIMain(HomeActivity.this, story);
 			Helper.modeEdit(HomeActivity.this, viewGroup);
-			showDatePopup(v);
+
+			// routes to main activity
+			finish();
+			Intent intent = getIntent();
+			intent.putExtra("app.story", (Story) null);
+			startActivity(intent);
 
 			break;
 
 		case R.id.submitEventButton:
 			key = 0;
 			popup.setVisibility(View.GONE);
+
+			event = new Event();
 			// event handler for save event to storage
-			event = EventHelper.buildEvent(this, event);
+			event = EventHelper.buildEvent(this, event, story);
 
 			viewGroup = AdapterHelper.buildBubbleEventAdapter(this, event);
 			countBubble++;
+
+			events.add(event);
+			for (int i = 0; i < events.size(); i++) {
+				Event e = (Event) events.get(i);
+			}
 
 			break;
 		case R.id.cancelEventButton:
@@ -180,19 +220,27 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		if (story == null)
 			return;
 
+		// save your story
 		if (!story.isExist())
-			db.insertStoryRecord(story);
+			story.setId((int) db.insertStoryRecord(story));
 		else
 			db.updateStoryRecord(story);
 
+		// insert event to db
+		for (int i = 0; i < events.size(); i++) {
+			Event e = (Event) events.get(i);
+			db.insertEventRecord(e, story.getId());
+		}
+
+		events.clear();
 		Helper.modeNormal(this, viewGroup);
 		AdapterHelper.buildListViewAdapter(HomeActivity.this);
 
-		if(viewGroup!=null){
+		if (viewGroup != null) {
 			// reset viewGroup into null value
 			noBubble = viewGroup.getChildCount() - OFFSET_VIEWGROUP;
 			countBubble = 0;
-	
+
 			viewGroup = null;
 		}
 
@@ -203,10 +251,16 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		story = (Story) title.getTag();
 
-		if (story == null) {
-			story = db.getLastStory();
-		} else {
+		events.clear();
+
+		if (story != null) {
+
 			story = db.getStoryRecord(story.getId());
+		} else {
+			finish();
+			Intent i = new Intent(this, HomeActivity.class);
+			startActivity(i);
+			return;
 		}
 
 		// remove bubble event still draft

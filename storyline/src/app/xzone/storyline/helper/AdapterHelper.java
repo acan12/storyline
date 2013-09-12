@@ -2,6 +2,7 @@ package app.xzone.storyline.helper;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,8 +43,16 @@ public class AdapterHelper {
 				ImageButton listButton = (ImageButton) a
 						.findViewById(R.id.menuListButton);
 				listButton.performClick();
-				Helper.buildUIMain(a, (Story) adapter.getItem(position));
+				
+				Story selectedStory = (Story) adapter.getItem(position);
+				
+				Helper.buildUIMain(a, selectedStory);
 
+				//routes to main activity
+				a.finish();
+				Intent intent = a.getIntent();
+				intent.putExtra("app.story", selectedStory);
+				a.startActivity(intent);
 			}
 
 		});
@@ -98,7 +107,7 @@ public class AdapterHelper {
 		ViewGroup parent = (ViewGroup) bubble.getParent();
 		int index = parent.indexOfChild(bubble);
 		
-		
+		 
 		parent.addView(vi, index, new ViewGroup.LayoutParams(
 				ViewGroup.LayoutParams.FILL_PARENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT));

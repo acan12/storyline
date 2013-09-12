@@ -115,7 +115,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 		initialValues.put(FIELD_START_DATE, event.getStartDate());
 //		initialValues.put(FIELD_START_TIME, event.getStartTime());
 		initialValues.put(FIELD_FR_EVENT_STORY,
-				Integer.valueOf(event.getStory().getId()));
+				Integer.valueOf(storyId));
 
 		long rowid = sqliteDB.insert(DATABASE_TABLE_EVENT, null, initialValues);
 		this.close();
@@ -151,14 +151,8 @@ public class DBAdapter extends SQLiteOpenHelper {
 		Cursor c = sqliteDB.rawQuery(query, null);
 
 		while (c.moveToNext()) {
-			story = new Story();
-			story.setId(c.getInt(c.getColumnIndex("id")));
-			story.setName(c.getString(c.getColumnIndex("name")));
-			story.setDescription(c.getString(c.getColumnIndex("description")));
-			story.setStatus(c.getInt(c.getColumnIndex("status")));
-			story.setShared(c.getInt(c.getColumnIndex("shared")));
-			story.setStartDate(c.getLong(c.getColumnIndex("start_date")));
-			story.setEndDate(c.getLong(c.getColumnIndex("end_date")));
+			int id = c.getInt(c.getColumnIndex("id"));
+			story = getStoryRecord(id);
 
 			items.add(story);
 		}
@@ -199,6 +193,29 @@ public class DBAdapter extends SQLiteOpenHelper {
 			story.setStartTime(mCursor.getString(6));
 			story.setEndDate(Long.parseLong(mCursor.getString(7)));
 			story.setEndTime(mCursor.getString(8));
+			
+			String q = "SELECT * FROM events where event_story = "+story.getId()+" ORDER BY id";
+			
+			Cursor c = sqliteDB.rawQuery(q, null);
+			
+			while (c.moveToNext()) {
+				Event event = new Event();
+				event.setId(c.getInt(c.getColumnIndex("id")));
+				event.setName(c.getString(c.getColumnIndex("name")));
+				event.setMessage(c.getString(c.getColumnIndex("message")));
+				event.setCategory(c.getString(c.getColumnIndex("category")));
+				event.setTransportation(c.getString(c.getColumnIndex("transportation")));
+				event.setStatus(c.getInt(c.getColumnIndex("status")));
+				event.setShared(c.getInt(c.getColumnIndex("shared")));
+				event.setLocname(c.getString(c.getColumnIndex("locname")));
+				event.setLat(c.getLong(c.getColumnIndex("lat")));
+				event.setLng(c.getLong(c.getColumnIndex("lng")));
+
+				System.out.println("------- event name DBAdapter------"+event.getName());
+				story.setEvents(event);
+			}
+			
+			
 		} else {
 			story = null;
 		}

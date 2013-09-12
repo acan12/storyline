@@ -71,16 +71,16 @@
                 android:layout_alignParentTop="true"
                 android:src="@drawable/divider_header" />
 
-            <!--
-                 <ImageButton
+            
+            <ImageButton
 	            android:id="@+id/addStoryButton"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_vertical"
 	            android:background="@null"
 	            android:paddingRight="15dp"
-	            android:src="@drawable/plus_icon" />
-            -->
+	            android:src="@drawable/camera" />
+            
 
             <ImageButton
                 android:id="@+id/storyButton"

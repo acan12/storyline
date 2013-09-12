@@ -240,16 +240,10 @@ public class Helper {
 		
 		
 		// show pointer add new event button
-//		if(viewGroup == null){
 		View bubble = ac.findViewById(R.id.body_content);
 		viewGroup = (ViewGroup) bubble.getParent();
 		bubble.setVisibility(View.VISIBLE);
-//		}
 		
-	}
-
-	public static void buildUIEventBuble(DBAdapter db) {
-
 	}
 
 }
