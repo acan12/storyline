@@ -261,6 +261,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 		initialValues.put(FIELD_NAME, event.getName());
 		initialValues.put(FIELD_MESSAGE, event.getMessage());
 		initialValues.put(FIELD_CATEGORY, event.getCategory());
+		initialValues.put(FIELD_TRANSPORT, event.getTransportation());
 		initialValues.put(FIELD_STATUS, event.getStatus());
 		initialValues.put(FIELD_SHARED, event.getShared());
 		initialValues.put(FIELD_LOCNAME, event.getLocname());
@@ -268,7 +269,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 		initialValues.put(FIELD_LNG, event.getShared());
 		initialValues.put(FIELD_START_DATE, event.getStartDate());
 //		initialValues.put(FIELD_START_TIME, event.getStartTime());
-		initialValues.put(FIELD_FR_EVENT_STORY, event.getStory().getId());
+//		initialValues.put(FIELD_FR_EVENT_STORY, storyid);
 
 		boolean rows = sqliteDB.update(DATABASE_TABLE_EVENT, initialValues,
 				FIELD_ID + "=" + event.getId(), null) > 0;

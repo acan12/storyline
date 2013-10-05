@@ -5,7 +5,7 @@
     android:orientation="horizontal" >
 
     <RelativeLayout
-        android:id="@+id/bubleEvent"
+        android:id="@+id/bubbleEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -20,25 +20,26 @@
             android:orientation="horizontal" >
 
             <LinearLayout
-                android:id="@+id/buble_header1"
+                android:id="@+id/bubble_header1"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-                <ImageButton
+                <!-- <ImageButton
+                    android:id="@+id/image_preview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|top"
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="15dp"
                     android:background="@null"
-                    android:src="@drawable/demo_pic" />
+                    android:src="@drawable/demo_pic" /> -->
 
                 <TextView
                     android:id="@+id/titleEvent"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_marginTop="15dp"
                     android:text="acan12"
                     android:textColor="#078cbe"
@@ -46,7 +47,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/buble_header2"
+                android:id="@+id/bubble_header2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
@@ -62,7 +63,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/transport"
+            android:id="@+id/transportation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -85,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="70dip"
             android:layout_below="@+id/location"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="5dp"
             android:text="Waktu kemarin mudik setengah mati gw kangen ama Bakmi GM. Abis disana ngga ada. Kalo di Jakarta kan hampir di setiap Malla ada. Gw suka bakmi GM mostly karena menunya enak sich. "

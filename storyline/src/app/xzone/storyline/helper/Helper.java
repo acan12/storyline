@@ -1,6 +1,9 @@
 package app.xzone.storyline.helper;
 
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -13,30 +16,52 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import app.xzone.storyline.HomeActivity;
 import app.xzone.storyline.R;
 import app.xzone.storyline.adapter.DBAdapter;
+import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
 import app.xzone.storyline.util.StringManipulation;
 import app.xzone.storyline.util.TimeUtil;
 
 public class Helper {
 
+	
+    public static final int REQUEST_CODE_IMAGE_CAMERA 	= 0;
+	public static final int REQUEST_CODE_IMAGE_GALLERY 	= 1;
+	public static final int REQUEST_CODE_PICK_LOCATION 	= 2;
+	
+	public static final int MODE_NORMAL 	= 0;
+	public static final int MODE_EDIT 		= 1;
+	
+	public static int OFFSET_VIEWGROUP = 3;
+	
+	
+	
+	
 	public static Story singletonStory(Story story) {
 		if (story == null) {
 			story = new Story();
 		}
 
 		return story;
+	}
+	
+	public static int getBubbleIndex(int index, ViewGroup viewGroup) {
+		
+		return index + viewGroup.getChildCount() - Helper.OFFSET_VIEWGROUP;
 	}
 
 	public static void buildUIMain(Activity activity, Story story) {
@@ -65,6 +90,7 @@ public class Helper {
 					TimeUtil.fromEpochFormat(story.getEndDate())).toString());
 
 	}
+	
 
 	public static Story buildFromDateTimeStory(Story story, Dialog dialog)
 			throws ParseException {
@@ -106,12 +132,12 @@ public class Helper {
 
 
 	// Helper for handle date time picker
-	public static void showDatePicker(final Dialog dialog,
-			final int resourceIdTarget) {
+	public static void showDatePicker(final Context context,
+			final View resourceTarget) {
 		DateTime dt = new DateTime();
 		DatePickerDialog dp = null;
 
-		dp = new DatePickerDialog(dialog.getContext(), new OnDateSetListener() {
+		dp = new DatePickerDialog(context, new OnDateSetListener() {
 
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -119,8 +145,7 @@ public class Helper {
 				DateTimeFormatter fmt = DateTimeFormat
 						.forPattern("MMM dd, yyyy");
 
-				TextView dateText = (TextView) dialog
-						.findViewById(resourceIdTarget);
+				TextView dateText = (TextView) resourceTarget;
 				dateText.setText((new DateTime(year, monthOfYear + 1,
 						dayOfMonth, 0, 0, 0, 0)).toString(fmt));
 
@@ -130,17 +155,16 @@ public class Helper {
 
 	}
 
-	public static void showTimePicker(final Dialog dialog,
-			final int resourceIdTarget) {
+	public static void showTimePicker(final Context context,
+			final View resourceTarget) {
 		DateTime dt = new DateTime();
 		TimePickerDialog tp = null;
 
-		tp = new TimePickerDialog(dialog.getContext(), new OnTimeSetListener() {
+		tp = new TimePickerDialog(context, new OnTimeSetListener() {
 
 			@Override
 			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-				TextView timeText = (TextView) dialog
-						.findViewById(resourceIdTarget);
+				TextView timeText = (TextView) resourceTarget;
 				timeText.setText(hourOfDay + ":" + minute
 						+ TimeUtil.timeArea(hourOfDay));
 
@@ -151,6 +175,9 @@ public class Helper {
 
 	// Handle Mode screen (normal, edit)
 	public static void modeNormal(final Activity ac, ViewGroup viewGroup) {
+		TextView mode = (TextView) ac.findViewById(R.id.mode);
+		mode.setTag(MODE_NORMAL);
+		
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(
 				R.drawable.paper_plane));
@@ -164,6 +191,8 @@ public class Helper {
 
 		View v = (View) ac.findViewById(R.id.footer);
 		v.setVisibility(View.GONE);
+		v = (View) ac.findViewById(R.id.bubbleEvent);
+		v.setClickable(false);
 		v = ac.findViewById(R.id.addDateStoryButton);
 		v.setVisibility(View.GONE);
 		v = ac.findViewById(R.id.addDateStoryButton02);
@@ -180,6 +209,9 @@ public class Helper {
 	}
 
 	public static void modeEdit(final Activity ac, ViewGroup viewGroup) {
+		TextView mode = (TextView) ac.findViewById(R.id.mode);
+		mode.setTag(MODE_EDIT);
+		
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(R.drawable.trash));
 		sb.setOnClickListener(new OnClickListener() {
@@ -231,6 +263,8 @@ public class Helper {
 
 		View v = (View) ac.findViewById(R.id.footer);
 		v.setVisibility(View.VISIBLE);
+//		v = (View) ac.findViewById(R.id.bubbleEvent);
+//		v.setClickable(true);
 		v = ac.findViewById(R.id.addDateStoryButton);
 		v.setVisibility(View.VISIBLE);
 		v = ac.findViewById(R.id.addDateStoryButton02);
@@ -244,6 +278,18 @@ public class Helper {
 		viewGroup = (ViewGroup) bubble.getParent();
 		bubble.setVisibility(View.VISIBLE);
 		
+	}
+	
+	public View getBubbleEvent(ViewGroup viewGroup, int position){
+		int pos = position + OFFSET_VIEWGROUP;
+		
+		return viewGroup.getChildAt(position);
+	}
+	
+	public static int getCurrentMode(Activity a){
+		TextView mode = (TextView) a.findViewById(R.id.mode);
+		
+		return (Integer) mode.getTag();
 	}
 
 }

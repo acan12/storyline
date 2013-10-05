@@ -14,10 +14,16 @@
         android:layout_height="wrap_content"
         layout="@layout/sliding_menutop_layout" />
 
+    <TextView
+        android:id="@+id/mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
     <ScrollView
         android:id="@+id/content"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fillViewport="true"
         android:isScrollContainer="true" >
@@ -43,9 +49,8 @@
                 <ImageButton
                     android:id="@+id/addDateStoryButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:background="@null"
-                    android:onClick="showDatePopup"
+                    android:layout_height="35dip"
+                    android:onClick="addStoryPopup"
                     android:src="@drawable/notif"
                     android:visibility="gone" />
 
@@ -68,21 +73,25 @@
                 android:gravity="center_vertical|left"
                 android:orientation="vertical" >
 
-                <!-- <include
+                <!--
+                     <include
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    layout="@layout/main_bubble_right_images" /> -->
+                    layout="@layout/main_bubble_right_images" />
+                -->
 
-                <!-- <include
+
+                <!--
+                     <include
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    layout="@layout/main_bubble_right" /> -->
+                    layout="@layout/main_bubble_right" />
+                -->
 
                 <include
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     layout="@layout/main_add_event" />
-                
             </LinearLayout>
             <!-- end -->
 
@@ -103,10 +112,9 @@
                 <ImageButton
                     android:id="@+id/addDateStoryButton02"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
+                    android:layout_height="35dip"
                     android:layout_toRightOf="@+id/endPoint"
-                    android:background="@null"
-                    android:onClick="showDatePopup"
+                    android:onClick="addStoryPopup"
                     android:src="@drawable/notif"
                     android:visibility="gone" />
 

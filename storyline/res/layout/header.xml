@@ -73,12 +73,13 @@
 
             
             <ImageButton
-	            android:id="@+id/addStoryButton"
+	            android:id="@+id/pickCameraButton"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_vertical"
 	            android:background="@null"
 	            android:paddingRight="15dp"
+	            android:onClick="pickCamera"
 	            android:src="@drawable/camera" />
             
 

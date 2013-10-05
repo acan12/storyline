@@ -3,29 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
- 
-	<RelativeLayout
-	    android:id="@+id/bubleEvent"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_marginRight="5dp"
-	    android:background="@drawable/bubble_big_right"
-	    android:onClick="handleBubleEvent"
-	    android:orientation="vertical" >
 
-	    <LinearLayout
-	        android:id="@+id/linearLayout1"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal" >
+    <RelativeLayout
+        android:id="@+id/bubbleEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/bubble_big_right"
+        android:orientation="vertical" >
 
-	        <LinearLayout
-	            android:id="@+id/buble_header1"
-	            android:layout_width="220dp"
-	            android:layout_height="wrap_content"
-	            android:orientation="horizontal" >
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
-	            <ImageButton
+            <LinearLayout
+                android:id="@+id/bubble_header1"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <!--
+                     <ImageButton
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_gravity="left|top"
@@ -33,111 +33,104 @@
 	                android:layout_marginTop="15dp"
 	                android:background="@null"
 	                android:src="@drawable/demo_pic" />
+                -->
 
-	            <TextView
-	                android:id="@+id/username"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:layout_marginLeft="10dp"
-	                android:layout_marginTop="15dp"
-	                android:text="acan12"
-	                android:textColor="#078cbe"
-	                android:textStyle="bold" />
-	            
-	        </LinearLayout>
-	        
-	        <LinearLayout
-	            android:id="@+id/buble_header2"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:orientation="horizontal" >
-	            
-	            
-	            <ImageView
-			        android:id="@+id/imageView4"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:layout_marginTop="15dp"
-			        android:layout_marginLeft="48dp"
-			        android:src="@drawable/delete" />
-	            
-	        </LinearLayout>
-	        
-	    </LinearLayout>
+                <TextView
+                    android:id="@+id/titleEvent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="#078cbe"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-	    
-	    
-	    <ImageView
-	        android:id="@+id/imageView4"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_centerVertical="true"
-	        android:src="@drawable/pointer_plane" />
+            <LinearLayout
+                android:id="@+id/bubble_header2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
 
-	    <TextView
-	        android:id="@+id/location"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/linearLayout1"
-	        android:layout_marginLeft="62dp"
-	        android:layout_toRightOf="@+id/imageView4"
-	        android:text="Kuningan , South Jakarta"
-	        android:textColor="#ababab" />
-	    
-	    <!-- bubble note -->
-	    <TextView
-	        android:id="@+id/bubble_note"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/location"
-	        android:layout_marginLeft="25dp"
-	        android:layout_marginRight="8dp"
-	        android:layout_marginTop="5dp"
-	        android:maxLines="3"
-	        android:text="Waktu kemarin mudik setengah mati gw kangen ama Bakmi GM. Abis disana ngga ada. Kalo di Jakarta kan hampir di setiap Malla ada. Gw suka bakmi GM mostly karena menunya enak sich. "
-	        android:textColor="#636060" />
-	    
-	    <!-- info bottom section -->
-	    <LinearLayout
-	        android:id="@+id/bottom_line"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="15dp"
-	        android:layout_marginLeft="30dp"
-	        android:layout_marginRight="25dp"
-	        android:background="@drawable/bottom_line"
-	        android:layout_below="@+id/bubble_note"
-	        android:orientation="vertical" >
-	    </LinearLayout>   
-	        
-	        
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="48dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/delete" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/transportation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true" />
+
+        <TextView
+            android:id="@+id/location"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout1"
+            android:layout_toRightOf="@+id/imageView4"
+            android:gravity="right"
+            android:paddingRight="30dip"
+            android:text="Kuningan , South Jakarta"
+            android:textColor="#ababab" />
+
+        <!-- bubble note -->
+
+        <TextView
+            android:id="@+id/bubble_note"
+            android:layout_width="wrap_content"
+            android:layout_height="70dip"
+            android:layout_below="@+id/location"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="5dp"
+            android:text="Waktu kemarin mudik setengah mati gw kangen ama Bakmi GM. Abis disana ngga ada. Kalo di Jakarta kan hampir di setiap Malla ada. Gw suka bakmi GM mostly karena menunya enak sich. "
+            android:textColor="#636060" />
+
+        <!-- info bottom section -->
+
+        <LinearLayout
+            android:id="@+id/bottom_line"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bubble_note"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/bottom_line"
+            android:orientation="vertical" >
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/bottom_line"
             android:orientation="horizontal" >
-            
-            <ImageView 
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="30dp"
-                android:src="@drawable/clock_black" />
-            
+                android:layout_marginTop="10dp"
+                android:src="@drawable/clock_black_small" />
+
             <TextView
-		        android:id="@+id/time_note"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dp"
-		        android:layout_marginLeft="10dp"
-		        android:layout_marginRight="25dp"
-		        android:text="5,August 2013"
-		        android:textSize="12px"
-		        android:textColor="#636060" />
-            
+                android:id="@+id/time_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="10dp"
+                android:text="5 Aug 2013"
+                android:textColor="#636060"
+                android:textSize="12px" />
         </LinearLayout>
         <!-- info bottom section :end -->
-	</RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>
-                

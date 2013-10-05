@@ -3,11 +3,17 @@ package app.xzone.storyline;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
@@ -18,6 +24,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import app.xzone.storyline.adapter.DBAdapter;
@@ -25,8 +32,10 @@ import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.helper.AdapterHelper;
 import app.xzone.storyline.helper.EventHelper;
 import app.xzone.storyline.helper.Helper;
+import app.xzone.storyline.helper.ImageAdapter;
 import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
+import app.xzone.storyline.util.StringManipulation;
 import app.xzone.storyline.util.TimeUtil;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -50,18 +59,18 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	private Sliding popup;
 	private Button submitEventButton;
 	private Button cancelEventButton;
+	private LinearLayout pickDateEvent;
+	private LinearLayout pickTimeEvent;
 
 	private Story story;
 	private Event event;
-	private ArrayList<Event> events;
+	private ArrayList<Event> events = null;
+	private ArrayList<Event> prevEvents = new ArrayList<Event>();
 
 	final Context context = this;
 
 	// accessing model storage
 	DBAdapter db = null;
-
-	// constanta
-	private int OFFSET_VIEWGROUP = 3;
 
 	/** Called when the activity is first created. Testing */
 	@Override
@@ -84,45 +93,65 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		newStoryButton = (LinearLayout) findViewById(R.id.newStorySliding);
 		submitEventButton = (Button) findViewById(R.id.submitEventButton);
 		cancelEventButton = (Button) findViewById(R.id.cancelEventButton);
+		pickDateEvent = (LinearLayout) findViewById(R.id.pickDateEvent);
+		pickTimeEvent = (LinearLayout) findViewById(R.id.pickTimeEvent);
 
 		listButton.setOnClickListener(this);
 		storyButton.setOnClickListener(this);
 		newStoryButton.setOnClickListener(this);
 		submitEventButton.setOnClickListener(this);
 		cancelEventButton.setOnClickListener(this);
+		pickDateEvent.setOnClickListener(this);
+		pickTimeEvent.setOnClickListener(this);
 
 		db = new DBAdapter(context);
 
 		// read parameters passing to activity
 		Bundle b = getIntent().getExtras();
 		if (b == null) {
-			if (story == null)
-				story = db.getLastStory();
-		} else {
-			story = (Story) b.getSerializable("app.story");
-		}
 
-		events = new ArrayList<Event>();
+			// calling when start application
+			if (story == null) {
+				story = db.getLastStory();
+				prevEvents = story.getEvents(); // store all event from this
+												// story into prevEvent before
+												// change
+			} else {
+				Helper.modeEdit(this, viewGroup);
+			}
+		} else {
+
+			// calling from menu list story
+			story = (Story) b.getSerializable("app.story");
+			prevEvents = story.getEvents(); // store all event from this story
+											// into prevEvent before change
+		}
 
 		Helper.buildUIMain(HomeActivity.this, story);
 		AdapterHelper.buildListViewAdapter(HomeActivity.this);
 
 		if (story != null && story.getEvents() != null) {
-			loadFirstTime();
+			renderTimeline(story.getEvents());
+		} else {
+			Helper.modeEdit(this, viewGroup);
 		}
 
 	}
 
-	public void loadFirstTime() {
-		for (int i = 0; i < story.getEvents().size(); i++) {
-			viewGroup = AdapterHelper.buildBubbleEventAdapter(this, story
-					.getEvents().get(i));
+	public void renderTimeline(ArrayList<Event> items) {
+		for (int i = 0; i < items.size(); i++) {
+			viewGroup = AdapterHelper.buildBubbleEventAdapter(this,
+					items.get(i));
 		}
 		Helper.modeNormal(this, viewGroup);
 
 		// reset viewGroup into null value
-		noBubble = viewGroup.getChildCount() - OFFSET_VIEWGROUP;
+		noBubble = Helper.getBubbleIndex(0, viewGroup);
 		countBubble = 0;
+
+		// default -> add list of events contains from story.getEvents()
+		events = EventHelper.getSingletonArray(events);
+		events.addAll(story.getEvents());
 
 		View bubble = findViewById(R.id.body_content);
 		bubble.setVisibility(View.GONE);
@@ -184,23 +213,42 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 			break;
 
+		case R.id.pickDateEvent:
+			Helper.showDatePicker(context, findViewById(R.id.valueDateEvent));
+			break;
+
+		case R.id.pickTimeEvent:
+			Helper.showTimePicker(context, findViewById(R.id.valueTimeEvent));
+			break;
+
 		case R.id.submitEventButton:
 			key = 0;
 			popup.setVisibility(View.GONE);
 
-			event = new Event();
-			// event handler for save event to storage
-			event = EventHelper.buildEvent(this, event, story);
+			Event e = EventHelper.getEventFromTag(this);
 
-			viewGroup = AdapterHelper.buildBubbleEventAdapter(this, event);
-			countBubble++;
+			if (e != null) {
+				// update / modify event data
+				event = EventHelper.buildEvent(this, e, story);
+				viewGroup = AdapterHelper.updateBubbleEvent(this, event);
 
-			events.add(event);
-			for (int i = 0; i < events.size(); i++) {
-				Event e = (Event) events.get(i);
+				// replace with modified event
+				int index = events.indexOf(e);
+				events.set(index, event);
+
+			} else {
+				// event handler for save event to storage
+				event = EventHelper.buildEvent(this, (e == null) ? new Event()
+						: e, story);
+				viewGroup = AdapterHelper.buildBubbleEventAdapter(this, event);
+				countBubble++;
+				events.add(event);
 			}
 
+			// reset object event
+			event = null;
 			break;
+
 		case R.id.cancelEventButton:
 
 			key = 0;
@@ -209,6 +257,59 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			break;
 		}
 
+	}
+
+	// Pick location from map view
+	public void pickLocation(View v) {
+		Intent intent = new Intent(this, LocationPickerActivity.class);
+		startActivityForResult(intent, Helper.REQUEST_CODE_PICK_LOCATION);
+	}
+
+	// Pick image from camera event
+	public void pickCamera(View v) {
+		ImageAdapter.takePhoto(HomeActivity.this);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case Helper.REQUEST_CODE_IMAGE_CAMERA:
+			if (resultCode == RESULT_OK) {
+
+				Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+				// preview.setImageBitmap(thumbnail);
+			}
+			break;
+
+		case Helper.REQUEST_CODE_IMAGE_GALLERY:
+			if (resultCode == RESULT_OK && null != data) {
+				Uri selectedImage = data.getData();
+				String[] filePathColumn = { MediaStore.Images.Media.DATA };
+				Cursor cursor = getContentResolver().query(selectedImage,
+						filePathColumn, null, null, null);
+				cursor.moveToFirst();
+				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+				String picturePath = cursor.getString(columnIndex);
+				cursor.close();
+
+				ImageView image = (ImageView) findViewById(R.id.pic01);
+				image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+			}
+		case Helper.REQUEST_CODE_PICK_LOCATION:
+			if (resultCode == RESULT_OK && data != null) {
+				if (data.getExtras().containsKey("location")) {
+					String locname = data.getStringExtra("location");
+
+					double[] coordinates = { data.getDoubleExtra("lat", 0d),
+							data.getDoubleExtra("lng", 0d) };
+					TextView tv = (TextView) findViewById(R.id.locationEvent);
+					tv.setText(StringManipulation.ellipsis(locname, 30));
+					tv.setTag(coordinates);
+				}
+			}
+		}
 	}
 
 	// event handler when cancel edit button clicked
@@ -229,7 +330,13 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		// insert event to db
 		for (int i = 0; i < events.size(); i++) {
 			Event e = (Event) events.get(i);
-			db.insertEventRecord(e, story.getId());
+
+			if (e.getId() > 0) {
+				db.updateEventRecord(e);
+			} else {
+				db.insertEventRecord(e, story.getId());
+			}
+
 		}
 
 		events.clear();
@@ -238,7 +345,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		if (viewGroup != null) {
 			// reset viewGroup into null value
-			noBubble = viewGroup.getChildCount() - OFFSET_VIEWGROUP;
+			noBubble = viewGroup.getChildCount() - Helper.OFFSET_VIEWGROUP;
 			countBubble = 0;
 
 			viewGroup = null;
@@ -251,35 +358,13 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		story = (Story) title.getTag();
 
-		events.clear();
-
-		if (story != null) {
-
-			story = db.getStoryRecord(story.getId());
-		} else {
-			finish();
-			Intent i = new Intent(this, HomeActivity.class);
-			startActivity(i);
-			return;
-		}
-
-		// remove bubble event still draft
-		if (viewGroup != null) {
-			viewGroup.removeViews((noBubble + 1), countBubble);
-			countBubble = 0;
-
-			// reset viewGroup into null value
-			if (noBubble == 0)
-				viewGroup = null;
-		}
-
-		Helper.buildUIMain(this, story);
-		Helper.modeNormal(HomeActivity.this, viewGroup);
-
+		// revert into last event data
+		if (prevEvents != null)
+			rollbackTimeline(this, prevEvents);
 	}
 
 	// event handler when notif icon clicked
-	public void showDatePopup(View v) {
+	public void addStoryPopup(View v) {
 		TextView title = (TextView) findViewById(R.id.titleStory);
 		story = (Story) title.getTag();
 
@@ -325,7 +410,8 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				Helper.showDatePicker(dialog, R.id.valueStartDate);
+				Helper.showDatePicker(dialog.getContext(),
+						dialog.findViewById(R.id.valueStartDate));
 			}
 		});
 
@@ -335,7 +421,8 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				Helper.showTimePicker(dialog, R.id.valueStartTime);
+				Helper.showTimePicker(dialog.getContext(),
+						dialog.findViewById(R.id.valueStartTime));
 			}
 		});
 
@@ -345,7 +432,8 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				Helper.showDatePicker(dialog, R.id.valueEndDate);
+				Helper.showDatePicker(dialog.getContext(),
+						dialog.findViewById(R.id.valueEndDate));
 			}
 		});
 
@@ -355,7 +443,8 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				Helper.showTimePicker(dialog, R.id.valueEndTime);
+				Helper.showTimePicker(dialog.getContext(),
+						dialog.findViewById(R.id.valueEndTime));
 			}
 		});
 
@@ -382,15 +471,44 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		});
 	}
 
-	// event handler direct from layout xml
-	public void handleBubleEvent(View v) {
-		if (key == 0) {
-			key = 1;
-			popup.setVisibility(View.VISIBLE);
-		} else if (key == 1) {
-			key = 0;
-			popup.setVisibility(View.GONE);
+	public void showNewEvent(View v) {
+
+		Sliding popup = (Sliding) findViewById(R.id.sliding1);
+		popup.setVisibility(View.VISIBLE);
+		EventHelper.buildUISliding(this, null);
+	}
+
+	// additional methods
+	public void rollbackTimeline(Activity a, ArrayList<Event> prevs) {
+
+		renderTimeline(prevs);
+		viewGroup = null;
+
+		events.clear();
+		prevEvents.clear();
+
+		if (story != null) {
+
+			story = db.getStoryRecord(story.getId());
+		} else {
+			finish();
+			Intent i = new Intent(this, HomeActivity.class);
+			startActivity(i);
+			return;
 		}
+
+		// remove bubble event still draft
+		if (viewGroup != null) {
+			viewGroup.removeViews((noBubble + 1), countBubble);
+			countBubble = 0;
+
+			// reset viewGroup into null value
+			if (noBubble == 0)
+				viewGroup = null;
+		}
+
+		Helper.buildUIMain(this, story);
+		Helper.modeNormal(HomeActivity.this, viewGroup);
 	}
 
 }

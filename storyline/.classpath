@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="libs/scribe-1.2.1.jar"/>
 	<classpathentry kind="lib" path="libs/joda-time-1.5.1.jar"/>
 	<classpathentry kind="lib" path="libs/imageloader-core-1.5.8.jar"/>
+	<classpathentry kind="lib" path="libs/easyfacebookandroidsdk_2.3.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -5,23 +5,85 @@
     android:layout_height="match_parent"
     android:background="#364244"
     tools:context=".HomeActivity">
-
-    <ImageButton 
-	    android:id="@+id/notSlider"
-	    android:src="@drawable/ic_action_github"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_toLeftOf="@+id/name"
-	    android:layout_centerVertical="true"
-	    android:background="@null" />
-    
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
+	
+    <LinearLayout
+        android:id="@+id/titleRecomendation"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textColor="#FFFFFF"
-        android:text="Recomendation Travel" />
-
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+        
+	    <TextView
+	        android:id="@+id/name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="20dip"
+	        android:text="Recomendation Travel"/>
+	</LinearLayout>
+    
+    <ScrollView
+        android:id="@+id/content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:isScrollContainer="true"
+        android:layout_below="@+id/titleRecomendation" >
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="vertical" >
+            
+		    <ImageButton 
+			    android:src="@drawable/demo01"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="10dip"    
+			    android:background="@null" />
+		    
+		    <ImageButton 
+			    android:src="@drawable/demo02"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="10dip"
+			    android:background="@null" />
+		    
+		    <ImageButton 
+			    android:src="@drawable/demo03"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="10dip"    
+			    android:background="@null" />
+		    
+		    <ImageButton 
+			    android:src="@drawable/demo04"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="10dip"
+			    android:background="@null" />
+		    
+		    <ImageButton 
+			    android:src="@drawable/demo05"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="10dip"
+			    android:background="@null" />
+		    
+		    <ImageButton 
+			    android:src="@drawable/demo06"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="10dip"
+			    android:background="@null" />
+		    
+		    <ImageButton 
+			    android:src="@drawable/demo07"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="10dip"
+			    android:background="@null" />
+		    
+		</LinearLayout>
+	</ScrollView>
 </RelativeLayout>

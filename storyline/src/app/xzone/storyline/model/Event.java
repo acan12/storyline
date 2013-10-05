@@ -23,8 +23,8 @@ public class Event extends BaseModel implements Serializable {
 	private double lng;
 
 	// Date Time to start & end
-	private String startDate;
-	
+	private long startDate;
+
 	private Story story;
 
 	/**
@@ -125,7 +125,8 @@ public class Event extends BaseModel implements Serializable {
 	}
 
 	/**
-	 * @param locname the locname to set
+	 * @param locname
+	 *            the locname to set
 	 */
 	public void setLocname(String locname) {
 		this.locname = locname;
@@ -164,7 +165,7 @@ public class Event extends BaseModel implements Serializable {
 	/**
 	 * @return the startDate
 	 */
-	public String getStartDate() {
+	public long getStartDate() {
 		return startDate;
 	}
 
@@ -172,7 +173,7 @@ public class Event extends BaseModel implements Serializable {
 	 * @param startDate
 	 *            the startDate to set
 	 */
-	public void setStartDate(String startDate) {
+	public void setStartDate(long startDate) {
 		this.startDate = startDate;
 	}
 
@@ -192,7 +193,8 @@ public class Event extends BaseModel implements Serializable {
 	}
 
 	/**
-	 * @param story the story to set
+	 * @param story
+	 *            the story to set
 	 */
 	public void setStory(Story story) {
 		this.story = story;
