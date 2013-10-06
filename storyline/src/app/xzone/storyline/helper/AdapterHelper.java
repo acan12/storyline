@@ -71,16 +71,20 @@ public class AdapterHelper {
 
 		View vi = event.getView();
 
-		if (event.getTransportation().equals("Car")
-				|| event.getTransportation().equals("Bus")
-				|| event.getTransportation().equals("Walk")) {
-
-			pointerNo = R.drawable.pointer_car;
-
-		} else {
+//		if (event.getTransportation().equals("Car")
+//				|| event.getTransportation().equals("Bus")
+//				|| event.getTransportation().equals("Walk")) {
+//
+//			pointerNo = R.drawable.pointer_car;
+//
+//		} 
+		if (event.getTransportation().equals("Flight")) {
 			// set plane pointer
 			pointerNo = R.drawable.pointer_plane;
-		}
+		}else 
+			pointerNo = R.drawable.pointer_car;
+		
+		
 
 		if (pointerNo > 0) {
 			// show selected transport icon
@@ -109,7 +113,7 @@ public class AdapterHelper {
 		});
 
 		// construct UI element for bubble event
-		TextView title = (TextView) vi.findViewById(R.id.titleEvent);
+		TextView title = (TextView) vi.findViewById(R.id.title_event);
 		ImageView trans = (ImageView) vi.findViewById(R.id.transportation);
 		TextView loc = (TextView) vi.findViewById(R.id.location);
 		TextView note = (TextView) vi.findViewById(R.id.bubble_note);
@@ -130,7 +134,10 @@ public class AdapterHelper {
 		// set bubble note
 		note.setText(event.getMessage());
 		// set bubble date
+		date.setTextSize(8f);
+		date.setTextColor(R.color.yellow);
 		date.setText("7 Aug 2013 10:15 AM");
+		
 
 		View bubble = a.findViewById(R.id.body_content);
 		ViewGroup parent = (ViewGroup) bubble.getParent();
@@ -148,17 +155,19 @@ public class AdapterHelper {
 		View vi = inflater.inflate(R.layout.main_bubble_right, null);
 		;
 
-		if (event.getTransportation().equals("Car")
-				|| event.getTransportation().equals("Bus")
-				|| event.getTransportation().equals("Walk")) {
-			vi = inflater.inflate(R.layout.main_bubble_right_images, null);
-
-			pointerNo = R.drawable.pointer_car;
-
-		} else if (event.getTransportation().equals("Flight")) {
+//		if (event.getTransportation().equals("Car")
+//				|| event.getTransportation().equals("Bus")
+//				|| event.getTransportation().equals("Walk")) {
+//			vi = inflater.inflate(R.layout.main_bubble_right_images, null);
+//
+//			pointerNo = R.drawable.pointer_car;
+//
+//		} else 
+		if (event.getTransportation().equals("Flight")) {
 			// set plane pointer
 			pointerNo = R.drawable.pointer_plane;
-		}
+		}else 
+			pointerNo = R.drawable.pointer_car;
 
 		if (pointerNo > 0) {
 			// show selected transport icon
@@ -193,7 +202,7 @@ public class AdapterHelper {
 		});
 
 		final View vi2 = vi;
-		Button deleteEvent = (Button) vi.findViewById(R.id.deleteEvent);
+		Button deleteEvent = (Button) vi.findViewById(R.id.delete_event);
 		deleteEvent.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -233,7 +242,7 @@ public class AdapterHelper {
 		});
 
 		// construct UI element for bubble event
-		TextView title = (TextView) vi.findViewById(R.id.titleEvent);
+		TextView title = (TextView) vi.findViewById(R.id.title_event);
 		ImageView trans = (ImageView) vi.findViewById(R.id.transportation);
 		TextView loc = (TextView) vi.findViewById(R.id.location);
 		TextView note = (TextView) vi.findViewById(R.id.bubble_note);
@@ -254,6 +263,8 @@ public class AdapterHelper {
 		// set bubble note
 		note.setText(event.getMessage());
 		// set bubble date
+		date.setTextSize(12f);
+		date.setTextColor(R.color.yellow);
 		date.setText("7 Aug 2013 10:15 AM");
 
 		View bubble = a.findViewById(R.id.body_content);

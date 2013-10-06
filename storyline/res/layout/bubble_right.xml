@@ -13,53 +13,99 @@
         android:orientation="vertical" >
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_marginTop="5dip"
+            android:orientation="vertical" >
 
             <LinearLayout
-                android:id="@+id/bubble_header1"
-                android:layout_width="220dp"
+                android:id="@+id/bubble_header"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-                <!--
-                     <ImageButton
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_gravity="left|top"
-	                android:layout_marginLeft="25dp"
-	                android:layout_marginTop="15dp"
-	                android:background="@null"
-	                android:src="@drawable/demo_pic" />
-                -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/clock_black_small" />
 
                 <TextView
-                    android:id="@+id/titleEvent"
+                    android:id="@+id/time_note"
+                    android:layout_width="180dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#636060"
+                    android:textSize="12px" />
+
+                <LinearLayout
+                    android:id="@+id/bubble_header_right"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/delete_event"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@null"
+                        android:drawableLeft="@drawable/delete" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- info bottom section -->
+
+            <LinearLayout
+                android:id="@+id/bottom_line"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="5dip"
+                android:background="@drawable/bottom_line"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <!-- info bottom section :end -->
+
+            <LinearLayout
+                android:id="@+id/bubble_body"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:layout_marginRight="10dip"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/title_event"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:layout_marginTop="15dp"
+                    android:text="titttlleeee"
                     android:textColor="#078cbe"
                     android:textStyle="bold" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/bubble_header2"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dip"
-                android:layout_marginTop="5dip"
-                android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/deleteEvent"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:drawableLeft="@drawable/delete" />
+                    android:layout_marginLeft="30dp"
+                    android:text="Jakarta" />
 
+                <TextView
+                    android:id="@+id/bubble_note"
+                    android:layout_width="fill_parent"
+                    android:layout_height="70dip"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:text="my message here commented please!! kjdlksjlkdjs kdjskljd djklsjd skld"
+                    android:textColor="#636060" />
             </LinearLayout>
         </LinearLayout>
 
@@ -67,70 +113,10 @@
             android:id="@+id/transportation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:src="@drawable/pointer_plane" />
 
-        <TextView
-            android:id="@+id/location"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout1"
-            android:layout_toRightOf="@+id/imageView4"
-            android:gravity="right"
-            android:paddingRight="30dip"
-            android:textColor="#ababab" />
 
-        <!-- bubble note -->
-
-        <TextView
-            android:id="@+id/bubble_note"
-            android:layout_width="wrap_content"
-            android:layout_height="70dip"
-            android:layout_below="@+id/location"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="5dp"
-            android:textColor="#636060" />
-
-        <!-- info bottom section -->
-
-        <LinearLayout
-            android:id="@+id/bottom_line"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bubble_note"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/bottom_line"
-            android:orientation="vertical" >
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bottom_line"
-            android:orientation="horizontal" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/clock_black_small" />
-
-            <TextView
-                android:id="@+id/time_note"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginTop="10dp"
-                android:text="5 Aug 2013"
-                android:textColor="#636060"
-                android:textSize="12px" />
-        </LinearLayout>
-        <!-- info bottom section :end -->
     </RelativeLayout>
 
 </LinearLayout>
