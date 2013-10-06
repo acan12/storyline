@@ -49,15 +49,17 @@
                 android:id="@+id/bubble_header2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:layout_marginTop="5dip"
                 android:orientation="horizontal" >
 
-                <ImageView
-                    android:id="@+id/imageView4"
+                <Button
+                    android:id="@+id/deleteEvent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="48dp"
-                    android:layout_marginTop="15dp"
-                    android:src="@drawable/delete" />
+                    android:layout_gravity="right"
+                    android:drawableLeft="@drawable/delete" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -75,7 +77,6 @@
             android:layout_toRightOf="@+id/imageView4"
             android:gravity="right"
             android:paddingRight="30dip"
-            android:text="Kuningan , South Jakarta"
             android:textColor="#ababab" />
 
         <!-- bubble note -->
@@ -88,7 +89,6 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="5dp"
-            android:text="Waktu kemarin mudik setengah mati gw kangen ama Bakmi GM. Abis disana ngga ada. Kalo di Jakarta kan hampir di setiap Malla ada. Gw suka bakmi GM mostly karena menunya enak sich. "
             android:textColor="#636060" />
 
         <!-- info bottom section -->

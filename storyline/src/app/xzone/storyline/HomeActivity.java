@@ -12,7 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,9 +42,6 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 
 public class HomeActivity extends SlidingActivity implements OnClickListener {
 
-	boolean menuOut = false;
-	Handler handler = new Handler();
-	int btnWidth;
 	private ImageButton listButton;
 	private ImageButton storyButton;
 	private LinearLayout newStoryButton;
@@ -54,7 +50,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	private int noBubble = 0; // index last saved bubble
 	private int countBubble = 0; // count of bubble ready to save
 
-	int key = 0;
+	int key1 = 0;
 	int key2 = 0;
 	private Sliding popup;
 	private Button submitEventButton;
@@ -71,6 +67,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	// accessing model storage
 	DBAdapter db = null;
+	
 
 	/** Called when the activity is first created. Testing */
 	@Override
@@ -95,6 +92,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		cancelEventButton = (Button) findViewById(R.id.cancelEventButton);
 		pickDateEvent = (LinearLayout) findViewById(R.id.pickDateEvent);
 		pickTimeEvent = (LinearLayout) findViewById(R.id.pickTimeEvent);
+		
 
 		listButton.setOnClickListener(this);
 		storyButton.setOnClickListener(this);
@@ -104,6 +102,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		pickDateEvent.setOnClickListener(this);
 		pickTimeEvent.setOnClickListener(this);
 
+		
 		db = new DBAdapter(context);
 
 		// read parameters passing to activity
@@ -222,7 +221,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			break;
 
 		case R.id.submitEventButton:
-			key = 0;
+			key1 = 0;
 			popup.setVisibility(View.GONE);
 
 			Event e = EventHelper.getEventFromTag(this);
@@ -251,10 +250,11 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		case R.id.cancelEventButton:
 
-			key = 0;
+			key1 = 0;
 			popup.setVisibility(View.GONE);
 
 			break;
+		
 		}
 
 	}
@@ -362,6 +362,12 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		if (prevEvents != null)
 			rollbackTimeline(this, prevEvents);
 	}
+	
+//	public void deleteEvent(View v){
+//		View x = (View) v.findViewById(R.id.bubble_event);
+//		Event ev = (Event) x.getTag();
+//		System.out.println("---- get from delete event name:"+ev.getName());
+//	}
 
 	// event handler when notif icon clicked
 	public void addStoryPopup(View v) {
@@ -478,7 +484,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		EventHelper.buildUISliding(this, null);
 	}
 
-	// additional methods
+	// rollback configuration before modified, if cancel
 	public void rollbackTimeline(Activity a, ArrayList<Event> prevs) {
 
 		renderTimeline(prevs);
