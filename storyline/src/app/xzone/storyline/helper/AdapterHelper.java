@@ -71,26 +71,6 @@ public class AdapterHelper {
 
 		View vi = event.getView();
 
-//		if (event.getTransportation().equals("Car")
-//				|| event.getTransportation().equals("Bus")
-//				|| event.getTransportation().equals("Walk")) {
-//
-//			pointerNo = R.drawable.pointer_car;
-//
-//		} 
-		if (event.getTransportation().equals("Flight")) {
-			// set plane pointer
-			pointerNo = R.drawable.pointer_plane;
-		}else 
-			pointerNo = R.drawable.pointer_car;
-		
-		
-
-		if (pointerNo > 0) {
-			// show selected transport icon
-			ImageView tr = (ImageView) vi.findViewById(R.id.transportation);
-			tr.setBackgroundDrawable(vi.getResources().getDrawable(pointerNo));
-		}
 		vi.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -123,10 +103,30 @@ public class AdapterHelper {
 		title.setTag(event);
 
 		// set transportation pointer
-		int pointerIcon = (event.getTransportation().equals("Flight")) ? R.drawable.pointer_plane
-				: R.drawable.pointer_car;
-		trans.setImageDrawable(a.getResources().getDrawable(pointerIcon));
+		if (event.getTransportation().equals("Flight")) {
+			// set plane pointer
+			pointerNo = R.drawable.pointer_plane;
+		}else if(event.getTransportation().equals("Car")){
+			pointerNo = R.drawable.pointer_car;
+		}else if(event.getTransportation().equals("Bus")){
+			pointerNo = R.drawable.pointer_bus;
+		}else if(event.getTransportation().equals("Train")){
+			pointerNo = R.drawable.pointer_train;
+		}else if(event.getTransportation().equals("Walk")){
+			pointerNo = R.drawable.pointer_walking;
+		}else{
+			pointerNo = 0;
+		}
+		
+		
 
+		if (pointerNo > 0) {
+			// show selected transport icon
+			trans.setVisibility(View.VISIBLE);
+			trans.setImageDrawable(a.getResources().getDrawable(pointerNo));
+		}else
+			trans.setVisibility(View.INVISIBLE);
+			
 		// set title of event
 		title.setText(event.getName());
 		// set location name
@@ -153,27 +153,7 @@ public class AdapterHelper {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		View vi = inflater.inflate(R.layout.main_bubble_right, null);
-		;
-
-//		if (event.getTransportation().equals("Car")
-//				|| event.getTransportation().equals("Bus")
-//				|| event.getTransportation().equals("Walk")) {
-//			vi = inflater.inflate(R.layout.main_bubble_right_images, null);
-//
-//			pointerNo = R.drawable.pointer_car;
-//
-//		} else 
-		if (event.getTransportation().equals("Flight")) {
-			// set plane pointer
-			pointerNo = R.drawable.pointer_plane;
-		}else 
-			pointerNo = R.drawable.pointer_car;
-
-		if (pointerNo > 0) {
-			// show selected transport icon
-			ImageView tr = (ImageView) vi.findViewById(R.id.transportation);
-			tr.setBackgroundDrawable(vi.getResources().getDrawable(pointerNo));
-		}
+		
 
 		// set view into event
 		event.setView(vi);
@@ -252,10 +232,29 @@ public class AdapterHelper {
 		title.setTag(event);
 
 		// set transportation pointer
-		int pointerIcon = (event.getTransportation().equals("Flight")) ? R.drawable.pointer_plane
-				: R.drawable.pointer_car;
-		trans.setImageDrawable(a.getResources().getDrawable(pointerIcon));
+		if (event.getTransportation().equals("Flight")) {
+			// set plane pointer
+			pointerNo = R.drawable.pointer_plane;
+		}else if(event.getTransportation().equals("Car")){
+			pointerNo = R.drawable.pointer_car;
+		}else if(event.getTransportation().equals("Bus")){
+			pointerNo = R.drawable.pointer_bus;
+		}else if(event.getTransportation().equals("Train")){
+			pointerNo = R.drawable.pointer_train;
+		}else if(event.getTransportation().equals("Walk")){
+			pointerNo = R.drawable.pointer_walking;
+		}else{
+			pointerNo = 0;
+		}
+		
 
+		if (pointerNo > 0) {
+			// show selected transport icon
+			trans.setVisibility(View.VISIBLE);
+			trans.setImageDrawable(a.getResources().getDrawable(pointerNo));
+		}else
+			trans.setVisibility(View.INVISIBLE);
+		
 		// set title of event
 		title.setText(event.getName());
 		// set location name

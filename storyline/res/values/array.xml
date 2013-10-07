@@ -6,6 +6,7 @@
         <item>Habit</item>
     </string-array>
     <string-array name="tranportItems">
+        <item>Nothing</item>
         <item>Flight</item>
         <item>Car</item>
         <item>Bus</item>
