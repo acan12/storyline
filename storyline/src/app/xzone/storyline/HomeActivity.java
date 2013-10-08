@@ -60,7 +60,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	private Story story;
 	private Event event;
-	private ArrayList<Event> events = null;
+	private ArrayList<Event> events = new ArrayList<Event>();
 	private ArrayList<Event> prevEvents = new ArrayList<Event>();
 
 	final Context context = this;
@@ -112,9 +112,10 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			// calling when start application
 			if (story == null) {
 				story = db.getLastStory();
-				prevEvents = story.getEvents(); // store all event from this
-												// story into prevEvent before
-												// change
+				
+				// store all event from this story into prevEvent before change
+				if(story != null){	prevEvents = story.getEvents(); }
+												
 			} else {
 				Helper.modeEdit(this, viewGroup);
 			}
@@ -122,8 +123,9 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 			// calling from menu list story
 			story = (Story) b.getSerializable("app.story");
-			prevEvents = story.getEvents(); // store all event from this story
-											// into prevEvent before change
+			
+			// store all event from this story
+			if(story != null){ prevEvents = story.getEvents(); }
 		}
 
 		Helper.buildUIMain(HomeActivity.this, story);
@@ -146,13 +148,23 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		}
 		Helper.modeNormal(this, viewGroup);
 
+		
 		// reset viewGroup into null value
 		noBubble = Helper.getBubbleIndex(0, viewGroup);
 
 		// default -> add list of events contains from story.getEvents()
 		events = EventHelper.getSingletonArray(events);
 		events.addAll(story.getEvents());
+		 
 
+		View bubble = findViewById(R.id.body_content);
+		bubble.setVisibility(View.GONE);
+	}
+	
+	public void renderEmptyTimeline(){
+		countBubble = 0;
+		Helper.modeNormal(this, viewGroup);
+		
 		View bubble = findViewById(R.id.body_content);
 		bubble.setVisibility(View.GONE);
 	}
@@ -238,8 +250,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 			} else {
 				// event handler for save event to storage
-				event = EventHelper.buildEvent(this, (e == null) ? new Event()
-						: e, story);
+				event = EventHelper.buildEvent(this, (e == null) ? new Event() : e, story);
 				viewGroup = AdapterHelper.buildBubbleEventAdapter(this, event);
 				countBubble++;
 				events.add(event);
@@ -330,9 +341,9 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		
 		// make empty collection for ready to fill
-		prevEvents.clear();
+		if(prevEvents != null) { prevEvents.clear(); }
 		
-		// insert event to db
+		// insert / update event to db
 		for (int i = 0; i < events.size(); i++) {
 			Event e = (Event) events.get(i);
 
@@ -345,14 +356,14 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			prevEvents.add(e);
 		}
 		
-		events.clear();
+		if(events != null) events.clear();
 		Helper.modeNormal(this, viewGroup);
 		AdapterHelper.buildListViewAdapter(HomeActivity.this);
 
 		if (viewGroup != null) {
 			
 			// reset viewGroup into null value
-			noBubble = viewGroup.getChildCount() - Helper.OFFSET_VIEWGROUP;
+			noBubble = Helper.getBubbleIndex(0, viewGroup);
 			viewGroup = null;
 		}
 
@@ -364,9 +375,28 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		story = (Story) title.getTag();
 
 		// revert into last event data
-		if (prevEvents != null)
-			rollbackTimeline(this, prevEvents);
+		rollbackTimeline(this, prevEvents);
 	}
+	
+	public void showNewEvent(View v) {
+
+		Sliding popup = (Sliding) findViewById(R.id.sliding1);
+		popup.setVisibility(View.VISIBLE);
+		EventHelper.buildUISliding(this, null);
+	}
+
+	// rollback configuration before modified, if cancel
+	public void rollbackTimeline(Activity a, ArrayList<Event> prevs) {
+		if(prevs.size() > 0){
+			viewGroup.removeViews(1, countBubble);
+			renderTimeline(prevEvents);
+		} else {
+			renderEmptyTimeline();
+		}
+	}
+
+	
+	
 	
 	// event handler when notif icon clicked
 	public void addStoryPopup(View v) {
@@ -474,19 +504,6 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 				dialog.dismiss();
 			}
 		});
-	}
-
-	public void showNewEvent(View v) {
-
-		Sliding popup = (Sliding) findViewById(R.id.sliding1);
-		popup.setVisibility(View.VISIBLE);
-		EventHelper.buildUISliding(this, null);
-	}
-
-	// rollback configuration before modified, if cancel
-	public void rollbackTimeline(Activity a, ArrayList<Event> prevs) {
-		viewGroup.removeViews(1, countBubble);
-		renderTimeline(prevEvents);
 	}
 
 }

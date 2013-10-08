@@ -191,8 +191,10 @@ public class Helper {
 
 		View v = (View) ac.findViewById(R.id.footer);
 		v.setVisibility(View.GONE);
-		v = (View) ac.findViewById(R.id.bubbleEvent);
-		v.setClickable(false);
+		if(viewGroup != null){
+			v = (View) ac.findViewById(R.id.bubbleEvent);
+			v.setClickable(false);
+		}
 		v = ac.findViewById(R.id.addDateStoryButton);
 		v.setVisibility(View.GONE);
 		v = ac.findViewById(R.id.addDateStoryButton02);
