@@ -168,10 +168,15 @@ public class Story extends BaseModel implements Serializable {
 		return events;
 	}
 
+	public void setEvents(ArrayList<Event> events) {
+		this.events = events;
+	}
+	
+	
 	/**
 	 * @param events the events to set
 	 */
-	public void setEvents(Event e) {
+	public void addToEvents(Event e) {
 		events.add(e);
 		this.events = events;
 	}

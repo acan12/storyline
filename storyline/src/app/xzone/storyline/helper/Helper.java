@@ -18,6 +18,7 @@ import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -50,7 +51,7 @@ public class Helper {
 	}
 
 	public static int getBubbleIndex(int index, ViewGroup viewGroup) {
-
+		if(viewGroup == null) return 0; 
 		return index + viewGroup.getChildCount() - Helper.OFFSET_VIEWGROUP;
 	}
 
@@ -170,6 +171,7 @@ public class Helper {
 		TextView mode = (TextView) ac.findViewById(R.id.mode);
 		mode.setTag(MODE_NORMAL);
 
+		
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(
 				R.drawable.paper_plane));
@@ -186,6 +188,9 @@ public class Helper {
 		if (viewGroup != null) {
 			v = (View) ac.findViewById(R.id.bubbleEvent);
 			v.setClickable(false);
+			
+			Button deleteEvent = (Button) ac.findViewById(R.id.delete_event);
+			deleteEvent.setVisibility(View.VISIBLE);
 		}
 		v = ac.findViewById(R.id.addDateStoryButton);
 		v.setVisibility(View.GONE);
@@ -205,7 +210,7 @@ public class Helper {
 	public static void modeEdit(final Activity ac, ViewGroup viewGroup) {
 		TextView mode = (TextView) ac.findViewById(R.id.mode);
 		mode.setTag(MODE_EDIT);
-
+		
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(R.drawable.trash));
 		sb.setOnClickListener(new OnClickListener() {
@@ -265,6 +270,11 @@ public class Helper {
 		v.setVisibility(View.VISIBLE);
 		v = ac.findViewById(R.id.addEventButton);
 		v.setVisibility(View.VISIBLE);
+		
+		if(viewGroup != null){
+			Button deleteEvent = (Button) ac.findViewById(R.id.delete_event);
+			deleteEvent.setVisibility(View.INVISIBLE);
+		}
 
 		// show pointer add new event button
 		View bubble = ac.findViewById(R.id.body_content);

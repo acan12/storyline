@@ -1,5 +1,7 @@
 package app.xzone.storyline.helper;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,8 +19,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import app.xzone.storyline.R;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.adapter.LazyAdapter;
@@ -166,8 +168,6 @@ public class AdapterHelper {
 					Sliding popup = (Sliding) a.findViewById(R.id.sliding1);
 					popup.setVisibility(View.VISIBLE);
 
-					if (event.getView() == null)
-						System.out.println("---- view null 01 ---");
 					EventHelper.buildUISliding(a, event);
 
 				}
@@ -188,8 +188,8 @@ public class AdapterHelper {
 			@Override
 			public void onClick(View v) {
 				AlertDialog dialog = new AlertDialog.Builder(a).create();
-				dialog.setTitle("Confirmation Remove The Event");
-				dialog.setMessage("This will remove your event !!");
+				dialog.setTitle("Remove Event");
+				dialog.setMessage("Are you sure remove this event?");
 				dialog.setCancelable(false);
 				dialog.setButton(DialogInterface.BUTTON_POSITIVE, "Yes",
 						new DialogInterface.OnClickListener() {
@@ -198,9 +198,39 @@ public class AdapterHelper {
 							public void onClick(DialogInterface dialog,
 									int which) {
 
-								View bubble = (RelativeLayout) vi2
-										.findViewById(R.id.bubbleEvent);
-								bubble.setBackgroundColor(Color.GRAY);
+								DBAdapter db = new DBAdapter(a.getApplicationContext());
+								
+								// go to story in main page
+								TextView bubbleTitle = (TextView) vi2.findViewById(R.id.title_event);
+								
+								Event ev = (Event) bubbleTitle.getTag();
+								Story st = ev.getStory();
+								
+								System.out.println("----- story :"+st.getName());
+								// remove event
+								if(db.deleteEventRecord(ev.getId())){
+									// show success notification
+									Toast.makeText(a.getApplicationContext(), "Remove Event Success!!", 10).show();
+									
+									// remove object collection for event
+									ArrayList<Event> es = st.getEvents();
+									es.remove(ev);
+									st.setEvents(es);
+									
+									// reload story in main page
+									a.finish();
+									Intent intent = a.getIntent();
+									intent.putExtra("app.story", st);
+									a.startActivity(intent);
+								}else{
+									// show fail notification
+									Toast.makeText(a.getApplicationContext(), "Failed to remove!!", 10).show();
+								}
+								
+								
+								
+//								
+//								bubble.setBackgroundColor(Color.GRAY);
 							}
 						});
 

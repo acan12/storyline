@@ -210,9 +210,12 @@ public class DBAdapter extends SQLiteOpenHelper {
 				event.setLocname(c.getString(c.getColumnIndex("locname")));
 				event.setLat(c.getLong(c.getColumnIndex("lat")));
 				event.setLng(c.getLong(c.getColumnIndex("lng")));
+			
+				// set event relation to story
+				event.setStory(story);
 
-				System.out.println("------- event name DBAdapter------"+event.getName());
-				story.setEvents(event);
+				// set story relation to event 
+				story.addToEvents(event);
 			}
 			
 			

@@ -253,8 +253,6 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 				// replace with modified event
 				int index = events.indexOf(e);
 				
-				System.out.println("--- index :"+index);
-				System.out.println("--- event :"+event.getName());
 				events.set(index, event); 
 
 			} else {
