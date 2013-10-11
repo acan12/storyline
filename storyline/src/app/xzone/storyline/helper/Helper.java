@@ -1,9 +1,6 @@
 package app.xzone.storyline.helper;
 
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -21,36 +18,29 @@ import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import app.xzone.storyline.HomeActivity;
 import app.xzone.storyline.R;
 import app.xzone.storyline.adapter.DBAdapter;
-import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
 import app.xzone.storyline.util.StringManipulation;
 import app.xzone.storyline.util.TimeUtil;
 
 public class Helper {
 
-	
-    public static final int REQUEST_CODE_IMAGE_CAMERA 	= 0;
-	public static final int REQUEST_CODE_IMAGE_GALLERY 	= 1;
-	public static final int REQUEST_CODE_PICK_LOCATION 	= 2;
-	
-	public static final int MODE_NORMAL 	= 0;
-	public static final int MODE_EDIT 		= 1;
-	
+	public static final int REQUEST_CODE_IMAGE_CAMERA = 0;
+	public static final int REQUEST_CODE_IMAGE_GALLERY = 1;
+	public static final int REQUEST_CODE_PICK_LOCATION = 2;
+
+	public static final int MODE_NORMAL = 0;
+	public static final int MODE_EDIT = 1;
+
 	public static int OFFSET_VIEWGROUP = 3;
-	
-	
-	
-	
+
 	public static Story singletonStory(Story story) {
 		if (story == null) {
 			story = new Story();
@@ -58,9 +48,9 @@ public class Helper {
 
 		return story;
 	}
-	
+
 	public static int getBubbleIndex(int index, ViewGroup viewGroup) {
-		
+
 		return index + viewGroup.getChildCount() - Helper.OFFSET_VIEWGROUP;
 	}
 
@@ -90,7 +80,6 @@ public class Helper {
 					TimeUtil.fromEpochFormat(story.getEndDate())).toString());
 
 	}
-	
 
 	public static Story buildFromDateTimeStory(Story story, Dialog dialog)
 			throws ParseException {
@@ -106,8 +95,12 @@ public class Helper {
 		TextView date02 = (TextView) dialog.findViewById(R.id.valueEndDate);
 		TextView time02 = (TextView) dialog.findViewById(R.id.valueEndTime);
 
-		if (t01.getText().toString().equals("") || t02.getText().toString().equals("") || date01.getText().toString().equals("") || time01.getText().toString().equals("")
-				|| date02.getText().toString().equals("") || time02.getText().toString().equals(""))
+		if (t01.getText().toString().equals("")
+				|| t02.getText().toString().equals("")
+				|| date01.getText().toString().equals("")
+				|| time01.getText().toString().equals("")
+				|| date02.getText().toString().equals("")
+				|| time02.getText().toString().equals(""))
 			return null;
 
 		int hour01 = Integer
@@ -129,7 +122,6 @@ public class Helper {
 
 		return story;
 	}
-
 
 	// Helper for handle date time picker
 	public static void showDatePicker(final Context context,
@@ -177,12 +169,12 @@ public class Helper {
 	public static void modeNormal(final Activity ac, ViewGroup viewGroup) {
 		TextView mode = (TextView) ac.findViewById(R.id.mode);
 		mode.setTag(MODE_NORMAL);
-		
+
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(
 				R.drawable.paper_plane));
 		sb.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				((HomeActivity) ac).showSecondaryMenu();
@@ -191,7 +183,7 @@ public class Helper {
 
 		View v = (View) ac.findViewById(R.id.footer);
 		v.setVisibility(View.GONE);
-		if(viewGroup != null){
+		if (viewGroup != null) {
 			v = (View) ac.findViewById(R.id.bubbleEvent);
 			v.setClickable(false);
 		}
@@ -201,9 +193,9 @@ public class Helper {
 		v.setVisibility(View.GONE);
 		v = ac.findViewById(R.id.addEventButton);
 		v.setVisibility(View.GONE);
-		
+
 		// hide pointer add new event button
-		if(viewGroup != null){
+		if (viewGroup != null) {
 			View bubble = ac.findViewById(R.id.body_content);
 			bubble.setVisibility(View.GONE);
 		}
@@ -213,7 +205,7 @@ public class Helper {
 	public static void modeEdit(final Activity ac, ViewGroup viewGroup) {
 		TextView mode = (TextView) ac.findViewById(R.id.mode);
 		mode.setTag(MODE_EDIT);
-		
+
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(R.drawable.trash));
 		sb.setOnClickListener(new OnClickListener() {
@@ -265,32 +257,31 @@ public class Helper {
 
 		View v = (View) ac.findViewById(R.id.footer);
 		v.setVisibility(View.VISIBLE);
-//		v = (View) ac.findViewById(R.id.bubbleEvent);
-//		v.setClickable(true);
+		// v = (View) ac.findViewById(R.id.bubbleEvent);
+		// v.setClickable(true);
 		v = ac.findViewById(R.id.addDateStoryButton);
 		v.setVisibility(View.VISIBLE);
 		v = ac.findViewById(R.id.addDateStoryButton02);
 		v.setVisibility(View.VISIBLE);
 		v = ac.findViewById(R.id.addEventButton);
 		v.setVisibility(View.VISIBLE);
-		
-		
+
 		// show pointer add new event button
 		View bubble = ac.findViewById(R.id.body_content);
 		viewGroup = (ViewGroup) bubble.getParent();
 		bubble.setVisibility(View.VISIBLE);
-		
+
 	}
-	
-	public View getBubbleEvent(ViewGroup viewGroup, int position){
+
+	public View getBubbleEvent(ViewGroup viewGroup, int position) {
 		int pos = position + OFFSET_VIEWGROUP;
-		
+
 		return viewGroup.getChildAt(position);
 	}
-	
-	public static int getCurrentMode(Activity a){
+
+	public static int getCurrentMode(Activity a) {
 		TextView mode = (TextView) a.findViewById(R.id.mode);
-		
+
 		return (Integer) mode.getTag();
 	}
 

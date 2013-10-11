@@ -106,8 +106,24 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		db = new DBAdapter(context);
 
 		// read parameters passing to activity
-		Bundle b = getIntent().getExtras();
-		if (b == null) {
+		getStoryWithBundle(getIntent().getExtras());
+
+		Helper.buildUIMain(HomeActivity.this, story);
+		AdapterHelper.buildListViewAdapter(HomeActivity.this);
+
+		if (story != null && story.getEvents() != null) {
+			renderTimeline(story.getEvents());
+		} else {
+			Helper.modeEdit(this, viewGroup);
+		}
+
+	}
+	
+	
+	
+
+	private void getStoryWithBundle(Bundle bundle) {
+		if (bundle == null) {
 
 			// calling when start application
 			if (story == null) {
@@ -122,21 +138,11 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		} else {
 
 			// calling from menu list story
-			story = (Story) b.getSerializable("app.story");
+			story = (Story) bundle.getSerializable("app.story");
 			
 			// store all event from this story
 			if(story != null){ prevEvents = story.getEvents(); }
 		}
-
-		Helper.buildUIMain(HomeActivity.this, story);
-		AdapterHelper.buildListViewAdapter(HomeActivity.this);
-
-		if (story != null && story.getEvents() != null) {
-			renderTimeline(story.getEvents());
-		} else {
-			Helper.modeEdit(this, viewGroup);
-		}
-
 	}
 
 	public void renderTimeline(ArrayList<Event> items) {
@@ -246,6 +252,9 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 				// replace with modified event
 				int index = events.indexOf(e);
+				
+				System.out.println("--- index :"+index);
+				System.out.println("--- event :"+event.getName());
 				events.set(index, event); 
 
 			} else {
@@ -356,7 +365,6 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			prevEvents.add(e);
 		}
 		
-		if(events != null) events.clear();
 		Helper.modeNormal(this, viewGroup);
 		AdapterHelper.buildListViewAdapter(HomeActivity.this);
 
