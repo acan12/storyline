@@ -49,6 +49,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/head_devider"
         android:layout_marginTop="10dp"
+        android:gravity="right"
         android:orientation="horizontal" >
 
         <TextView
@@ -56,9 +57,10 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:paddingBottom="10dp"
-            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:paddingTop="5dp"
             android:text="YOUR STORIES"
+            android:textColor="#ABABAB"
             android:textStyle="bold" />
     </LinearLayout>
 

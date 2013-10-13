@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -218,11 +219,8 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			break;
 
 		case R.id.newStorySliding:
-			listButton.performClick();
-			story = null;
-			Helper.buildUIMain(HomeActivity.this, story);
-			Helper.modeEdit(HomeActivity.this, viewGroup);
-
+			ProgressDialog.show(HomeActivity.this, null, "Loading");
+			
 			// routes to main activity
 			finish();
 			Intent intent = getIntent();

@@ -9,6 +9,7 @@ import org.joda.time.format.DateTimeFormatter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -50,6 +51,7 @@ public class Helper {
 		return story;
 	}
 
+	
 	public static int getBubbleIndex(int index, ViewGroup viewGroup) {
 		if(viewGroup == null) return 0; 
 		return index + viewGroup.getChildCount() - Helper.OFFSET_VIEWGROUP;

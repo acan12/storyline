@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,10 +49,11 @@ public class AdapterHelper {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				ImageButton listButton = (ImageButton) a
-						.findViewById(R.id.menuListButton);
-				listButton.performClick();
+//				ImageButton listButton = (ImageButton) a
+//						.findViewById(R.id.menuListButton);
+//				listButton.performClick();
 
+				ProgressDialog.show(a, null, "Loading");
 				Story selectedStory = (Story) adapter.getItem(position);
 
 				Helper.buildUIMain(a, selectedStory);
