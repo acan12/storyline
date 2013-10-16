@@ -2,7 +2,7 @@ package app.xzone.storyline.model;
 
 import java.io.Serializable;
 
-public class Event extends BaseModel implements Serializable {
+public class Event extends BaseModel implements Serializable, Cloneable {
 	private int id;
 	private String name;
 	private String message;
@@ -26,6 +26,12 @@ public class Event extends BaseModel implements Serializable {
 	private long startDate;
 
 	private Story story;
+	
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
 
 	/**
 	 * @return the id

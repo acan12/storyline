@@ -9,7 +9,6 @@ import org.joda.time.format.DateTimeFormatter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -23,6 +22,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import app.xzone.storyline.HomeActivity;
@@ -47,13 +47,17 @@ public class Helper {
 		if (story == null) {
 			story = new Story();
 		}
-
 		return story;
 	}
 
-	
+	public static Story getStoryFromTag(Activity a) {
+		View title = (View) a.findViewById(R.id.titleStory);
+		return (Story) title.getTag();
+	}
+
 	public static int getBubbleIndex(int index, ViewGroup viewGroup) {
-		if(viewGroup == null) return 0; 
+		if (viewGroup == null)
+			return 0;
 		return index + viewGroup.getChildCount() - Helper.OFFSET_VIEWGROUP;
 	}
 
@@ -82,6 +86,99 @@ public class Helper {
 			tv.setText(TimeUtil.dateFormat(
 					TimeUtil.fromEpochFormat(story.getEndDate())).toString());
 
+	}
+
+	public static void buildUIStoryPopup(Story s, final Dialog dialog,
+			final Activity a) {
+		if (s != null) {
+			EditText t = (EditText) dialog.findViewById(R.id.valueNameStory);
+			t.setText(s.getName());
+			t = (EditText) dialog.findViewById(R.id.valueDescriptionStory);
+			t.setText(s.getDescription());
+
+			TextView tv = (TextView) dialog.findViewById(R.id.valueStartDate);
+			tv.setText(TimeUtil.dateFormat(
+					TimeUtil.fromEpochFormat(s.getStartDate()),
+					"EEE MMM d, yyyy"));
+			tv = (TextView) dialog.findViewById(R.id.valueStartTime);
+			tv.setText(TimeUtil.dateFormat(
+					TimeUtil.fromEpochFormat(s.getStartDate()), "k:mm a"));
+
+			tv = (TextView) dialog.findViewById(R.id.valueEndDate);
+			tv.setText(TimeUtil.dateFormat(
+					TimeUtil.fromEpochFormat(s.getEndDate()), "EEE MMM d, yyyy"));
+			tv = (TextView) dialog.findViewById(R.id.valueEndTime);
+			tv.setText(TimeUtil.dateFormat(
+					TimeUtil.fromEpochFormat(s.getEndDate()), "k:mm a"));
+
+		}
+
+		// pick date
+		LinearLayout ll;
+		ll = (LinearLayout) dialog.findViewById(R.id.pickDate);
+		ll.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Helper.showDatePicker(dialog.getContext(),
+						dialog.findViewById(R.id.valueStartDate));
+			}
+		});
+
+		// pick time
+		ll = (LinearLayout) dialog.findViewById(R.id.pickTime);
+		ll.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Helper.showTimePicker(dialog.getContext(),
+						dialog.findViewById(R.id.valueStartTime));
+			}
+		});
+
+		// pick date end
+		ll = (LinearLayout) dialog.findViewById(R.id.pickDateEnd);
+		ll.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Helper.showDatePicker(dialog.getContext(),
+						dialog.findViewById(R.id.valueEndDate));
+			}
+		});
+
+		// pick time end
+		ll = (LinearLayout) dialog.findViewById(R.id.pickTimeEnd);
+		ll.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Helper.showTimePicker(dialog.getContext(),
+						dialog.findViewById(R.id.valueEndTime));
+			}
+		});
+
+		// submit button
+		Button okButton = (Button) dialog.findViewById(R.id.submitDateButton);
+		okButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Story s = null;
+				try {
+					s = Helper.buildFromDateTimeStory(s, dialog);
+
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				if (s != null)
+					Helper.buildUIMain(a, s);
+
+				dialog.dismiss();
+			}
+		});
 	}
 
 	public static Story buildFromDateTimeStory(Story story, Dialog dialog)
@@ -173,7 +270,6 @@ public class Helper {
 		TextView mode = (TextView) ac.findViewById(R.id.mode);
 		mode.setTag(MODE_NORMAL);
 
-		
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(
 				R.drawable.paper_plane));
@@ -190,9 +286,7 @@ public class Helper {
 		if (viewGroup != null) {
 			v = (View) ac.findViewById(R.id.bubbleEvent);
 			v.setClickable(false);
-			
-			Button deleteEvent = (Button) ac.findViewById(R.id.delete_event);
-			deleteEvent.setVisibility(View.VISIBLE);
+
 		}
 		v = ac.findViewById(R.id.addDateStoryButton);
 		v.setVisibility(View.GONE);
@@ -205,6 +299,14 @@ public class Helper {
 		if (viewGroup != null) {
 			View bubble = ac.findViewById(R.id.body_content);
 			bubble.setVisibility(View.GONE);
+			
+			
+			Button deleteEvent;
+			for (int i = 0; i < getBubbleIndex(0, viewGroup); i++) {
+				deleteEvent = (Button) viewGroup.getChildAt(i + 1)
+						.findViewById(R.id.delete_event);
+				deleteEvent.setVisibility(View.VISIBLE);
+			}
 		}
 
 	}
@@ -212,7 +314,7 @@ public class Helper {
 	public static void modeEdit(final Activity ac, ViewGroup viewGroup) {
 		TextView mode = (TextView) ac.findViewById(R.id.mode);
 		mode.setTag(MODE_EDIT);
-		
+
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(R.drawable.trash));
 		sb.setOnClickListener(new OnClickListener() {
@@ -272,10 +374,16 @@ public class Helper {
 		v.setVisibility(View.VISIBLE);
 		v = ac.findViewById(R.id.addEventButton);
 		v.setVisibility(View.VISIBLE);
-		
-		if(viewGroup != null){
-			Button deleteEvent = (Button) ac.findViewById(R.id.delete_event);
-			deleteEvent.setVisibility(View.INVISIBLE);
+
+		if (viewGroup != null) {
+
+			Button deleteEvent;
+			for (int i = 0; i < getBubbleIndex(0, viewGroup); i++) {
+				deleteEvent = (Button) viewGroup.getChildAt(i + 1)
+						.findViewById(R.id.delete_event);
+				deleteEvent.setVisibility(View.INVISIBLE);
+			}
+
 		}
 
 		// show pointer add new event button
@@ -285,10 +393,10 @@ public class Helper {
 
 	}
 
-	public View getBubbleEvent(ViewGroup viewGroup, int position) {
+	public static View getBubbleEvent(ViewGroup viewGroup, int position) {
 		int pos = position + OFFSET_VIEWGROUP;
 
-		return viewGroup.getChildAt(position);
+		return viewGroup.getChildAt(pos);
 	}
 
 	public static int getCurrentMode(Activity a) {

@@ -1,15 +1,11 @@
 package app.xzone.storyline.helper;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang.SerializationUtils;
-
 import android.app.Activity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,22 +16,12 @@ import app.xzone.storyline.util.TimeUtil;
 
 public class EventHelper {
 
-	public static ArrayList<Event> getSingletonArray(ArrayList<Event> collection){
-		
-		if(collection == null) collection = new ArrayList<Event>();
-		
-		return collection;
-	}
-	
 	public static Event getEventFromTag(Activity a) {
 		View v = a.findViewById(R.id.titleFieldEvent);
 		Event e = (Event) v.getTag();
 
 		if (e == null)
 			return null;
-		// save last saved event object
-//		e.setLastSavedObject((Event) SerializationUtils.clone(e));
-
 		return e;
 	}
 
@@ -111,6 +97,5 @@ public class EventHelper {
 		tv02.setText(TimeUtil.dateFormat(date, "k:mm a"));
 
 	}
-
 
 }

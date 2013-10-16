@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import app.xzone.storyline.HomeActivity;
 import app.xzone.storyline.R;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.adapter.LazyAdapter;
@@ -53,16 +54,20 @@ public class AdapterHelper {
 //						.findViewById(R.id.menuListButton);
 //				listButton.performClick();
 
-				ProgressDialog.show(a, null, "Loading");
+				
 				Story selectedStory = (Story) adapter.getItem(position);
-
-				Helper.buildUIMain(a, selectedStory);
-
+				
+				ProgressDialog pdialog = ProgressDialog.show(a, null, "Loading Story");
+				
+				
 				// routes to main activity
 				a.finish();
 				Intent intent = a.getIntent();
 				intent.putExtra("app.story", selectedStory);
+				
+				
 				a.startActivity(intent);
+//				pd.dismiss();
 			}
 
 		});
@@ -71,7 +76,7 @@ public class AdapterHelper {
 	public static ViewGroup updateBubbleEvent(final Activity a,
 			final Event event) {
 
-		int pointerNo = 0;
+		int pointerNo = 0; 
 
 		View vi = event.getView();
 
@@ -150,7 +155,7 @@ public class AdapterHelper {
 	}
 
 	public static ViewGroup buildBubbleEventAdapter(final Activity a,
-			final Event event) {
+			final Event event, boolean showRemoveEvent) {
 		int pointerNo = 0;
 
 		LayoutInflater inflater = (LayoutInflater) a.getApplicationContext()
@@ -185,6 +190,7 @@ public class AdapterHelper {
 
 		final View vi2 = vi;
 		Button deleteEvent = (Button) vi.findViewById(R.id.delete_event);
+		if(showRemoveEvent) deleteEvent.setVisibility(View.VISIBLE);
 		deleteEvent.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -208,7 +214,6 @@ public class AdapterHelper {
 								Event ev = (Event) bubbleTitle.getTag();
 								Story st = ev.getStory();
 								
-								System.out.println("----- story :"+st.getName());
 								// remove event
 								if(db.deleteEventRecord(ev.getId())){
 									// show success notification

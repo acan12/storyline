@@ -157,7 +157,7 @@ public class Story extends BaseModel implements Serializable {
 		this.shared = shared;
 	}
 
-	public boolean isExist() {
+	public boolean hasObject() {
 		return (this.getId() > 0);
 	}
 

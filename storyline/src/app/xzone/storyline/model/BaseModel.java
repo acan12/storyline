@@ -9,6 +9,8 @@ public class BaseModel extends Object {
 	protected Object lastSavedObject;
 	
 
+	
+	
 	/**
 	 * @return the todo
 	 */
