@@ -194,7 +194,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 			story.setEndDate(Long.parseLong(mCursor.getString(7)));
 			story.setEndTime(mCursor.getString(8));
 			
-			String q = "SELECT * FROM events where event_story = "+story.getId()+" ORDER BY id";
+			String q = "SELECT * FROM events where event_story = "+story.getId()+" ORDER BY start_date";
 			
 			Cursor c = sqliteDB.rawQuery(q, null);
 			
@@ -210,7 +210,8 @@ public class DBAdapter extends SQLiteOpenHelper {
 				event.setLocname(c.getString(c.getColumnIndex("locname")));
 				event.setLat(c.getLong(c.getColumnIndex("lat")));
 				event.setLng(c.getLong(c.getColumnIndex("lng")));
-			
+				event.setStartDate(c.getLong(c.getColumnIndex("start_date")));
+				
 				// set event relation to story
 				event.setStory(story);
 

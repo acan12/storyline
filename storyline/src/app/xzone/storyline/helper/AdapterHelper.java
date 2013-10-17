@@ -29,6 +29,7 @@ import app.xzone.storyline.adapter.LazyAdapter;
 import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
+import app.xzone.storyline.util.TimeUtil;
 
 public class AdapterHelper {
 	private static ListView list;
@@ -143,9 +144,9 @@ public class AdapterHelper {
 		// set bubble note
 		note.setText(event.getMessage());
 		// set bubble date
-		date.setTextSize(8f);
-		date.setTextColor(R.color.yellow);
-		date.setText("7 Aug 2013 10:15 AM");
+		
+		date.setTextSize(12f);
+		date.setText(TimeUtil.dateFormat( TimeUtil.fromEpochFormat(event.getStartDate())) );
 		
 
 		View bubble = a.findViewById(R.id.body_content);
@@ -299,9 +300,10 @@ public class AdapterHelper {
 		// set bubble note
 		note.setText(event.getMessage());
 		// set bubble date
+		
+		
 		date.setTextSize(12f);
-		date.setTextColor(R.color.yellow);
-		date.setText("7 Aug 2013 10:15 AM");
+		date.setText(TimeUtil.dateFormat(  TimeUtil.fromEpochFormat(event.getStartDate())) );
 
 		View bubble = a.findViewById(R.id.body_content);
 		ViewGroup parent = (ViewGroup) bubble.getParent();

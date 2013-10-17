@@ -1,5 +1,6 @@
 package app.xzone.storyline;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -149,6 +150,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	public void renderTimeline(ArrayList<Event> items) {
 		
 		for (int i = 0; i < items.size(); i++) {
+			
 			viewGroup = AdapterHelper.buildBubbleEventAdapter(this,
 					items.get(i), true);
 		}
@@ -387,13 +389,14 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 				Event e = null;
 				try {
 					e = (Event) event.clone();
-				} catch (CloneNotSupportedException ex) {
+				
+					// update / modify event data
+					EventHelper.buildEvent(this, event, story);
+					
+				} catch (Exception ex) {
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
 				}
-				
-				// update / modify event data
-				EventHelper.buildEvent(this, event, story);
 				
 				
 				viewGroup = AdapterHelper.updateBubbleEvent(this, event);
@@ -406,7 +409,12 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			} else {
 				
 				// event handler for save event to storage
-				event = EventHelper.buildEvent(this, (event == null) ? new Event() : event, story);
+				try {
+					event = EventHelper.buildEvent(this, (event == null) ? new Event() : event, story);
+				} catch (ParseException ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+				}
 				viewGroup = AdapterHelper.buildBubbleEventAdapter(this, event, false);
 				
 				events.add(event);

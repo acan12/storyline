@@ -1,5 +1,6 @@
 package app.xzone.storyline.helper;
 
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ public class EventHelper {
 		v.setTag(obj);
 	}
 
-	public static Event buildEvent(Activity a, Event event, Story story) {
+	public static Event buildEvent(Activity a, Event event, Story story) throws ParseException {
 
 		EditText t01 = (EditText) a.findViewById(R.id.titleFieldEvent);
 		EditText t02 = (EditText) a.findViewById(R.id.messageFieldEvent);
@@ -38,6 +39,8 @@ public class EventHelper {
 		Spinner sp02 = (Spinner) a.findViewById(R.id.transportSpinnerEvent);
 
 		TextView location = (TextView) a.findViewById(R.id.locationEvent);
+		TextView dateEvent = (TextView) a.findViewById(R.id.valueDateEvent);
+		TextView timeEvent = (TextView) a.findViewById(R.id.valueTimeEvent);
 
 		event.setView(event.getView());
 
@@ -46,6 +49,13 @@ public class EventHelper {
 		event.setCategory(sp01.getSelectedItem().toString());
 		event.setTransportation(sp02.getSelectedItem().toString());
 		event.setLocname(location.getText().toString());
+		
+		int hour = Integer
+				.parseInt(timeEvent.getText().toString().split(":")[0]);
+		int minute = Integer
+				.parseInt(timeEvent.getText().toString().split(":")[1].split(" ")[0]);
+		event.setStartDate(TimeUtil.toEpochFormat(dateEvent.getText().toString(),
+				hour, minute));
 
 		event.setStory(story);
 

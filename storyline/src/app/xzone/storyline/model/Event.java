@@ -22,7 +22,7 @@ public class Event extends BaseModel implements Serializable, Cloneable {
 	private double lat;
 	private double lng;
 
-	// Date Time to start & end
+	// Date Time to start in EPOCH Format
 	private long startDate;
 
 	private Story story;
