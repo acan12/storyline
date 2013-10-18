@@ -33,13 +33,16 @@
                     android:src="@drawable/clock_black_small" />
 
                 <TextView
-                    android:id="@+id/time_note"
+                    android:id="@+id/date_note"
                     android:layout_width="180dip"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="25dp"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/purple" />
+                    android:layout_marginTop="5dp"
+                    android:text="Mon 12 July 2013"
+                    android:textStyle="bold"
+                    android:textColor="@color/plum" />
+                
 
                 <LinearLayout
                     android:id="@+id/bubble_header_right"
@@ -60,7 +63,14 @@
             </LinearLayout>
 
             <!-- info bottom section -->
-
+			<TextView
+			    android:id="@+id/time_note"
+                android:layout_width="180dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="-10dp"
+                android:textStyle="italic"
+                android:textColor="@color/plum" />
             <LinearLayout
                 android:id="@+id/bottom_line"
                 android:layout_width="fill_parent"

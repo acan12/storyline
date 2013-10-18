@@ -14,6 +14,8 @@ public class TimeUtil {
 	}
 	
 	public static String dateFormat(Date date, String format){
+		if(date == null) return "";
+		
 		DateFormat df = new SimpleDateFormat(format);
 		return df.format(date);
 	}
@@ -40,6 +42,7 @@ public class TimeUtil {
 	}
 	
 	public static Date fromEpochFormat(long epoch){
+		if(epoch == 0) return null;
 		return new Date(epoch);
 	}
 }

@@ -58,7 +58,7 @@ public class AdapterHelper {
 				
 				Story selectedStory = (Story) adapter.getItem(position);
 				
-				ProgressDialog pdialog = ProgressDialog.show(a, null, "Loading Story");
+				ProgressDialog pdialog = ProgressDialog.show(a, null, "Loading ...");
 				
 				
 				// routes to main activity
@@ -107,7 +107,8 @@ public class AdapterHelper {
 		ImageView trans = (ImageView) vi.findViewById(R.id.transportation);
 		TextView loc = (TextView) vi.findViewById(R.id.location);
 		TextView note = (TextView) vi.findViewById(R.id.bubble_note);
-		TextView date = (TextView) vi.findViewById(R.id.time_note);
+		TextView date = (TextView) vi.findViewById(R.id.date_note);
+		TextView time = (TextView) vi.findViewById(R.id.time_note);
 
 		// set object event into element
 		title.setTag(event);
@@ -145,8 +146,10 @@ public class AdapterHelper {
 		note.setText(event.getMessage());
 		// set bubble date
 		
-		date.setTextSize(12f);
-		date.setText(TimeUtil.dateFormat( TimeUtil.fromEpochFormat(event.getStartDate())) );
+		date.setTextSize(14f);
+		date.setText(TimeUtil.dateFormat(  TimeUtil.fromEpochFormat(event.getStartDate()), "EEE MMM d, yyyy" ) );
+		time.setTextSize(12f);
+		time.setText(TimeUtil.dateFormat(  TimeUtil.fromEpochFormat(event.getStartDate()), "k:mm a") );
 		
 
 		View bubble = a.findViewById(R.id.body_content);
@@ -264,7 +267,8 @@ public class AdapterHelper {
 		ImageView trans = (ImageView) vi.findViewById(R.id.transportation);
 		TextView loc = (TextView) vi.findViewById(R.id.location);
 		TextView note = (TextView) vi.findViewById(R.id.bubble_note);
-		TextView date = (TextView) vi.findViewById(R.id.time_note);
+		TextView date = (TextView) vi.findViewById(R.id.date_note);
+		TextView time = (TextView) vi.findViewById(R.id.time_note);
 
 		// set object event into element
 		title.setTag(event);
@@ -302,8 +306,10 @@ public class AdapterHelper {
 		// set bubble date
 		
 		
-		date.setTextSize(12f);
-		date.setText(TimeUtil.dateFormat(  TimeUtil.fromEpochFormat(event.getStartDate())) );
+		date.setTextSize(14f);
+		date.setText(TimeUtil.dateFormat(  TimeUtil.fromEpochFormat(event.getStartDate()), "EEE MMM d, yyyy" ) );
+		time.setTextSize(12f);
+		time.setText(TimeUtil.dateFormat(  TimeUtil.fromEpochFormat(event.getStartDate()), "k:mm a") );
 
 		View bubble = a.findViewById(R.id.body_content);
 		ViewGroup parent = (ViewGroup) bubble.getParent();
