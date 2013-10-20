@@ -12,14 +12,10 @@
         android:layout_height="wrap_content"
         android:padding="3dip"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/image_bg"
+        android:background="@drawable/calendar_yellow"
         android:layout_marginRight="5dip">
  
-        <ImageView
-            android:id="@+id/list_image"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:src="@drawable/demo_pic"/>
+        
  
     </LinearLayout>
     
@@ -30,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Rihanna Love the way lie"
+        android:text="title text"
         android:textColor="#040404"
         android:typeface="sans"
         android:textSize="15dip"
@@ -46,7 +42,7 @@
         android:textSize="10dip"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Just gona stand there and ..." />
+        android:text="description text" />
     
      <!-- Rightend Duration -->
     <TextView

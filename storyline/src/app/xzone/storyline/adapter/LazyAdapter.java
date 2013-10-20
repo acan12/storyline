@@ -55,7 +55,7 @@ public class LazyAdapter extends BaseAdapter {
         TextView title = (TextView)vi.findViewById(R.id.title); // title
         TextView artist = (TextView)vi.findViewById(R.id.artist); // artist name
         TextView duration = (TextView)vi.findViewById(R.id.duration); // duration
-        ImageView thumb_image=(ImageView)vi.findViewById(R.id.list_image); // thumb image
+//        ImageView thumbnail =(ImageView)vi.findViewById(R.id.thumbnail); // thumb image
  
         
         Story s = data.get(position);
@@ -64,6 +64,7 @@ public class LazyAdapter extends BaseAdapter {
         title.setText(s.getName());
         artist.setText(s.getDescription());
         duration.setText( TimeUtil.dateFormat(TimeUtil.fromEpochFormat(s.getStartDate()), "MMM d, yyyy") );
+//        thumbnail.
 
         return vi;
 	}
