@@ -28,6 +28,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.component.Sliding;
+import app.xzone.storyline.component.SlidingUpPanelLayout;
+import app.xzone.storyline.component.SlidingUpPanelLayout.PanelSlideListener;
 import app.xzone.storyline.helper.AdapterHelper;
 import app.xzone.storyline.helper.EventHelper;
 import app.xzone.storyline.helper.Helper;

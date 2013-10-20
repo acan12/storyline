@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class TimeUtil {
+	
 	public static String dateFormat(Date date){
 		DateFormat df = new SimpleDateFormat("EEE MMM d, yyyy k:mm a");
 		return df.format(date);

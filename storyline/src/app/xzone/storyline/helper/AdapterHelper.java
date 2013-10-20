@@ -72,15 +72,23 @@ public class AdapterHelper {
 			}
 
 		});
-	}
+	}  
 
 	public static ViewGroup updateBubbleEvent(final Activity a,
 			final Event event) {
-
+ 
 		int pointerNo = 0; 
 
 		View vi = event.getView();
 
+		// set pointer_full show information event already pass
+		ImageView pointer = (ImageView) vi.findViewById(R.id.pointer);		
+		if(event.getStartDate() <= System.currentTimeMillis()){
+			pointer.setImageResource(R.drawable.pointer_fill);
+		}else{
+			pointer.setImageResource(R.drawable.pointer);
+		}
+		
 		vi.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -193,6 +201,13 @@ public class AdapterHelper {
 		});
 
 		final View vi2 = vi;
+		
+		// set pointer_full show information event already pass
+		ImageView pointer = (ImageView) vi.findViewById(R.id.pointer);		
+		if(event.getStartDate() <= System.currentTimeMillis()){
+			pointer.setImageResource(R.drawable.pointer_fill);
+		}
+		
 		Button deleteEvent = (Button) vi.findViewById(R.id.delete_event);
 		if(showRemoveEvent) deleteEvent.setVisibility(View.VISIBLE);
 		deleteEvent.setOnClickListener(new OnClickListener() {

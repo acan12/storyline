@@ -392,12 +392,12 @@ public class Helper {
 		bubble.setVisibility(View.VISIBLE);
 
 	}
-
-	public static View getBubbleEvent(ViewGroup viewGroup, int position) {
-		int pos = position + OFFSET_VIEWGROUP;
-
-		return viewGroup.getChildAt(pos);
-	}
+//
+//	public static View getBubbleEvent(ViewGroup viewGroup, int position) {
+//		int pos = position + OFFSET_VIEWGROUP;
+//
+//		return viewGroup.getChildAt(pos);
+//	}
 
 	public static int getCurrentMode(Activity a) {
 		TextView mode = (TextView) a.findViewById(R.id.mode);
