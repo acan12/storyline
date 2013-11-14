@@ -16,11 +16,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,12 +28,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.component.Sliding;
-import app.xzone.storyline.component.SlidingUpPanelLayout;
-import app.xzone.storyline.component.SlidingUpPanelLayout.PanelSlideListener;
 import app.xzone.storyline.helper.AdapterHelper;
 import app.xzone.storyline.helper.EventHelper;
 import app.xzone.storyline.helper.Helper;
-import app.xzone.storyline.helper.ImageAdapter;
 import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
 import app.xzone.storyline.util.StringManipulation;
@@ -42,7 +39,7 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 
 public class HomeActivity extends SlidingActivity implements OnClickListener {
-
+ 
 	private Sliding popup;
 	private ImageButton listButton;
 	private ImageButton storyButton;
@@ -55,20 +52,20 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	private DBAdapter db = null;
 
 	private Story story;
-	
-	private ArrayList<Event> events;  // list of events consists previous event + draft event
+
+	private ArrayList<Event> events; // list of events consists previous event +
+										// draft event
 	private ArrayList<Event> prevEvents; // list of events consists saved event
 	private ViewGroup viewGroup;
 	private Dialog dialog;
-	
+
 	int key1 = 0;
-	int key2 = 0;	
-	
-	
+	int key2 = 0;
+	private boolean isPanelShown;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 
 		// initialize components
 		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
@@ -78,7 +75,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		getSlidingMenu().setSecondaryMenu(R.layout.sliding_recomendation);
 		getSlidingMenu().setBehindOffset(80);
 
-		popup = (Sliding) findViewById(R.id.sliding1);
+		popup = (Sliding) findViewById(R.id.sliding);
 		popup.setVisibility(View.GONE);
 
 		listButton = (ImageButton) findViewById(R.id.menuListButton);
@@ -109,13 +106,15 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		// set array event collection
 		events = (ArrayList<Event>) prevEvents.clone();
-		
+
 		// if null will go to new page in mode edit
 		if (story == null || story.getEvents() == null) {
 			Helper.modeEdit(this, viewGroup);
 		} else {
 			renderTimeline(story.getEvents());
 		}
+		
+		isPanelShown = false;
 
 	}
 
@@ -148,11 +147,11 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		}
 
 	}
-	
+
 	public void renderTimeline(ArrayList<Event> items) {
-		
+
 		for (int i = 0; i < items.size(); i++) {
-			
+
 			viewGroup = AdapterHelper.buildBubbleEventAdapter(this,
 					items.get(i), true);
 		}
@@ -162,45 +161,35 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		bubble.setVisibility(View.GONE);
 	}
 
-	
-	public void renderEmptyTimeline(){
+	public void renderEmptyTimeline() {
 		Helper.modeNormal(this, viewGroup);
-		
+
 		View bubble = findViewById(R.id.body_content);
 		bubble.setVisibility(View.GONE);
 	}
-	
-	// Pick location from map view
-	public void pickLocation(View v) {
-		Intent intent = new Intent(this, LocationPickerActivity.class);
-		startActivityForResult(intent, Helper.REQUEST_CODE_PICK_LOCATION);
-	}
 
-	// Pick image from camera event
-	public void pickCamera(View v) {
-		ImageAdapter.takePhoto(HomeActivity.this);
-	}
 	
-	
+
 	// event handler when cancel edit button clicked
 	public void saveEdit(View v) {
-		
+
 		story = (Story) Helper.getStoryFromTag(this);
 
 		// enter code show alert => your story not valid
-		if (story == null) return;
+		if (story == null)
+			return;
 
 		// save your story
-		if (story.hasObject())
+		if (story.hasObject()){
 			db.updateStoryRecord(story);
-		else
+		}else{
 			story.setId((int) db.insertStoryRecord(story));
-
-		
-		
+		}
 		// make empty collection for ready to fill
-		if(prevEvents != null) { prevEvents.clear(); }
-		
+		if (prevEvents != null) {
+			prevEvents.clear();
+		}
+
 		// insert / update event to db
 		for (int i = 0; i < events.size(); i++) {
 			Event e = (Event) events.get(i);
@@ -210,54 +199,53 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			} else {
 				e.setId((int) db.insertEventRecord(e, story.getId()));
 			}
-			
+
 			prevEvents.add(e);
 		}
-		
+
 		Helper.modeNormal(this, viewGroup);
 		AdapterHelper.buildListViewAdapter(HomeActivity.this);
 
 	}
-	
-	
+
 	public void cancelEdit(View v) {
 		TextView title = (TextView) findViewById(R.id.titleStory);
 
 		story = (Story) title.getTag();
-		
+
 		// revert into last event data
 		rollbackTimeline(this, prevEvents);
-		
+
 		// rollback events as global var into equal with saved events
 		events.clear();
-		for(int i=0; i< prevEvents.size(); i++){
+		for (int i = 0; i < prevEvents.size(); i++) {
 			events.add(prevEvents.get(i));
 		}
 	}
-	
+
 	public void showNewEvent(View v) {
 
-		Sliding popup = (Sliding) findViewById(R.id.sliding1);
+		Sliding popup = (Sliding) findViewById(R.id.sliding);
 		popup.setVisibility(View.VISIBLE);
 		EventHelper.buildUISliding(this, null);
 	}
-	
+
 	// rollback configuration before modified, if cancel
 	public void rollbackTimeline(Activity a, ArrayList<Event> prevs) {
-		if(prevs.size() > 0){
-			
-			if(events.size() > 0) viewGroup.removeViews(1, events.size());
+		if (prevs.size() > 0) {
+
+			if (events.size() > 0)
+				viewGroup.removeViews(1, events.size());
 			renderTimeline(prevEvents);
 		} else {
 			renderEmptyTimeline();
 		}
 	}
-	
-	
+
 	// event handler when notif icon clicked
 	public void addStoryPopup(View v) {
 		story = Helper.getStoryFromTag(this);
-		
+
 		LinearLayout ll = null;
 		dialog = new Dialog(this);
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
@@ -266,13 +254,10 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		dialog.show();
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON,
 				R.drawable.paper_plane);
-		
+
 		Helper.buildUIStoryPopup(story, dialog, this);
 	}
-	
-	
-	
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -314,8 +299,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			}
 		}
 	}
-	
-	
+
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		MenuItem item01 = menu.add("Map").setOnMenuItemClickListener(
@@ -345,10 +329,10 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		item02.setIcon(R.drawable.list);
 		return true;
 	}
-	
+
 	@Override
 	public void onClick(View v) {
-		
+
 		switch (v.getId()) {
 		case R.id.menuListButton:
 			// put your code here
@@ -361,7 +345,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		case R.id.newStorySliding:
 			ProgressDialog.show(HomeActivity.this, null, "Loading");
-			
+
 			// routes to main activity
 			finish();
 			Intent intent = getIntent();
@@ -384,44 +368,45 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 			// check if existed event or new event
 			Event event = EventHelper.getEventFromTag(this);
-			
+
 			if (event != null) {
-				
+
 				// create duplicate object to keep save value not modified yet
 				Event e = null;
 				try {
 					e = (Event) event.clone();
-				
+
 					// update / modify event data
 					EventHelper.buildEvent(this, event, story);
-					
+
 				} catch (Exception ex) {
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
 				}
-				
-				
+
 				viewGroup = AdapterHelper.updateBubbleEvent(this, event);
 
 				// replace with modified event
 				int index = events.indexOf(event);
-				
+
 				events.set(index, event);
 				prevEvents.set(index, e);
 			} else {
-				
+
 				// event handler for save event to storage
 				try {
-					event = EventHelper.buildEvent(this, (event == null) ? new Event() : event, story);
+					event = EventHelper.buildEvent(this,
+							(event == null) ? new Event() : event, story);
 				} catch (ParseException ex) {
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
 				}
-				viewGroup = AdapterHelper.buildBubbleEventAdapter(this, event, false);
-				
+				viewGroup = AdapterHelper.buildBubbleEventAdapter(this, event,
+						false);
+
 				events.add(event);
 			}
-			
+
 			// reset object event
 			event = null;
 			break;
@@ -432,9 +417,35 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			popup.setVisibility(View.GONE);
 
 			break;
-		
+
 		}
 
 	}
 
+	// Pick location from map view
+	public void pickLocation(View v) {
+		Intent intent = new Intent(this, LocationPickerActivity.class);
+		startActivityForResult(intent, Helper.REQUEST_CODE_PICK_LOCATION);
+	}
+
+	// Pick image from camera event
+	public void pickCamera(View v) {
+		// ImageAdapter.takePhoto(HomeActivity.this);
+				
+				
+		if(!isPanelShown) {
+			
+			Helper.modeEdit(HomeActivity.this, viewGroup);
+	        
+	        isPanelShown = true;
+	    }
+	    else {
+	        // Hide the Panel
+	        Helper.modeNormal(HomeActivity.this, viewGroup);
+	        isPanelShown = false;
+	    }
+		
+		
+		
+	}	
 }

@@ -1,139 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="vertical" >
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/header" />
+      <include
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          layout="@layout/header" />
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/sliding_menutop_layout" />
+      <include
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          layout="@layout/sliding_menutop_layout" />
 
-    <TextView
-        android:id="@+id/mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+      <TextView
+          android:id="@+id/mode"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone" />
 
-    <ScrollView
-        android:id="@+id/content"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fillViewport="true"
-        android:isScrollContainer="true" >
+      <ScrollView
+          android:id="@+id/content"
+          android:layout_width="fill_parent"
+          android:layout_height="120dp"
+          android:layout_weight="1"
+          android:fillViewport="true"
+          android:isScrollContainer="true" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/background_color"
-            android:orientation="vertical" >
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="50dp"
+              android:background="@drawable/background_color"
+              android:orientation="vertical" >
 
-            <LinearLayout
-                android:id="@+id/body_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|left" >
+              <LinearLayout
+                  android:id="@+id/body_header"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center_vertical|left" >
 
-                <ImageView
-                    android:id="@+id/startPoint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/start_point" />
+                  <ImageView
+                      android:id="@+id/startPoint"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:src="@drawable/start_point" />
 
-                <ImageButton
-                    android:id="@+id/addDateStoryButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dip"
-                    android:onClick="addStoryPopup"
-                    android:src="@drawable/notif"
-                    android:visibility="gone" />
+                  <ImageButton
+                      android:id="@+id/addDateStoryButton"
+                      android:layout_width="wrap_content"
+                      android:layout_height="35dip"
+                      android:onClick="addStoryPopup"
+                      android:src="@drawable/notif"
+                      android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/infoStart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text=""
-                    android:textColor="@color/black" />
-            </LinearLayout>
+                  <TextView
+                      android:id="@+id/infoStart"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="5dp"
+                      android:layout_marginTop="5dp"
+                      android:text=""
+                      android:textColor="@color/black" />
+              </LinearLayout>
 
-            <!-- code handle:start -->
+              <!-- code handle:start -->
 
-            <LinearLayout
-                android:id="@+id/body_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical|left"
-                android:orientation="vertical" >
+              <LinearLayout
+                  android:id="@+id/body_content"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center_vertical|left"
+                  android:orientation="vertical" >
 
-                <!--
-                     <include
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/main_bubble_right_images" />
-                -->
+                  <!--
+                       <include
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      layout="@layout/main_bubble_right_images" />
+                  -->
 
 
-                <!--
-                     <include
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/main_bubble_right" />
-                -->
+                  <!--
+                       <include
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      layout="@layout/main_bubble_right" />
+                  -->
 
-                <include
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/main_add_event" />
-            </LinearLayout>
-            <!-- end -->
+                  <include
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      layout="@layout/main_add_event" />
+              </LinearLayout>
+              <!-- end -->
 
-            <LinearLayout
-                android:id="@+id/body_footer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left" >
+              <LinearLayout
+                  android:id="@+id/body_footer"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="left" >
 
-                <ImageView
-                    android:id="@+id/endPoint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:src="@drawable/end_point" />
+                  <ImageView
+                      android:id="@+id/endPoint"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentLeft="true"
+                      android:layout_alignParentTop="true"
+                      android:src="@drawable/end_point" />
 
-                <ImageButton
-                    android:id="@+id/addDateStoryButton02"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dip"
-                    android:layout_toRightOf="@+id/endPoint"
-                    android:onClick="addStoryPopup"
-                    android:src="@drawable/notif"
-                    android:visibility="gone" />
+                  <ImageButton
+                      android:id="@+id/addDateStoryButton02"
+                      android:layout_width="wrap_content"
+                      android:layout_height="35dip"
+                      android:layout_toRightOf="@+id/endPoint"
+                      android:onClick="addStoryPopup"
+                      android:src="@drawable/notif"
+                      android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/infoEnd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:text=""
-                    android:textColor="@color/black" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+                  <TextView
+                      android:id="@+id/infoEnd"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="5dp"
+                      android:layout_marginTop="5dp"
+                      android:text=""
+                      android:textColor="@color/black" />
+              </LinearLayout>
+          </LinearLayout>
+      </ScrollView>
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        layout="@layout/footer" />
+      <include
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          layout="@layout/footer" />
 
-</LinearLayout>
+  </LinearLayout>

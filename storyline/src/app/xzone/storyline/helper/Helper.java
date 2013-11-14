@@ -1,6 +1,8 @@
 package app.xzone.storyline.helper;
 
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -18,11 +20,14 @@ import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import app.xzone.storyline.HomeActivity;
@@ -62,7 +67,6 @@ public class Helper {
 	}
 
 	public static void buildUIMain(Activity activity, Story story) {
-
 		TextView tv = (TextView) activity.findViewById(R.id.titleStory);
 		tv.setTag(story);
 
@@ -88,51 +92,61 @@ public class Helper {
 
 	}
 
-	public static void buildUIStoryPopup(Story s, final Dialog dialog,
-			final Activity a) {
-		if (s != null) {
+	public static void buildUIStoryPopup(final Story story,
+			final Dialog dialog, final Activity a) {
+		if (story != null) {
 			EditText t = (EditText) dialog.findViewById(R.id.valueNameStory);
-			t.setText(s.getName());
+			t.setText(story.getName());
 			t = (EditText) dialog.findViewById(R.id.valueDescriptionStory);
-			t.setText(s.getDescription());
+			t.setText(story.getDescription());
 
-			TextView tv = (TextView) dialog.findViewById(R.id.valueStartDate);
+			Spinner sp = (Spinner) a.findViewById(R.id.categorySpinnerEvent);
+
+			String[] items = a.getApplication().getResources()
+					.getStringArray(R.array.categoryItems);
+			List<String> list = Arrays.asList(items);
+
+			int pos = list.indexOf(story.getCategory());
+			sp.setSelection(pos);
+
+			TextView tv = (TextView) dialog.findViewById(R.id.valueDateStart);
 			tv.setText(TimeUtil.dateFormat(
-					TimeUtil.fromEpochFormat(s.getStartDate()),
+					TimeUtil.fromEpochFormat(story.getStartDate()),
 					"EEE MMM d, yyyy"));
-			tv = (TextView) dialog.findViewById(R.id.valueStartTime);
+			tv = (TextView) dialog.findViewById(R.id.valueTimeStart);
 			tv.setText(TimeUtil.dateFormat(
-					TimeUtil.fromEpochFormat(s.getStartDate()), "k:mm a"));
+					TimeUtil.fromEpochFormat(story.getStartDate()), "k:mm a"));
 
-			tv = (TextView) dialog.findViewById(R.id.valueEndDate);
+			tv = (TextView) dialog.findViewById(R.id.valueDateEnd);
 			tv.setText(TimeUtil.dateFormat(
-					TimeUtil.fromEpochFormat(s.getEndDate()), "EEE MMM d, yyyy"));
-			tv = (TextView) dialog.findViewById(R.id.valueEndTime);
+					TimeUtil.fromEpochFormat(story.getEndDate()),
+					"EEE MMM d, yyyy"));
+			tv = (TextView) dialog.findViewById(R.id.valueTimeEnd);
 			tv.setText(TimeUtil.dateFormat(
-					TimeUtil.fromEpochFormat(s.getEndDate()), "k:mm a"));
+					TimeUtil.fromEpochFormat(story.getEndDate()), "k:mm a"));
 
 		}
 
 		// pick date
 		LinearLayout ll;
-		ll = (LinearLayout) dialog.findViewById(R.id.pickDate);
+		ll = (LinearLayout) dialog.findViewById(R.id.pickDateStart);
 		ll.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				Helper.showDatePicker(dialog.getContext(),
-						dialog.findViewById(R.id.valueStartDate));
+						dialog.findViewById(R.id.valueDateStart));
 			}
 		});
 
 		// pick time
-		ll = (LinearLayout) dialog.findViewById(R.id.pickTime);
+		ll = (LinearLayout) dialog.findViewById(R.id.pickTimeStart);
 		ll.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				Helper.showTimePicker(dialog.getContext(),
-						dialog.findViewById(R.id.valueStartTime));
+						dialog.findViewById(R.id.valueTimeStart));
 			}
 		});
 
@@ -143,7 +157,7 @@ public class Helper {
 			@Override
 			public void onClick(View v) {
 				Helper.showDatePicker(dialog.getContext(),
-						dialog.findViewById(R.id.valueEndDate));
+						dialog.findViewById(R.id.valueDateEnd));
 			}
 		});
 
@@ -154,34 +168,35 @@ public class Helper {
 			@Override
 			public void onClick(View v) {
 				Helper.showTimePicker(dialog.getContext(),
-						dialog.findViewById(R.id.valueEndTime));
+						dialog.findViewById(R.id.valueTimeEnd));
 			}
 		});
 
 		// submit button
-		Button okButton = (Button) dialog.findViewById(R.id.submitDateButton);
+		Button okButton = (Button) dialog.findViewById(R.id.submitStoryButton);
 		okButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Story s = null;
+				Story story2 = null;
 				try {
-					s = Helper.buildFromDateTimeStory(s, dialog);
-
+					story2 = Helper.buildStoryFromDialog(story, dialog);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
-				if (s != null)
-					Helper.buildUIMain(a, s);
+				System.out.println("---------  s category:"
+						+ story2.getCategory());
+				if (story2 != null)
+					Helper.buildUIMain(a, story2);
 
 				dialog.dismiss();
 			}
 		});
 	}
 
-	public static Story buildFromDateTimeStory(Story story, Dialog dialog)
+	public static Story buildStoryFromDialog(Story story, Dialog dialog)
 			throws ParseException {
 
 		story = singletonStory(story);
@@ -190,10 +205,12 @@ public class Helper {
 		EditText t02 = (EditText) dialog
 				.findViewById(R.id.valueDescriptionStory);
 
-		TextView date01 = (TextView) dialog.findViewById(R.id.valueStartDate);
-		TextView time01 = (TextView) dialog.findViewById(R.id.valueStartTime);
-		TextView date02 = (TextView) dialog.findViewById(R.id.valueEndDate);
-		TextView time02 = (TextView) dialog.findViewById(R.id.valueEndTime);
+		Spinner sp = (Spinner) dialog.findViewById(R.id.categorySpinnerEvent);
+
+		TextView date01 = (TextView) dialog.findViewById(R.id.valueDateStart);
+		TextView time01 = (TextView) dialog.findViewById(R.id.valueTimeStart);
+		TextView date02 = (TextView) dialog.findViewById(R.id.valueDateEnd);
+		TextView time02 = (TextView) dialog.findViewById(R.id.valueTimeEnd);
 
 		if (t01.getText().toString().equals("")
 				|| t02.getText().toString().equals("")
@@ -215,6 +232,7 @@ public class Helper {
 
 		story.setName(t01.getText().toString());
 		story.setDescription(t02.getText().toString());
+		story.setCategory((String) sp.getSelectedItem());
 		story.setStartDate(TimeUtil.toEpochFormat(date01.getText().toString(),
 				hour01, minute01));
 		story.setEndDate(TimeUtil.toEpochFormat(date02.getText().toString(),
@@ -282,7 +300,12 @@ public class Helper {
 		});
 
 		View v = (View) ac.findViewById(R.id.footer);
+		Animation bottomDown = AnimationUtils.loadAnimation(ac,
+				R.anim.bottom_down);
+
+		v.startAnimation(bottomDown);
 		v.setVisibility(View.GONE);
+
 		if (viewGroup != null) {
 			v = (View) ac.findViewById(R.id.bubbleEvent);
 			v.setClickable(false);
@@ -299,8 +322,7 @@ public class Helper {
 		if (viewGroup != null) {
 			View bubble = ac.findViewById(R.id.body_content);
 			bubble.setVisibility(View.GONE);
-			
-			
+
 			Button deleteEvent;
 			for (int i = 0; i < getBubbleIndex(0, viewGroup); i++) {
 				deleteEvent = (Button) viewGroup.getChildAt(i + 1)
@@ -365,7 +387,15 @@ public class Helper {
 		});
 
 		View v = (View) ac.findViewById(R.id.footer);
+		Animation fadeout = AnimationUtils.loadAnimation(ac, R.anim.fadeout);
+		v.setAnimation(fadeout);
+
+		// Show the panel
+		Animation bottomUp = AnimationUtils.loadAnimation(ac, R.anim.bottom_up);
+
+		v.startAnimation(bottomUp);
 		v.setVisibility(View.VISIBLE);
+
 		// v = (View) ac.findViewById(R.id.bubbleEvent);
 		// v.setClickable(true);
 		v = ac.findViewById(R.id.addDateStoryButton);
@@ -392,12 +422,6 @@ public class Helper {
 		bubble.setVisibility(View.VISIBLE);
 
 	}
-//
-//	public static View getBubbleEvent(ViewGroup viewGroup, int position) {
-//		int pos = position + OFFSET_VIEWGROUP;
-//
-//		return viewGroup.getChildAt(pos);
-//	}
 
 	public static int getCurrentMode(Activity a) {
 		TextView mode = (TextView) a.findViewById(R.id.mode);

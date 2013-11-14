@@ -6,18 +6,14 @@
     android:orientation="horizontal"
     android:padding="5dip"  >
     
-    <!--  ListRow Left sied Thumbnail image -->
+    <!--  ListRow Left side Thumbnail image -->
     <LinearLayout android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="3dip"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/calendar_yellow"
-        android:layout_marginRight="5dip">
+        android:layout_marginRight="5dip" />
  
-        
- 
-    </LinearLayout>
     
     <!-- Title Of Song-->
     <TextView

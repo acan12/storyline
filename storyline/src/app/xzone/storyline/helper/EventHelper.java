@@ -35,7 +35,7 @@ public class EventHelper {
 
 		EditText t01 = (EditText) a.findViewById(R.id.titleFieldEvent);
 		EditText t02 = (EditText) a.findViewById(R.id.messageFieldEvent);
-		Spinner sp01 = (Spinner) a.findViewById(R.id.categorySpinnerEvent);
+		
 		Spinner sp02 = (Spinner) a.findViewById(R.id.transportSpinnerEvent);
 
 		TextView location = (TextView) a.findViewById(R.id.locationEvent);
@@ -43,10 +43,8 @@ public class EventHelper {
 		TextView timeEvent = (TextView) a.findViewById(R.id.valueTimeEvent);
 
 		event.setView(event.getView());
-
 		event.setName(t01.getText().toString());
 		event.setMessage(t02.getText().toString());
-		event.setCategory(sp01.getSelectedItem().toString());
 		event.setTransportation(sp02.getSelectedItem().toString());
 		event.setLocname(location.getText().toString());
 		
@@ -72,7 +70,6 @@ public class EventHelper {
 		EditText e01 = (EditText) a.findViewById(R.id.titleFieldEvent);
 		EditText e02 = (EditText) a.findViewById(R.id.messageFieldEvent);
 
-		Spinner sp01 = (Spinner) a.findViewById(R.id.categorySpinnerEvent);
 		Spinner sp02 = (Spinner) a.findViewById(R.id.transportSpinnerEvent);
 
 		TextView tv01 = (TextView) a.findViewById(R.id.valueDateEvent);
@@ -91,14 +88,11 @@ public class EventHelper {
 				.getStringArray(R.array.categoryItems);
 		List<String> list = Arrays.asList(items);
 
-		int pos = list.indexOf(e.getCategory());
-		sp01.setSelection(pos);
-
 		items = a.getApplication().getResources()
 				.getStringArray(R.array.tranportItems);
 		list = Arrays.asList(items);
 
-		pos = list.indexOf(e.getTransportation());
+		int pos = list.indexOf(e.getTransportation());
 		sp02.setSelection(pos);
 
 		Date date = TimeUtil.fromEpochFormat(e.getStartDate());

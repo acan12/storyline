@@ -29,7 +29,6 @@
         
         
         <activity android:name=".HomeActivity"></activity>
-        
         <activity android:name=".EventFormActivity"></activity>
         <activity android:name=".FormActivity"></activity>
         <activity android:name=".DetailActivity"></activity>

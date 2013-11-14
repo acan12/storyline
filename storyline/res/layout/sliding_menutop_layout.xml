@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <app.xzone.storyline.component.Sliding
-        android:id="@+id/sliding1"
+        android:id="@+id/sliding"
         android:layout_width="fill_parent"
         android:layout_height="400dp"
         android:background="#000"
@@ -36,20 +36,7 @@
             android:hint="Message"
             android:inputType="textPostalAddress" />
 
-        <!-- Category -->
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Category" />
-
-        <Spinner
-            android:id="@+id/categorySpinnerEvent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/categoryItems" />
-
+        
         <!-- Transportation -->
 
         <TextView

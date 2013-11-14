@@ -71,26 +71,27 @@
                 android:layout_alignParentTop="true"
                 android:src="@drawable/divider_header" />
 
-            
             <ImageButton
-	            android:id="@+id/pickCameraButton"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_gravity="center_vertical"
-	            android:background="@null"
-	            android:paddingRight="15dp"
-	            android:onClick="pickCamera"
-	            android:src="@drawable/camera" />
-            
+                android:id="@+id/pickCameraButton"
+                android:layout_width="wrap_content"
+                android:layout_height="74dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@null"
+                android:onClick="pickCamera"
+                android:paddingRight="15dp"
+                android:src="@drawable/facebook_icon" />
 
             <ImageButton
                 android:id="@+id/storyButton"
                 android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:layout_height="61dp"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginRight="5dp"
+                android:layout_weight="1"
                 android:background="@null"
                 android:src="@drawable/paper_plane" />
+
         </LinearLayout>
     </RelativeLayout>
 

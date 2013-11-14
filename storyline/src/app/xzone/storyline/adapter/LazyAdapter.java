@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import app.xzone.storyline.R;
+import app.xzone.storyline.helper.StoryHelper;
 import app.xzone.storyline.model.Story;
 import app.xzone.storyline.util.TimeUtil;
 
@@ -55,7 +57,7 @@ public class LazyAdapter extends BaseAdapter {
         TextView title = (TextView)vi.findViewById(R.id.title); // title
         TextView artist = (TextView)vi.findViewById(R.id.artist); // artist name
         TextView duration = (TextView)vi.findViewById(R.id.duration); // duration
-//        ImageView thumbnail =(ImageView)vi.findViewById(R.id.thumbnail); // thumb image
+        LinearLayout thumbnail =(LinearLayout)vi.findViewById(R.id.thumbnail); // thumb image
  
         
         Story s = data.get(position);
@@ -64,7 +66,7 @@ public class LazyAdapter extends BaseAdapter {
         title.setText(s.getName());
         artist.setText(s.getDescription());
         duration.setText( TimeUtil.dateFormat(TimeUtil.fromEpochFormat(s.getStartDate()), "MMM d, yyyy") );
-//        thumbnail.
+        StoryHelper.setImageStoryType(thumbnail, s.getCategory());
 
         return vi;
 	}

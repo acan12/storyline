@@ -47,15 +47,15 @@ public class DBAdapter extends SQLiteOpenHelper {
 			+ DATABASE_TABLE_STORY + "(id integer primary key autoincrement, "
 			+ FIELD_NAME + " text not null, " + FIELD_DESCRIPTION
 			+ " text not null, " + FIELD_STATUS + " integer default 0, "
-			+ FIELD_SHARED + " integer default 0, " + FIELD_START_DATE
-			+ " integer, " + FIELD_START_TIME + " text, " + FIELD_END_DATE
-			+ " integer, " + FIELD_END_TIME + " text); ";
+			+ FIELD_SHARED + " integer default 0, " + FIELD_CATEGORY
+			+ " integer, " + FIELD_START_DATE + " integer, " + FIELD_START_TIME
+			+ " text, " + FIELD_END_DATE + " integer, " + FIELD_END_TIME
+			+ " text); ";
 
 	private static final String TABLE_EVENT_CREATE = "create table "
 			+ DATABASE_TABLE_EVENT + "(id integer primary key autoincrement, "
 			+ FIELD_NAME + " text not null, " + FIELD_MESSAGE
-			+ " text not null, " + FIELD_CATEGORY + " integer, "
-			+ FIELD_TRANSPORT + " text, " + FIELD_STATUS
+			+ " text not null, " + FIELD_TRANSPORT + " text, " + FIELD_STATUS
 			+ " integer default 0, " + FIELD_SHARED + " integer default 0, "
 			+ FIELD_LOCNAME + " text, " + FIELD_LAT + " double, " + FIELD_LNG
 			+ " double, " + FIELD_START_DATE + " integer, " + FIELD_START_TIME
@@ -89,6 +89,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 		initialValues.put(FIELD_DESCRIPTION, story.getDescription());
 		initialValues.put(FIELD_STATUS, story.getStatus());
 		initialValues.put(FIELD_SHARED, story.getShared());
+		initialValues.put(FIELD_CATEGORY, story.getCategory());
 		initialValues.put(FIELD_START_DATE, story.getStartDate());
 		initialValues.put(FIELD_START_TIME, story.getStartTime());
 		initialValues.put(FIELD_END_DATE, story.getEndDate());
@@ -105,7 +106,6 @@ public class DBAdapter extends SQLiteOpenHelper {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(FIELD_NAME, event.getName());
 		initialValues.put(FIELD_MESSAGE, event.getMessage());
-		initialValues.put(FIELD_CATEGORY, event.getCategory());
 		initialValues.put(FIELD_TRANSPORT, event.getTransportation());
 		initialValues.put(FIELD_STATUS, event.getStatus());
 		initialValues.put(FIELD_SHARED, event.getShared());
@@ -113,9 +113,8 @@ public class DBAdapter extends SQLiteOpenHelper {
 		initialValues.put(FIELD_LAT, event.getLat());
 		initialValues.put(FIELD_LNG, event.getLng());
 		initialValues.put(FIELD_START_DATE, event.getStartDate());
-//		initialValues.put(FIELD_START_TIME, event.getStartTime());
-		initialValues.put(FIELD_FR_EVENT_STORY,
-				Integer.valueOf(storyId));
+		// initialValues.put(FIELD_START_TIME, event.getStartTime());
+		initialValues.put(FIELD_FR_EVENT_STORY, Integer.valueOf(storyId));
 
 		long rowid = sqliteDB.insert(DATABASE_TABLE_EVENT, null, initialValues);
 		this.close();
@@ -147,7 +146,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 
 		this.open();
 		String query = "SELECT * FROM stories ORDER BY id desc";
-		
+
 		Cursor c = sqliteDB.rawQuery(query, null);
 
 		while (c.moveToNext()) {
@@ -176,9 +175,10 @@ public class DBAdapter extends SQLiteOpenHelper {
 		this.open();
 		Cursor mCursor = sqliteDB.query(true, DATABASE_TABLE_STORY,
 				new String[] { FIELD_ID, FIELD_NAME, FIELD_DESCRIPTION,
-						FIELD_STATUS, FIELD_SHARED, FIELD_START_DATE,
-						FIELD_START_TIME, FIELD_END_DATE, FIELD_END_TIME },
-				FIELD_ID + "=" + rowId, null, null, null, null, null);
+						FIELD_STATUS, FIELD_SHARED, FIELD_CATEGORY,
+						FIELD_START_DATE, FIELD_START_TIME, FIELD_END_DATE,
+						FIELD_END_TIME }, FIELD_ID + "=" + rowId, null, null,
+				null, null, null);
 
 		Story story = new Story();
 
@@ -189,37 +189,39 @@ public class DBAdapter extends SQLiteOpenHelper {
 			story.setDescription(mCursor.getString(2));
 			story.setStatus(Integer.parseInt(mCursor.getString(3)));
 			story.setShared(Integer.parseInt(mCursor.getString(4)));
-			story.setStartDate(Long.parseLong(mCursor.getString(5)));
-			story.setStartTime(mCursor.getString(6));
-			story.setEndDate(Long.parseLong(mCursor.getString(7)));
-			story.setEndTime(mCursor.getString(8));
-			
-			String q = "SELECT * FROM events where event_story = "+story.getId()+" ORDER BY start_date";
-			
+			story.setCategory(mCursor.getString(5));
+			story.setStartDate(Long.parseLong(mCursor.getString(6)));
+			story.setStartTime(mCursor.getString(7));
+			story.setEndDate(Long.parseLong(mCursor.getString(8)));
+			story.setEndTime(mCursor.getString(9));
+
+			String q = "SELECT * FROM events where event_story = "
+					+ story.getId() + " ORDER BY start_date";
+
 			Cursor c = sqliteDB.rawQuery(q, null);
-			
+
 			while (c.moveToNext()) {
 				Event event = new Event();
 				event.setId(c.getInt(c.getColumnIndex("id")));
 				event.setName(c.getString(c.getColumnIndex("name")));
 				event.setMessage(c.getString(c.getColumnIndex("message")));
-				event.setCategory(c.getString(c.getColumnIndex("category")));
-				event.setTransportation(c.getString(c.getColumnIndex("transportation")));
+				// event.setCategory(c.getString(c.getColumnIndex("category")));
+				event.setTransportation(c.getString(c
+						.getColumnIndex("transportation")));
 				event.setStatus(c.getInt(c.getColumnIndex("status")));
 				event.setShared(c.getInt(c.getColumnIndex("shared")));
 				event.setLocname(c.getString(c.getColumnIndex("locname")));
 				event.setLat(c.getLong(c.getColumnIndex("lat")));
 				event.setLng(c.getLong(c.getColumnIndex("lng")));
 				event.setStartDate(c.getLong(c.getColumnIndex("start_date")));
-				
+
 				// set event relation to story
 				event.setStory(story);
 
-				// set story relation to event 
+				// set story relation to event
 				story.addToEvents(event);
 			}
-			
-			
+
 		} else {
 			story = null;
 		}
@@ -231,11 +233,11 @@ public class DBAdapter extends SQLiteOpenHelper {
 		this.open();
 		Cursor mCursor = sqliteDB.query(true, DATABASE_TABLE_EVENT,
 				new String[] { FIELD_ID, FIELD_NAME, FIELD_MESSAGE,
-						FIELD_CATEGORY, FIELD_TRANSPORT, FIELD_STATUS,
-						FIELD_SHARED, FIELD_LOCNAME, FIELD_LAT, FIELD_LNG,
-						FIELD_START_DATE, FIELD_START_TIME, FIELD_END_DATE,
-						FIELD_END_TIME, FIELD_FR_EVENT_STORY }, FIELD_ID + "="
-						+ rowId, null, null, null, null, null);
+						FIELD_TRANSPORT, FIELD_STATUS, FIELD_SHARED,
+						FIELD_LOCNAME, FIELD_LAT, FIELD_LNG, FIELD_START_DATE,
+						FIELD_START_TIME, FIELD_END_DATE, FIELD_END_TIME,
+						FIELD_FR_EVENT_STORY }, FIELD_ID + "=" + rowId, null,
+				null, null, null, null);
 
 		return mCursor;
 	}
@@ -247,6 +249,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 		initialValues.put(FIELD_DESCRIPTION, story.getDescription());
 		initialValues.put(FIELD_STATUS, story.getStatus());
 		initialValues.put(FIELD_SHARED, story.getShared());
+		initialValues.put(FIELD_CATEGORY, story.getCategory());
 		initialValues.put(FIELD_START_DATE, story.getStartDate());
 		initialValues.put(FIELD_START_TIME, story.getStartTime());
 		initialValues.put(FIELD_END_DATE, story.getEndDate());
@@ -264,7 +267,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(FIELD_NAME, event.getName());
 		initialValues.put(FIELD_MESSAGE, event.getMessage());
-		initialValues.put(FIELD_CATEGORY, event.getCategory());
+//		initialValues.put(FIELD_CATEGORY, event.getCategory());
 		initialValues.put(FIELD_TRANSPORT, event.getTransportation());
 		initialValues.put(FIELD_STATUS, event.getStatus());
 		initialValues.put(FIELD_SHARED, event.getShared());
@@ -272,8 +275,8 @@ public class DBAdapter extends SQLiteOpenHelper {
 		initialValues.put(FIELD_LAT, event.getShared());
 		initialValues.put(FIELD_LNG, event.getShared());
 		initialValues.put(FIELD_START_DATE, event.getStartDate());
-//		initialValues.put(FIELD_START_TIME, event.getStartTime());
-//		initialValues.put(FIELD_FR_EVENT_STORY, storyid);
+		// initialValues.put(FIELD_START_TIME, event.getStartTime());
+		// initialValues.put(FIELD_FR_EVENT_STORY, storyid);
 
 		boolean rows = sqliteDB.update(DATABASE_TABLE_EVENT, initialValues,
 				FIELD_ID + "=" + event.getId(), null) > 0;

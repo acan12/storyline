@@ -1,10 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="380dp"
     android:layout_height="380dp"
-    android:layout_gravity="center_horizontal|center_vertical">
-    
-    
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:orientation="vertical" >
+
     <LinearLayout
         android:id="@+id/pickStory"
         android:layout_width="fill_parent"
@@ -12,93 +11,175 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:orientation="vertical" >
-        
-     
+
         <EditText
-	        android:id="@+id/valueNameStory"
-	        android:layout_width="match_parent"
-	        android:layout_height="fill_parent"
-	        android:singleLine="true"
-	        android:hint="Your name story" />
-        
-	    <EditText
-	        android:id="@+id/valueDescriptionStory"
-	        android:layout_width="match_parent"
-	        android:layout_height="fill_parent"
-	        android:singleLine="true"
-	        android:hint="About your story" />
-	    
+            android:id="@+id/valueNameStory"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:hint="Your name story"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/valueDescriptionStory"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:hint="About your story"
+            android:singleLine="true" />
     </LinearLayout>
+
     <ImageView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginBottom="10dp"
-	        android:src="@drawable/menu_divider" />
-    
-    <LinearLayout 
-        android:id="@+id/pickDate"
         android:layout_width="fill_parent"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/menu_divider" />
+
+    <!-- Category -->
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:orientation="horizontal">
-        
-        <TextView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:layout_gravity="left|top"
-	        android:text="Date Start"
-	        android:textStyle="bold" />
-        
-        <TextView
-            android:id="@+id/valueStartDate"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text=""
-	        android:layout_gravity="right|bottom" />
-    </LinearLayout>
-    
-    <ImageView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginBottom="10dp"
-	        android:src="@drawable/menu_divider" />
-    
-    <LinearLayout 
-        android:id="@+id/pickTime"
-        android:layout_width="fill_parent"
-        android:layout_height="35dp"
+        android:text="Category" />
+
+    <Spinner
+        android:id="@+id/categorySpinnerEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:orientation="horizontal">
-        
-        <TextView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:layout_gravity="left|top"
-	        android:text="Time Start"
-	        android:textStyle="bold" />
-        
-        <TextView
-            android:id="@+id/valueStartTime"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text=""
-	        android:layout_gravity="right|bottom" />
-    </LinearLayout>
-    
+        android:entries="@array/categoryItems" />
+
     <ImageView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginBottom="10dp"
-	        android:src="@drawable/menu_divider" />
-    
-	<!-- end date time -->
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/menu_divider" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/pickDateStart"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:layout_weight="1"
+                android:text="Date Start"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/valueDateStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pickTimeStart"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:layout_weight="1"
+                android:text="Time Start"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/valueTimeStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:text=" " />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/menu_divider" />
+
+    <!-- end date time -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/pickDateEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:layout_weight="1"
+                android:text="Date End"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/valueDateEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:text="" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pickTimeEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:layout_weight="1"
+                android:text="Time End"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/valueTimeEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:text=" " />
+        </LinearLayout>
+    </LinearLayout>
+    <!--
 	<LinearLayout 
 	    android:id="@+id/pickDateEnd"
         android:layout_width="fill_parent"
@@ -122,53 +203,22 @@
 	        android:text=""
 	        android:layout_gravity="right|bottom" />
     </LinearLayout>
-    
+    -->
+
     <ImageView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginBottom="10dp"
-	        android:src="@drawable/menu_divider" />
-    
-    <LinearLayout
-        android:id="@+id/pickTimeEnd"
         android:layout_width="fill_parent"
-        android:layout_height="35dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:orientation="horizontal">
-        
-        <TextView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:layout_gravity="left|top"
-	        android:text="Time End"
-	        android:textStyle="bold" />
-        
-        <TextView
-            android:id="@+id/valueEndTime"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text=""
-	        android:layout_gravity="right|bottom" />
-    </LinearLayout>
-    
-    <ImageView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dp"
-	        android:layout_marginBottom="10dp"
-	        android:src="@drawable/menu_divider" />
-    
-    
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/menu_divider" />
+
     <Button
-        android:id="@+id/submitDateButton"
+        android:id="@+id/submitStoryButton"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" 
-        android:text="Done"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:padding="10dp" />
-        
+        android:padding="10dp"
+        android:text="Done" />
+
 </LinearLayout>

@@ -7,6 +7,8 @@ public class Story extends BaseModel implements Serializable {
 	private int id;
 	private String name;
 	private String description;
+	
+	private String category;
 
 	// provide flag information if story draft or not
 	private int status;
@@ -89,6 +91,21 @@ public class Story extends BaseModel implements Serializable {
 		this.status = status;
 	}
 
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category
+	 *            the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
 	/**
 	 * @return the startDate
 	 */

@@ -25,7 +25,7 @@ public class DetailActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detail);
 
-		final Sliding popup = (Sliding) findViewById(R.id.sliding1);
+		final Sliding popup = (Sliding) findViewById(R.id.sliding);
 		popup.setVisibility(View.GONE);
 
 		// final Button btn = (Button) findViewById(R.id.show1);

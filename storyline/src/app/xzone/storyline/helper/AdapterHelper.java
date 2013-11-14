@@ -94,7 +94,7 @@ public class AdapterHelper {
 			@Override
 			public void onClick(View v) {
 				if (Helper.getCurrentMode(a) == Helper.MODE_EDIT) {
-					Sliding popup = (Sliding) a.findViewById(R.id.sliding1);
+					Sliding popup = (Sliding) a.findViewById(R.id.sliding);
 					popup.setVisibility(View.VISIBLE);
 
 					EventHelper.buildUISliding(a, event);
@@ -184,7 +184,7 @@ public class AdapterHelper {
 			@Override
 			public void onClick(View v) {
 				if (Helper.getCurrentMode(a) == Helper.MODE_EDIT) {
-					Sliding popup = (Sliding) a.findViewById(R.id.sliding1);
+					Sliding popup = (Sliding) a.findViewById(R.id.sliding);
 					popup.setVisibility(View.VISIBLE);
 
 					EventHelper.buildUISliding(a, event);
