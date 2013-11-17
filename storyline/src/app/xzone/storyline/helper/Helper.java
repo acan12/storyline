@@ -95,17 +95,17 @@ public class Helper {
 	public static void buildUIStoryPopup(final Story story,
 			final Dialog dialog, final Activity a) {
 		if (story != null) {
+			String[] items = a.getApplication().getResources()
+					.getStringArray(R.array.categoryItems);
+			List<String> list = Arrays.asList(items);
+			
+			
 			EditText t = (EditText) dialog.findViewById(R.id.valueNameStory);
 			t.setText(story.getName());
 			t = (EditText) dialog.findViewById(R.id.valueDescriptionStory);
 			t.setText(story.getDescription());
 
-			Spinner sp = (Spinner) a.findViewById(R.id.categorySpinnerEvent);
-
-			String[] items = a.getApplication().getResources()
-					.getStringArray(R.array.categoryItems);
-			List<String> list = Arrays.asList(items);
-
+			Spinner sp = (Spinner) dialog.findViewById(R.id.categorySpinner);
 			int pos = list.indexOf(story.getCategory());
 			sp.setSelection(pos);
 
@@ -205,7 +205,7 @@ public class Helper {
 		EditText t02 = (EditText) dialog
 				.findViewById(R.id.valueDescriptionStory);
 
-		Spinner sp = (Spinner) dialog.findViewById(R.id.categorySpinnerEvent);
+		Spinner sp = (Spinner) dialog.findViewById(R.id.categorySpinner);
 
 		TextView date01 = (TextView) dialog.findViewById(R.id.valueDateStart);
 		TextView time01 = (TextView) dialog.findViewById(R.id.valueTimeStart);

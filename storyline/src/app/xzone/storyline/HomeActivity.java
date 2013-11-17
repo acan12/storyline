@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import app.xzone.storyline.adapter.DBAdapter;
+import app.xzone.storyline.adapter.KiiAdapter;
 import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.helper.AdapterHelper;
 import app.xzone.storyline.helper.EventHelper;
@@ -68,6 +69,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 
 		// initialize components
+		new KiiAdapter();
 		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
 
 		setContentView(R.layout.main);
