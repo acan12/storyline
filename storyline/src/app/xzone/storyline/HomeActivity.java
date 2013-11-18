@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.adapter.KiiAdapter;
+import app.xzone.storyline.component.DateTimePicker;
 import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.helper.AdapterHelper;
 import app.xzone.storyline.helper.EventHelper;
@@ -357,11 +358,11 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			break;
 
 		case R.id.pickDateEvent:
-			Helper.showDatePicker(context, findViewById(R.id.valueDateEvent));
+			DateTimePicker.showDatePicker(context, findViewById(R.id.valueDateEvent));
 			break;
 
 		case R.id.pickTimeEvent:
-			Helper.showTimePicker(context, findViewById(R.id.valueTimeEvent));
+			DateTimePicker.showTimePicker(context, findViewById(R.id.valueTimeEvent));
 			break;
 
 		case R.id.submitEventButton:

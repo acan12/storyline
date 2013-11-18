@@ -33,6 +33,7 @@ import android.widget.TimePicker;
 import app.xzone.storyline.HomeActivity;
 import app.xzone.storyline.R;
 import app.xzone.storyline.adapter.DBAdapter;
+import app.xzone.storyline.component.DateTimePicker;
 import app.xzone.storyline.model.Story;
 import app.xzone.storyline.util.StringManipulation;
 import app.xzone.storyline.util.TimeUtil;
@@ -134,7 +135,7 @@ public class Helper {
 
 			@Override
 			public void onClick(View v) {
-				Helper.showDatePicker(dialog.getContext(),
+				DateTimePicker.showDatePicker(dialog.getContext(),
 						dialog.findViewById(R.id.valueDateStart));
 			}
 		});
@@ -145,7 +146,7 @@ public class Helper {
 
 			@Override
 			public void onClick(View v) {
-				Helper.showTimePicker(dialog.getContext(),
+				DateTimePicker.showTimePicker(dialog.getContext(),
 						dialog.findViewById(R.id.valueTimeStart));
 			}
 		});
@@ -156,7 +157,7 @@ public class Helper {
 
 			@Override
 			public void onClick(View v) {
-				Helper.showDatePicker(dialog.getContext(),
+				DateTimePicker.showDatePicker(dialog.getContext(),
 						dialog.findViewById(R.id.valueDateEnd));
 			}
 		});
@@ -167,7 +168,7 @@ public class Helper {
 
 			@Override
 			public void onClick(View v) {
-				Helper.showTimePicker(dialog.getContext(),
+				DateTimePicker.showTimePicker(dialog.getContext(),
 						dialog.findViewById(R.id.valueTimeEnd));
 			}
 		});
@@ -186,8 +187,6 @@ public class Helper {
 					e.printStackTrace();
 				}
 
-				System.out.println("---------  s category:"
-						+ story2.getCategory());
 				if (story2 != null)
 					Helper.buildUIMain(a, story2);
 
@@ -239,48 +238,6 @@ public class Helper {
 				hour02, minute02));
 
 		return story;
-	}
-
-	// Helper for handle date time picker
-	public static void showDatePicker(final Context context,
-			final View resourceTarget) {
-		DateTime dt = new DateTime();
-		DatePickerDialog dp = null;
-
-		dp = new DatePickerDialog(context, new OnDateSetListener() {
-
-			@Override
-			public void onDateSet(DatePicker view, int year, int monthOfYear,
-					int dayOfMonth) {
-				DateTimeFormatter fmt = DateTimeFormat
-						.forPattern("MMM dd, yyyy");
-
-				TextView dateText = (TextView) resourceTarget;
-				dateText.setText((new DateTime(year, monthOfYear + 1,
-						dayOfMonth, 0, 0, 0, 0)).toString(fmt));
-
-			}
-		}, dt.getYear(), dt.getMonthOfYear(), dt.getDayOfMonth());
-		dp.show();
-
-	}
-
-	public static void showTimePicker(final Context context,
-			final View resourceTarget) {
-		DateTime dt = new DateTime();
-		TimePickerDialog tp = null;
-
-		tp = new TimePickerDialog(context, new OnTimeSetListener() {
-
-			@Override
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-				TextView timeText = (TextView) resourceTarget;
-				timeText.setText(hourOfDay + ":" + minute
-						+ TimeUtil.timeArea(hourOfDay));
-
-			}
-		}, dt.getHourOfDay(), dt.getMinuteOfHour(), true);
-		tp.show();
 	}
 
 	// Handle Mode screen (normal, edit)
