@@ -30,7 +30,7 @@ public class DateTimePicker {
 			public void onDateSet(android.widget.DatePicker view, int year,
 					int monthOfYear, int dayOfMonth) {
 				DateTimeFormatter fmt = DateTimeFormat
-						.forPattern("MMM dd, yyyy");
+						.forPattern("E MMM dd, yyyy");
 
 				TextView dateText = (TextView) resourceTarget;
 				dateText.setText((new DateTime(year, monthOfYear+1,
