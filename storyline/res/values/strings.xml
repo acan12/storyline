@@ -5,5 +5,7 @@
     <string name="app_name">Storyline</string>
     <string name="info">Info</string>
     <string name="pick_story">Pick Story</string>
+    
+    <string name="register">Register</string>
 
 </resources>

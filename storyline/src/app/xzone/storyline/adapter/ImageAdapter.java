@@ -1,4 +1,4 @@
-package app.xzone.storyline.helper;
+package app.xzone.storyline.adapter;
 
 import java.io.File;
 
@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
+import app.xzone.storyline.helper.Helper;
 
 public class ImageAdapter {
 	

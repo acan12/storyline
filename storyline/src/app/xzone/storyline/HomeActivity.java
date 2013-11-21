@@ -39,6 +39,7 @@ import app.xzone.storyline.util.StringManipulation;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
+import com.kii.cloud.storage.KiiUser;
 
 public class HomeActivity extends SlidingActivity implements OnClickListener {
  
@@ -69,8 +70,13 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// initialize components
-		new KiiAdapter();
+		// show current User
+		KiiUser currentUser = KiiUser.getCurrentUser();
+		
+		System.out.println("----->> -"+currentUser.getUsername());
+		
+		KiiUser.logOut();
+		
 		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
 
 		setContentView(R.layout.main);

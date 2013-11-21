@@ -10,8 +10,8 @@ public class KiiAdapter {
 		Kii.initialize(appId, appKey, Site.US);
 	}
 	
-	public KiiAdapter(){
-		
+	public static KiiAdapter newInstance(){
+		return new KiiAdapter();
 	}
 
 }
