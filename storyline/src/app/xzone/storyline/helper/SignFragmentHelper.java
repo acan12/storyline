@@ -86,16 +86,16 @@ public class SignFragmentHelper extends Fragment implements OnClickListener {
 		}
 		
 		try {
-			KiiUser user = KiiUser.logIn(username, password);
+//			KiiUser user = KiiUser.logIn(username, password);
 			
 			onLoginFinished();
 			
 			
 			
-		} catch (IOException e) {
-			AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
-			alert.setMessage("Invalid Sigin!!");
-			alert.show();
+//		} catch (IOException e) {
+//			AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
+//			alert.setMessage("Invalid Sigin!!");
+//			alert.show();
 		} catch (Exception e) {
 			AlertDialog.Builder alert = new AlertDialog.Builder(v.getContext());
 			alert.setMessage("Invalid Sigin!!");

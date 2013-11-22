@@ -11,19 +11,18 @@
 
         <LinearLayout
             android:id="@+id/header_center"
-            android:layout_width="220dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp" >
+            android:layout_marginLeft="20dp">
 
             <TextView
                 android:id="@+id/titleStory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text=""
+                android:layout_marginLeft="35dp"
+                android:text="xxxxx"
                 android:textColor="@color/yellow"
                 android:textSize="12dip"
                 android:textStyle="bold" />
@@ -64,23 +63,35 @@
             android:layout_alignParentTop="true" >
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/divide1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:layout_marginRight="5dp"
                 android:src="@drawable/divider_header" />
 
             <ImageButton
-                android:id="@+id/pickCameraButton"
+                android:id="@+id/modeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="74dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:background="@null"
                 android:onClick="pickCamera"
-                android:paddingRight="15dp"
-                android:src="@drawable/facebook_icon" />
+            	android:layout_margin="5dp" 
+                android:src="@drawable/mode_normal" />
+            
+            <ImageView
+                android:id="@+id/divide2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/divider_header" />
+            
+            
 
             <ImageButton
                 android:id="@+id/storyButton"

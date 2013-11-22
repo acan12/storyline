@@ -73,9 +73,8 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		// show current User
 		KiiUser currentUser = KiiUser.getCurrentUser();
 		
-		System.out.println("----->> -"+currentUser.getUsername());
-		
-		KiiUser.logOut();
+//		System.out.println("----->> -"+currentUser.getUsername());
+//		KiiUser.logOut();
 		
 		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
 
@@ -441,7 +440,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	public void pickCamera(View v) {
 		// ImageAdapter.takePhoto(HomeActivity.this);
 				
-				
+				    
 		if(!isPanelShown) {
 			
 			Helper.modeEdit(HomeActivity.this, viewGroup);

@@ -245,6 +245,9 @@ public class Helper {
 		TextView mode = (TextView) ac.findViewById(R.id.mode);
 		mode.setTag(MODE_NORMAL);
 
+		ImageButton modeButton = (ImageButton) ac.findViewById(R.id.modeButton);
+		modeButton.setImageDrawable(ac.getResources().getDrawable(R.drawable.mode_edit));
+		
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(
 				R.drawable.paper_plane));
@@ -294,6 +297,9 @@ public class Helper {
 		TextView mode = (TextView) ac.findViewById(R.id.mode);
 		mode.setTag(MODE_EDIT);
 
+		ImageButton modeButton = (ImageButton) ac.findViewById(R.id.modeButton);
+		modeButton.setImageDrawable(ac.getResources().getDrawable(R.drawable.mode_normal));
+		
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(R.drawable.trash));
 		sb.setOnClickListener(new OnClickListener() {
