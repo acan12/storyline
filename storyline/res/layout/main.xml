@@ -26,6 +26,7 @@
           android:layout_height="120dp"
           android:layout_weight="1"
           android:fillViewport="true"
+          android:fadingEdge="none"
           android:isScrollContainer="true" >
 
           <LinearLayout
@@ -135,5 +136,11 @@
           android:layout_height="wrap_content"
           android:layout_gravity="bottom"
           layout="@layout/footer" />
+      
+      <include
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          layout="@layout/footer_function" />
 
   </LinearLayout>

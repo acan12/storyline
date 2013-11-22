@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -26,9 +28,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.adapter.KiiAdapter;
 import app.xzone.storyline.component.DateTimePicker;
+import app.xzone.storyline.component.PanelButtons;
 import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.helper.AdapterHelper;
 import app.xzone.storyline.helper.EventHelper;
@@ -44,27 +48,27 @@ import com.kii.cloud.storage.KiiUser;
 public class HomeActivity extends SlidingActivity implements OnClickListener {
  
 	private Sliding popup;
-	private ImageButton listButton;
-	private ImageButton storyButton;
-	private LinearLayout newStoryButton;
-	private Button submitEventButton;
-	private Button cancelEventButton;
-	private LinearLayout pickDateEvent;
-	private LinearLayout pickTimeEvent;
+	private ImageButton listButton, allButton, storyButton;
+	private Button submitEventButton, cancelEventButton;
+	
+	private LinearLayout newStoryButton, pickDateEvent, pickTimeEvent;
+	
 	private final Context context = this;
 	private DBAdapter db = null;
 
 	private Story story;
 
-	private ArrayList<Event> events; // list of events consists previous event +
-										// draft event
+	private ArrayList<Event> events; // list of events consists previous event + draft event
 	private ArrayList<Event> prevEvents; // list of events consists saved event
-	private ViewGroup viewGroup;
+
 	private Dialog dialog;
+	private ViewGroup viewGroup;
 
 	int key1 = 0;
 	int key2 = 0;
-	private boolean isPanelShown;
+	private boolean showEditPanel;
+	private boolean showButtonsPanel = false;;
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +91,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		popup.setVisibility(View.GONE);
 
 		listButton = (ImageButton) findViewById(R.id.menuListButton);
+		allButton = (ImageButton) findViewById(R.id.allButton);
 		storyButton = (ImageButton) findViewById(R.id.storyButton);
 		newStoryButton = (LinearLayout) findViewById(R.id.newStorySliding);
 		submitEventButton = (Button) findViewById(R.id.submitEventButton);
@@ -95,6 +100,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		pickTimeEvent = (LinearLayout) findViewById(R.id.pickTimeEvent);
 
 		listButton.setOnClickListener(this);
+		allButton.setOnClickListener(this);
 		storyButton.setOnClickListener(this);
 		newStoryButton.setOnClickListener(this);
 		submitEventButton.setOnClickListener(this);
@@ -122,7 +128,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			renderTimeline(story.getEvents());
 		}
 		
-		isPanelShown = false;
+		showEditPanel = false;
 
 	}
 
@@ -346,9 +352,20 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			// put your code here
 			toggle();
 			break;
+			
+		case R.id.allButton:
+			Toast.makeText(getApplicationContext(), "Show All Button", 200).show();
+			
+			// set show buttons panel
+			showButtonsPanel = PanelButtons.showPanel(this, showButtonsPanel);
+
+			// Hide the Panel
+	        Helper.modeNormal(HomeActivity.this, viewGroup);
+	        showEditPanel = false;
+			break;
 
 		case R.id.storyButton:
-			showSecondaryMenu();
+			showSecondaryMenu(); 
 			break;
 
 		case R.id.newStorySliding:
@@ -441,16 +458,18 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		// ImageAdapter.takePhoto(HomeActivity.this);
 				
 				    
-		if(!isPanelShown) {
-			
+		if(!showEditPanel) {
 			Helper.modeEdit(HomeActivity.this, viewGroup);
 	        
-	        isPanelShown = true;
+	        showEditPanel = true;
+	        showButtonsPanel = PanelButtons.showPanel(this, true);
 	    }
 	    else {
 	        // Hide the Panel
 	        Helper.modeNormal(HomeActivity.this, viewGroup);
-	        isPanelShown = false;
+	        
+	        showEditPanel = false;
+	        showButtonsPanel = PanelButtons.showPanel(this, true);
 	    }
 		
 		
