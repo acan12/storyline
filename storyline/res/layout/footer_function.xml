@@ -8,11 +8,11 @@
     <RelativeLayout
         android:id="@+id/footer_function"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"  
+        android:layout_height="63dp"  
         android:layout_weight="1"
         android:gravity="bottom"
         android:visibility="gone" 
-        android:background="@android:color/background_dark" >
+        android:background="@color/soft_brown" >
  
         <LinearLayout
             android:layout_width="fill_parent"
@@ -26,7 +26,7 @@
 		        android:layout_height="wrap_content"
 		        android:text="Map"
 		        android:textColor="@android:color/background_light"
-		        android:textSize="8px"
+		        android:textSize="12px"
 		        android:layout_margin="10dp"
 		        android:drawablePadding="5dp"
 		        android:drawableLeft="@drawable/map"
@@ -45,7 +45,7 @@
 		        android:layout_height="wrap_content"
 		        android:text="Camera" 
 		        android:textColor="@android:color/background_light"
-		        android:textSize="8px" 
+		        android:textSize="12px" 
 		        android:layout_margin="10dp"
 		        android:drawablePadding="5dp"
 		        android:drawableLeft="@drawable/camera"
@@ -64,7 +64,7 @@
 		        android:layout_height="wrap_content"
 		        android:text="Gallery"
 		        android:textColor="@android:color/background_light"
-		        android:textSize="8px"
+		        android:textSize="12px"
 		        android:layout_margin="10dp"
 		        android:drawablePadding="5dp"
 		        android:drawableLeft="@drawable/gallery"

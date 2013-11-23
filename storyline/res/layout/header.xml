@@ -2,36 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <RelativeLayout
+        android:id="@+id/header_bar"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="@drawable/header_background" >
 
-        <LinearLayout
-            android:id="@+id/header_center"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp">
-
-            <TextView
-                android:id="@+id/titleStory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:text="xxxxx"
-                android:textColor="@color/yellow"
-                android:textSize="12dip"
-                android:textStyle="bold" />
-            
-        </LinearLayout>
-
+        
         <LinearLayout
             android:id="@+id/header_left"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:gravity="left" >
@@ -42,8 +24,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/button_selector"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
                 android:src="@drawable/list" />
 
             <ImageView
@@ -56,11 +38,32 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/header_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/header_left" >
+
+            <TextView
+                android:id="@+id/titleStory"
+                android:layout_width="130dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/yellow"
+                android:textSize="13dip"
+				android:maxLines="2"
+                android:scrollHorizontally="false"
+                android:textStyle="bold" />
+            
+        </LinearLayout>
+        
+        <LinearLayout
             android:id="@+id/header_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true" >
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/header_center" >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -107,8 +110,6 @@
                 android:layout_alignParentTop="true"
                 android:src="@drawable/divider_header" />
             
-            
-            
 
             <ImageButton
                 android:id="@+id/storyButton"
@@ -121,6 +122,11 @@
                 android:src="@drawable/paper_plane" />
 
         </LinearLayout>
+        
     </RelativeLayout>
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/colored_bars" />
+    
 </LinearLayout>
