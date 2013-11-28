@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
@@ -30,15 +31,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import app.xzone.storyline.adapter.DBAdapter;
+import app.xzone.storyline.adapter.ImageAdapter;
 import app.xzone.storyline.adapter.KiiAdapter;
 import app.xzone.storyline.component.DateTimePicker;
 import app.xzone.storyline.component.PanelButtons;
+import app.xzone.storyline.component.ProgressCustomDialog;
 import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.helper.AdapterHelper;
 import app.xzone.storyline.helper.EventHelper;
 import app.xzone.storyline.helper.Helper;
 import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
+import app.xzone.storyline.util.DebugLive;
 import app.xzone.storyline.util.StringManipulation;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -62,6 +66,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	private ArrayList<Event> prevEvents; // list of events consists saved event
 
 	private Dialog dialog;
+	private ProgressDialog progress = null;
 	private ViewGroup viewGroup;
 
 	int key1 = 0;
@@ -69,11 +74,25 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	private boolean showEditPanel;
 	private boolean showButtonsPanel = false;;
 	
-
+	@Override
+	public void onPause(){
+		super.onPause();
+		if(progress != null) progress.dismiss();
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		
+		DebugLive.init(this);
+		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+		int width = metrics.widthPixels;
+		int height = metrics.heightPixels;
+		DebugLive.liveLog("testing screensize device:"+width+"x"+height);
+		
+		
+		
 		// show current User
 		KiiUser currentUser = KiiUser.getCurrentUser();
 		
@@ -274,14 +293,14 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
 		super.onActivityResult(requestCode, resultCode, data);
+		
 		switch (requestCode) {
 		case Helper.REQUEST_CODE_IMAGE_CAMERA:
 			if (resultCode == RESULT_OK) {
 
 				Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-				// preview.setImageBitmap(thumbnail);
+//				 preview.setImageBitmap(thumbnail);
 			}
 			break;
 
@@ -314,35 +333,37 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		}
 	}
 
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		MenuItem item01 = menu.add("Map").setOnMenuItemClickListener(
-				new OnMenuItemClickListener() {
-
-					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						Intent intent = new Intent(HomeActivity.this,
-								MapPlaceActivity.class);
-						startActivity(intent);
-
-						return true;
-					}
-				});
-
-		MenuItem item02 = menu.add("Edit").setOnMenuItemClickListener(
-				new OnMenuItemClickListener() {
-
-					@Override
-					public boolean onMenuItemClick(MenuItem item) {
-						Helper.modeEdit(HomeActivity.this, viewGroup);
-
-						return true;
-					}
-				});
-		item01.setIcon(R.drawable.map);
-		item02.setIcon(R.drawable.list);
-		return true;
-	}
+	
+// * Hide menu from standart android *	
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//
+//		MenuItem item01 = menu.add("Map").setOnMenuItemClickListener(
+//				new OnMenuItemClickListener() {
+//
+//					@Override
+//					public boolean onMenuItemClick(MenuItem item) {
+//						Intent intent = new Intent(HomeActivity.this,
+//								MapPlaceActivity.class);
+//						startActivity(intent);
+//
+//						return true;
+//					}
+//				});
+//
+//		MenuItem item02 = menu.add("Edit").setOnMenuItemClickListener(
+//				new OnMenuItemClickListener() {
+//
+//					@Override
+//					public boolean onMenuItemClick(MenuItem item) {
+//						Helper.modeEdit(HomeActivity.this, viewGroup);
+//
+//						return true;
+//					}
+//				});
+//		item01.setIcon(R.drawable.map);
+//		item02.setIcon(R.drawable.list);
+//		return true;
+//	}
 
 	@Override
 	public void onClick(View v) {
@@ -354,7 +375,6 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			break;
 			
 		case R.id.allButton:
-			Toast.makeText(getApplicationContext(), "Show All Button", 200).show();
 			
 			// set show buttons panel
 			showButtonsPanel = PanelButtons.showPanel(this, showButtonsPanel);
@@ -369,13 +389,13 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			break;
 
 		case R.id.newStorySliding:
-			ProgressDialog.show(HomeActivity.this, null, "Loading");
-
+			
+			progress = ProgressDialog.show(this, null, "Loading");
 			// routes to main activity
 			finish();
 			Intent intent = getIntent();
 			intent.putExtra("app.story", (Story) null);
-			startActivity(intent);
+			startActivityForResult(intent, ProgressCustomDialog.LOAD_PROGRESS);
 
 			break;
 
@@ -447,15 +467,30 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	}
 
-	// Pick location from map view
+	// * pick location from map view
 	public void pickLocation(View v) {
 		Intent intent = new Intent(this, LocationPickerActivity.class);
 		startActivityForResult(intent, Helper.REQUEST_CODE_PICK_LOCATION);
 	}
 
-	// Pick image from camera event
-	public void pickCamera(View v) {
-		// ImageAdapter.takePhoto(HomeActivity.this);
+	// * routes to map page
+	public void goMap(View v){
+		Intent intent = new Intent(HomeActivity.this, MapPlaceActivity.class);
+		startActivity(intent);
+	}
+	
+	// * pick image from camera device 
+	public void goCamera(View v){
+		ImageAdapter.takePhoto(this);
+	}
+	
+	public void goGallery(View v){
+		ImageAdapter.takePictureFile(this);
+	}
+	
+	
+	public void showNavigation(View v) {
+
 				
 				    
 		if(!showEditPanel) {

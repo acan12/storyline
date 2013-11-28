@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,16 +15,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import app.xzone.storyline.HomeActivity;
 import app.xzone.storyline.R;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.adapter.LazyAdapter;
+import app.xzone.storyline.component.ProgressCustomDialog;
 import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
@@ -51,44 +49,38 @@ public class AdapterHelper {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-//				ImageButton listButton = (ImageButton) a
-//						.findViewById(R.id.menuListButton);
-//				listButton.performClick();
 
-				
 				Story selectedStory = (Story) adapter.getItem(position);
-				
-				ProgressDialog pdialog = ProgressDialog.show(a, null, "Loading ...");
-				
+
+				ProgressDialog.show(a, null, "Loading ...");
 				
 				// routes to main activity
 				a.finish();
 				Intent intent = a.getIntent();
 				intent.putExtra("app.story", selectedStory);
-				
-				
+
 				a.startActivity(intent);
-//				pd.dismiss();
+
 			}
 
 		});
-	}  
+	}
 
 	public static ViewGroup updateBubbleEvent(final Activity a,
 			final Event event) {
- 
-		int pointerNo = 0; 
+
+		int pointerNo = 0;
 
 		View vi = event.getView();
 
 		// set pointer_full show information event already pass
-		ImageView pointer = (ImageView) vi.findViewById(R.id.pointer);		
-		if(event.getStartDate() <= System.currentTimeMillis()){
+		ImageView pointer = (ImageView) vi.findViewById(R.id.pointer);
+		if (event.getStartDate() <= System.currentTimeMillis()) {
 			pointer.setImageResource(R.drawable.pointer_fill);
-		}else{
+		} else {
 			pointer.setImageResource(R.drawable.pointer);
 		}
-		
+
 		vi.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -125,27 +117,25 @@ public class AdapterHelper {
 		if (event.getTransportation().equals("Flight")) {
 			// set plane pointer
 			pointerNo = R.drawable.pointer_plane;
-		}else if(event.getTransportation().equals("Car")){
+		} else if (event.getTransportation().equals("Car")) {
 			pointerNo = R.drawable.pointer_car;
-		}else if(event.getTransportation().equals("Bus")){
+		} else if (event.getTransportation().equals("Bus")) {
 			pointerNo = R.drawable.pointer_bus;
-		}else if(event.getTransportation().equals("Train")){
+		} else if (event.getTransportation().equals("Train")) {
 			pointerNo = R.drawable.pointer_train;
-		}else if(event.getTransportation().equals("Walk")){
+		} else if (event.getTransportation().equals("Walk")) {
 			pointerNo = R.drawable.pointer_walking;
-		}else{
+		} else {
 			pointerNo = 0;
 		}
-		
-		
 
 		if (pointerNo > 0) {
 			// show selected transport icon
 			trans.setVisibility(View.VISIBLE);
 			trans.setImageDrawable(a.getResources().getDrawable(pointerNo));
-		}else
+		} else
 			trans.setVisibility(View.INVISIBLE);
-			
+
 		// set title of event
 		title.setText(event.getName());
 		// set location name
@@ -153,12 +143,14 @@ public class AdapterHelper {
 		// set bubble note
 		note.setText(event.getMessage());
 		// set bubble date
-		
+
 		date.setTextSize(14f);
-		date.setText(TimeUtil.dateFormat(  TimeUtil.fromEpochFormat(event.getStartDate()), "EEE MMM d, yyyy" ) );
+		date.setText(TimeUtil.dateFormat(
+				TimeUtil.fromEpochFormat(event.getStartDate()),
+				"EEE MMM d, yyyy"));
 		time.setTextSize(12f);
-		time.setText(TimeUtil.dateFormat(  TimeUtil.fromEpochFormat(event.getStartDate()), "k:mm a") );
-		
+		time.setText(TimeUtil.dateFormat(
+				TimeUtil.fromEpochFormat(event.getStartDate()), "k:mm a"));
 
 		View bubble = a.findViewById(R.id.body_content);
 		ViewGroup parent = (ViewGroup) bubble.getParent();
@@ -174,7 +166,6 @@ public class AdapterHelper {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		View vi = inflater.inflate(R.layout.main_bubble_right, null);
-		
 
 		// set view into event
 		event.setView(vi);
@@ -201,15 +192,16 @@ public class AdapterHelper {
 		});
 
 		final View vi2 = vi;
-		
+
 		// set pointer_full show information event already pass
-		ImageView pointer = (ImageView) vi.findViewById(R.id.pointer);		
-		if(event.getStartDate() <= System.currentTimeMillis()){
+		ImageView pointer = (ImageView) vi.findViewById(R.id.pointer);
+		if (event.getStartDate() <= System.currentTimeMillis()) {
 			pointer.setImageResource(R.drawable.pointer_fill);
 		}
-		
+
 		Button deleteEvent = (Button) vi.findViewById(R.id.delete_event);
-		if(showRemoveEvent) deleteEvent.setVisibility(View.VISIBLE);
+		if (showRemoveEvent)
+			deleteEvent.setVisibility(View.VISIBLE);
 		deleteEvent.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -225,38 +217,41 @@ public class AdapterHelper {
 							public void onClick(DialogInterface dialog,
 									int which) {
 
-								DBAdapter db = new DBAdapter(a.getApplicationContext());
-								
+								DBAdapter db = new DBAdapter(a
+										.getApplicationContext());
+
 								// go to story in main page
-								TextView bubbleTitle = (TextView) vi2.findViewById(R.id.title_event);
-								
+								TextView bubbleTitle = (TextView) vi2
+										.findViewById(R.id.title_event);
+
 								Event ev = (Event) bubbleTitle.getTag();
 								Story st = ev.getStory();
-								
+
 								// remove event
-								if(db.deleteEventRecord(ev.getId())){
+								if (db.deleteEventRecord(ev.getId())) {
 									// show success notification
-									Toast.makeText(a.getApplicationContext(), "Remove Event Success!!", 10).show();
-									
+									Toast.makeText(a.getApplicationContext(),
+											"Remove Event Success!!", 10)
+											.show();
+
 									// remove object collection for event
 									ArrayList<Event> es = st.getEvents();
 									es.remove(ev);
 									st.setEvents(es);
-									
+
 									// reload story in main page
 									a.finish();
 									Intent intent = a.getIntent();
 									intent.putExtra("app.story", st);
 									a.startActivity(intent);
-								}else{
+								} else {
 									// show fail notification
-									Toast.makeText(a.getApplicationContext(), "Failed to remove!!", 10).show();
+									Toast.makeText(a.getApplicationContext(),
+											"Failed to remove!!", 10).show();
 								}
-								
-								
-								
-//								
-//								bubble.setBackgroundColor(Color.GRAY);
+
+								//
+								// bubble.setBackgroundColor(Color.GRAY);
 							}
 						});
 
@@ -292,26 +287,25 @@ public class AdapterHelper {
 		if (event.getTransportation().equals("Flight")) {
 			// set plane pointer
 			pointerNo = R.drawable.pointer_plane;
-		}else if(event.getTransportation().equals("Car")){
+		} else if (event.getTransportation().equals("Car")) {
 			pointerNo = R.drawable.pointer_car;
-		}else if(event.getTransportation().equals("Bus")){
+		} else if (event.getTransportation().equals("Bus")) {
 			pointerNo = R.drawable.pointer_bus;
-		}else if(event.getTransportation().equals("Train")){
+		} else if (event.getTransportation().equals("Train")) {
 			pointerNo = R.drawable.pointer_train;
-		}else if(event.getTransportation().equals("Walk")){
+		} else if (event.getTransportation().equals("Walk")) {
 			pointerNo = R.drawable.pointer_walking;
-		}else{
+		} else {
 			pointerNo = 0;
 		}
-		
 
 		if (pointerNo > 0) {
 			// show selected transport icon
 			trans.setVisibility(View.VISIBLE);
 			trans.setImageDrawable(a.getResources().getDrawable(pointerNo));
-		}else
+		} else
 			trans.setVisibility(View.INVISIBLE);
-		
+
 		// set title of event
 		title.setText(event.getName());
 		// set location name
@@ -319,12 +313,14 @@ public class AdapterHelper {
 		// set bubble note
 		note.setText(event.getMessage());
 		// set bubble date
-		
-		
+
 		date.setTextSize(14f);
-		date.setText(TimeUtil.dateFormat(  TimeUtil.fromEpochFormat(event.getStartDate()), "EEE MMM d, yyyy" ) );
+		date.setText(TimeUtil.dateFormat(
+				TimeUtil.fromEpochFormat(event.getStartDate()),
+				"EEE MMM d, yyyy"));
 		time.setTextSize(12f);
-		time.setText(TimeUtil.dateFormat(  TimeUtil.fromEpochFormat(event.getStartDate()), "k:mm a") );
+		time.setText(TimeUtil.dateFormat(
+				TimeUtil.fromEpochFormat(event.getStartDate()), "k:mm a"));
 
 		View bubble = a.findViewById(R.id.body_content);
 		ViewGroup parent = (ViewGroup) bubble.getParent();

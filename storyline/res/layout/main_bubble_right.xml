@@ -8,14 +8,15 @@
     <ImageView
         android:id="@+id/vertical_line"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_marginLeft="15dp"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/bubbleEvent"
+        android:layout_marginLeft="15dip"
         android:src="@drawable/vertical_line" />
 
     <ImageView
         android:id="@+id/pointer"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="9dip"
         android:paddingTop="40dp"
         android:src="@drawable/pointer" />

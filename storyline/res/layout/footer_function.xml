@@ -30,6 +30,7 @@
 		        android:layout_margin="10dp"
 		        android:drawablePadding="5dp"
 		        android:drawableLeft="@drawable/map"
+		        android:onClick="goMap"
 		        android:background="@null" />
 
 	        <ImageView
@@ -49,6 +50,7 @@
 		        android:layout_margin="10dp"
 		        android:drawablePadding="5dp"
 		        android:drawableLeft="@drawable/camera"
+		        android:onClick="goCamera"
 		        android:background="@null" />
             
             <ImageView 
@@ -68,6 +70,7 @@
 		        android:layout_margin="10dp"
 		        android:drawablePadding="5dp"
 		        android:drawableLeft="@drawable/gallery"
+		        android:onClick="goGallery"
 		        android:background="@null" /> -->
 	        
 		</LinearLayout>

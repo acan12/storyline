@@ -8,7 +8,7 @@
     <app.xzone.storyline.component.Sliding
         android:id="@+id/sliding"
         android:layout_width="fill_parent"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:background="#000"
         android:gravity="left"
         android:orientation="vertical"
@@ -140,6 +140,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="bottom"
             android:orientation="horizontal" >
 
             <Button
