@@ -143,11 +143,14 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		// if null will go to new page in mode edit
 		if (story == null || story.getEvents() == null) {
 			Helper.modeEdit(this, viewGroup);
+			showEditPanel = true;
+	        
 		} else {
 			renderTimeline(story.getEvents());
+			showEditPanel = false;
 		}
 		
-		showEditPanel = false;
+		
 
 	}
 
@@ -334,7 +337,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	}
 
 	
-// * Hide menu from standart android *	
+// * Hide menu from standar android *	
 //	public boolean onCreateOptionsMenu(Menu menu) {
 //
 //		MenuItem item01 = menu.add("Map").setOnMenuItemClickListener(
