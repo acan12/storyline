@@ -4,36 +4,24 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.app.TimePickerDialog.OnTimeSetListener;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import app.xzone.storyline.HomeActivity;
 import app.xzone.storyline.R;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.component.DateTimePicker;
+import app.xzone.storyline.component.PanelButtons;
 import app.xzone.storyline.model.Story;
 import app.xzone.storyline.util.StringManipulation;
 import app.xzone.storyline.util.TimeUtil;
@@ -99,8 +87,7 @@ public class Helper {
 			String[] items = a.getApplication().getResources()
 					.getStringArray(R.array.categoryItems);
 			List<String> list = Arrays.asList(items);
-			
-			
+
 			EditText t = (EditText) dialog.findViewById(R.id.valueNameStory);
 			t.setText(story.getName());
 			t = (EditText) dialog.findViewById(R.id.valueDescriptionStory);
@@ -246,8 +233,9 @@ public class Helper {
 		mode.setTag(MODE_NORMAL);
 
 		ImageButton modeButton = (ImageButton) ac.findViewById(R.id.modeButton);
-		modeButton.setImageDrawable(ac.getResources().getDrawable(R.drawable.mode_edit));
-		
+		modeButton.setImageDrawable(ac.getResources().getDrawable(
+				R.drawable.mode_edit));
+
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(
 				R.drawable.paper_plane));
@@ -259,12 +247,9 @@ public class Helper {
 			}
 		});
 
-		View v = (View) ac.findViewById(R.id.footer);
-		Animation bottomDown = AnimationUtils.loadAnimation(ac,
-				R.anim.bottom_down);
+		PanelButtons.showPanel(ac, R.id.footer, true);
 
-		v.startAnimation(bottomDown);
-		v.setVisibility(View.GONE);
+		View v = null;
 
 		if (viewGroup != null) {
 			v = (View) ac.findViewById(R.id.bubbleEvent);
@@ -298,8 +283,9 @@ public class Helper {
 		mode.setTag(MODE_EDIT);
 
 		ImageButton modeButton = (ImageButton) ac.findViewById(R.id.modeButton);
-		modeButton.setImageDrawable(ac.getResources().getDrawable(R.drawable.mode_normal));
-		
+		modeButton.setImageDrawable(ac.getResources().getDrawable(
+				R.drawable.mode_normal));
+
 		ImageButton sb = (ImageButton) ac.findViewById(R.id.storyButton);
 		sb.setImageDrawable(ac.getResources().getDrawable(R.drawable.trash));
 		sb.setOnClickListener(new OnClickListener() {
@@ -349,19 +335,9 @@ public class Helper {
 			}
 		});
 
-		View v = (View) ac.findViewById(R.id.footer);
-		Animation fadeout = AnimationUtils.loadAnimation(ac, R.anim.fadeout);
-		v.setAnimation(fadeout);
+		PanelButtons.showPanel(ac, R.id.footer, false);
 
-		// Show the panel
-		Animation bottomUp = AnimationUtils.loadAnimation(ac, R.anim.bottom_up);
-
-		v.startAnimation(bottomUp);
-		v.setVisibility(View.VISIBLE);
-
-		// v = (View) ac.findViewById(R.id.bubbleEvent);
-		// v.setClickable(true);
-		v = ac.findViewById(R.id.addDateStoryButton);
+		View v = ac.findViewById(R.id.addDateStoryButton);
 		v.setVisibility(View.VISIBLE);
 		v = ac.findViewById(R.id.addDateStoryButton02);
 		v.setVisibility(View.VISIBLE);

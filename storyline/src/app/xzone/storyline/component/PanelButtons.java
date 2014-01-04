@@ -7,8 +7,8 @@ import android.view.animation.AnimationUtils;
 import app.xzone.storyline.R;
 
 public class PanelButtons {
-	public static boolean showPanel(Activity a, boolean isShow){
-		View function = (View) a.findViewById(R.id.footer_function);
+	public static boolean showPanel(Activity a, int element, boolean isShow){
+		View function = (View) a.findViewById(element);
 		Animation fadeout = AnimationUtils.loadAnimation(a, R.anim.fadeout);
 		function.setAnimation(fadeout);
 

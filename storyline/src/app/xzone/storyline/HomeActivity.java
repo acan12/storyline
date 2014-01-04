@@ -2,6 +2,7 @@ package app.xzone.storyline;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -32,7 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.adapter.ImageAdapter;
-import app.xzone.storyline.adapter.KiiAdapter;
+//import app.xzone.storyline.adapter.KiiAdapter;
 import app.xzone.storyline.component.DateTimePicker;
 import app.xzone.storyline.component.PanelButtons;
 import app.xzone.storyline.component.ProgressCustomDialog;
@@ -44,6 +45,8 @@ import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
 import app.xzone.storyline.util.DebugLive;
 import app.xzone.storyline.util.StringManipulation;
+import app.xzone.storyline.worker.Api;
+import app.xzone.storyline.worker.AuthenticationWorker;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
@@ -54,25 +57,27 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	private Sliding popup;
 	private ImageButton listButton, allButton, storyButton;
 	private Button submitEventButton, cancelEventButton;
-	
 	private LinearLayout newStoryButton, pickDateEvent, pickTimeEvent;
+	private Dialog dialog;
+	private ProgressDialog progress = null;
+	private ViewGroup viewGroup;
+	
 	
 	private final Context context = this;
 	private DBAdapter db = null;
-
 	private Story story;
 
 	private ArrayList<Event> events; // list of events consists previous event + draft event
 	private ArrayList<Event> prevEvents; // list of events consists saved event
+	private Map<String, String> params;
 
-	private Dialog dialog;
-	private ProgressDialog progress = null;
-	private ViewGroup viewGroup;
 
 	int key1 = 0;
 	int key2 = 0;
 	private boolean showEditPanel;
 	private boolean showButtonsPanel = false;;
+	
+	
 	
 	@Override
 	public void onPause(){
@@ -85,6 +90,9 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 
 		
+		// send register API with facebook token to server backend.
+//		String response = (String) AuthenticationWorker.getInstance(Api.KEY_CALL_REGISTER_API, params.put("token", "ABCDEFGHIJKLMNOPQRSTUVWXYZ")).callApi();
+		
 		DebugLive.init(this);
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
 		int width = metrics.widthPixels;
@@ -94,7 +102,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		
 		
 		// show current User
-		KiiUser currentUser = KiiUser.getCurrentUser();
+//		KiiUser currentUser = KiiUser.getCurrentUser();
 		
 //		System.out.println("----->> -"+currentUser.getUsername());
 //		KiiUser.logOut();
@@ -380,7 +388,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		case R.id.allButton:
 			
 			// set show buttons panel
-			showButtonsPanel = PanelButtons.showPanel(this, showButtonsPanel);
+			showButtonsPanel = PanelButtons.showPanel(this, R.id.footer_function, showButtonsPanel);
 
 			// Hide the Panel
 	        Helper.modeNormal(HomeActivity.this, viewGroup);
@@ -500,14 +508,14 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			Helper.modeEdit(HomeActivity.this, viewGroup);
 	        
 	        showEditPanel = true;
-	        showButtonsPanel = PanelButtons.showPanel(this, true);
+	        showButtonsPanel = PanelButtons.showPanel(this, R.id.footer_function, true);
 	    }
 	    else {
 	        // Hide the Panel
 	        Helper.modeNormal(HomeActivity.this, viewGroup);
 	        
 	        showEditPanel = false;
-	        showButtonsPanel = PanelButtons.showPanel(this, true);
+	        showButtonsPanel = PanelButtons.showPanel(this, R.id.footer_function, true);
 	    }
 		
 		

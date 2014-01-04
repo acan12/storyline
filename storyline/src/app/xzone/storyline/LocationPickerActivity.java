@@ -4,13 +4,18 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import app.xzone.storyline.component.CrosslineOverlay;
 
@@ -114,24 +119,32 @@ public class LocationPickerActivity extends MapActivity {
 		}
 	}
 
-	public void donePick(View v) throws IOException {
-
-		GeoPoint mapCenter = mapView.getProjection().fromPixels(
-				mapView.getWidth() / 2, mapView.getHeight() / 2);
-
+	public void submitLocation(View v) {
+		EditText nameLocation = (EditText) v.findViewById(R.id.valueNameLocation);
+		
+		
+		GeoPoint mapCenter = mapView.getProjection().fromPixels(mapView.getWidth() / 2, mapView.getHeight() / 2);
 		double lat = mapCenter.getLatitudeE6() / 1E6;
 		double lng = mapCenter.getLongitudeE6() / 1E6;
-
-		String loc = getAddressString(lat, lng);
-
+		
 		// Prepare data intent
 		Intent data = new Intent();
-		data.putExtra("location", loc);
+		data.putExtra("location", nameLocation.getText());
 		data.putExtra("lat", lat);
 		data.putExtra("lng", lng);
 		setResult(RESULT_OK, data);
 
 		finish();
+	}
+	
+	public void donePick(View v) throws IOException {
+		
+		Dialog dialog = new Dialog(this);
+		dialog.setTitle("Location Name");
+		dialog.setContentView(R.layout.dialog_pick_location);
+		
+		dialog.show();
+		
 	}
 
 	public void cancelPick(View v) {
