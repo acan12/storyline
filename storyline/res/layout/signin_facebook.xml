@@ -25,7 +25,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Doododoll"
+            android:text="Welcome in Beta Version"
             android:textColor="@android:color/darker_gray" />
         
         

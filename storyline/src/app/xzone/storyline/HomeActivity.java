@@ -90,8 +90,6 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 
 		
-		// send register API with facebook token to server backend.
-//		String response = (String) AuthenticationWorker.getInstance(Api.KEY_CALL_REGISTER_API, params.put("token", "ABCDEFGHIJKLMNOPQRSTUVWXYZ")).callApi();
 		
 		DebugLive.init(this);
 		DisplayMetrics metrics = context.getResources().getDisplayMetrics();

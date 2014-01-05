@@ -1,11 +1,16 @@
 package app.xzone.storyline.http;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import net.sf.json.JSONObject;
 
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
@@ -14,20 +19,23 @@ import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 public class HttpUtil {
 
 	private HttpResponse httpResponse = null;
 
 	private String url = null;
-	private Map<String, String> params = new HashMap<String, String>();
+	private List<NameValuePair> params = new ArrayList<NameValuePair>();
 	private Method requestMethod = null;
 	private HttpRequestBase requestBase = null;
 
@@ -35,7 +43,7 @@ public class HttpUtil {
 		GET, POST, PUT, DELETE
 	}
 
-	public HttpUtil(String url, Map<String, String> params, Method requestMethod) {
+	public HttpUtil(String url, List<NameValuePair> params, Method requestMethod) {
 		this.url = url;
 		this.params = params;
 		this.requestMethod = requestMethod;
@@ -52,6 +60,9 @@ public class HttpUtil {
 			break;
 		case POST:
 			requestBase = new HttpPost(url);
+			((HttpPost) requestBase).addHeader("Content-Type", "application/x-www-form-urlencoded");  
+			((HttpPost) requestBase).setEntity(new UrlEncodedFormEntity(params));
+			
 			break;
 		case PUT:
 			requestBase = new HttpPut(url);
@@ -64,10 +75,15 @@ public class HttpUtil {
 		}
 
 		HttpResponse response = httpClient.execute(requestBase);
-		httpEntity = response.getEntity();
-		String responses = getApiResponseBody(httpEntity);
-
-		return responses;
+		BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+		
+		StringBuilder builder = new StringBuilder();
+		String aux = "";
+		
+		while((aux = reader.readLine()) != null){
+			builder.append(aux);
+		}
+		return builder.toString();
 
 	}
 

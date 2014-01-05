@@ -14,6 +14,6 @@ public interface IApi {
 	public Story[] getMyStories() throws ClientProtocolException,
 	IOException;
 	
-	public String registerApi(Object  params) throws ClientProtocolException,
+	public String registerApi(String  params) throws ClientProtocolException,
 	IOException;
 }

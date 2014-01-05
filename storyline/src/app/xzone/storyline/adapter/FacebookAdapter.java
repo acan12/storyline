@@ -1,5 +1,8 @@
 package app.xzone.storyline.adapter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -38,15 +41,20 @@ public class FacebookAdapter {
 									if (user != null) {
 										TextView welcome = (TextView) a
 												.findViewById(R.id.welcome);
-										welcome.setText("Hello "
+										welcome.setText("Hi "
 												+ user.getName()
-												+ "! \n "
-												+ session.getAccessToken()
-														.toString());
+												+ "! \n ");
 										
 										Log.i("AccessToken: ", session.getAccessToken());
 									}
 									
+									
+									
+									
+									
+									
+									// send register API with facebook token to server backend.
+									String response2 = (String) AuthenticationWorker.getInstance(Api.KEY_CALL_REGISTER_API, session.getAccessToken()).callApi();
 									
 									progress.dismiss();
 									Intent intent = new Intent(a,

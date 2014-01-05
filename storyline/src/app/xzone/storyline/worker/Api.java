@@ -1,10 +1,14 @@
 package app.xzone.storyline.worker;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.message.BasicNameValuePair;
 
 import com.google.gson.Gson;
 
@@ -15,10 +19,10 @@ import app.xzone.storyline.interfaces.IApi;
 import app.xzone.storyline.model.Story;
 
 public class Api implements IApi{
-	protected static final String DOMAIN_URL_API_V1 = "http://mimocore.heroku.com/api/v1/";
+	protected static final String DOMAIN_URL_API_V1 = "http://10.0.2.2:4000/api/v1/";
 	
 	private final String BIZ_JSON = "biz.json";
-	private final String REGISTER_API = "register";
+	private final String REGISTER_API = "signin";
 	
 	protected HttpUtil httpUtil;
 	protected StringBuffer apiUrl;
@@ -46,28 +50,35 @@ public class Api implements IApi{
 	@Override
 	public Story[] getMyStories() throws ClientProtocolException, IOException {
 		httpUtil = new HttpUtil(apiUrl.append(BIZ_JSON).toString(), null, Method.GET);
-		String responses = httpUtil.sendRequest();
+		String responseApi = httpUtil.sendRequest();
 
-		Story[] data = gson.fromJson(responses, Story[].class);
+		Story[] data = gson.fromJson(responseApi, Story[].class);
 		return data;
 	}
 	
 	
 	@Override
-	public String registerApi(Object params) throws ClientProtocolException, IOException{
-		Map<String, String> paramsMap = (Map<String, String>) params;
-		httpUtil = new HttpUtil(apiUrl.append(REGISTER_API).toString(), paramsMap, Method.POST);
-		String responses = httpUtil.sendRequest();
+	public String registerApi(String param) throws ClientProtocolException, IOException{
 		
-		System.out.println("-------- responses register API: "+responses);
-		return "false";
+		List<NameValuePair> pair = new ArrayList<NameValuePair>();
+		pair.add(new BasicNameValuePair("token", param));
+
+		
+		httpUtil = new HttpUtil(apiUrl.append(REGISTER_API).toString(), pair, Method.POST);
+		String responseApi = httpUtil.sendRequest();
+		
+		System.out.println("-------- responses register API: "+responseApi.length());
+		return responseApi;
 		
 	}
 
 	
+	
+	
+	
 	public Object callApi(String apiKey, Object params) throws ClientProtocolException, IOException{
 		for(String key : apiKeys){
-			if(key.equals(KEY_CALL_REGISTER_API)) return registerApi(params);
+			if(key.equals(KEY_CALL_REGISTER_API)) return registerApi((String) params);
 			
 		}
 		return null;
