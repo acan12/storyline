@@ -1,10 +1,10 @@
-package app.xzone.storyline.helper;
+package app.xzone.storyline.adapter;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 
-public class ApplicationHelper {
+public class ApplicationAdapter {
 	/**
      * @return Application's version code from the {@code PackageManager}.
      */
