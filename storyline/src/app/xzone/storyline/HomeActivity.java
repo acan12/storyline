@@ -51,7 +51,7 @@ import app.xzone.storyline.worker.AuthenticationWorker;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 import com.kii.cloud.storage.KiiUser;
-
+ 
 public class HomeActivity extends SlidingActivity implements OnClickListener {
  
 	private Sliding popup;
@@ -66,11 +66,11 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	private final Context context = this;
 	private DBAdapter db = null;
 	private Story story;
-
+ 
 	private ArrayList<Event> events; // list of events consists previous event + draft event
 	private ArrayList<Event> prevEvents; // list of events consists saved event
 	private Map<String, String> params;
-
+ 
 
 	int key1 = 0;
 	int key2 = 0;

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import app.xzone.storyline.HomeActivity;
 import app.xzone.storyline.R;
 import app.xzone.storyline.worker.Api;
+import app.xzone.storyline.worker.Api.ApiKey;
 import app.xzone.storyline.worker.AuthenticationWorker;
 
 import com.facebook.Request;
@@ -54,7 +55,7 @@ public class FacebookAdapter {
 									
 									
 									// send register API with facebook token to server backend.
-									String response2 = (String) AuthenticationWorker.getInstance(Api.KEY_CALL_REGISTER_API, session.getAccessToken()).callApi();
+									String response2 = (String) AuthenticationWorker.getInstance(ApiKey.REGISTER_API, session.getAccessToken()).callApi();
 									
 									progress.dismiss();
 									Intent intent = new Intent(a,

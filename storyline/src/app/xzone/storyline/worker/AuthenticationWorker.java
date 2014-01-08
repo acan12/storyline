@@ -4,20 +4,22 @@ import java.io.IOException;
 
 import org.apache.http.client.ClientProtocolException;
 
+import app.xzone.storyline.worker.Api.ApiKey;
+
 public class AuthenticationWorker extends BaseWorker {
 	private static AuthenticationWorker authWorker = null;
-	private String apiKey;
+	private ApiKey apiKey;
 
 	private Object params;
 	private Object response;
 
-	protected AuthenticationWorker(String apiKey, Object params) {
+	protected AuthenticationWorker(ApiKey apiKey, Object params) {
 		this.apiKey = apiKey;
 		this.params = params;
 		this.start();
 	}
 
-	public static AuthenticationWorker getInstance(String apiKey, Object params) {
+	public static AuthenticationWorker getInstance(ApiKey apiKey, Object params) {
 		if (authWorker == null) {
 			authWorker = new AuthenticationWorker(apiKey, params);
 		}
@@ -70,12 +72,12 @@ public class AuthenticationWorker extends BaseWorker {
 		this.response = response;
 	}
 
-	// set API Key as uniq identification
-	public String getApiKey() {
+	// set API Key as Uniq
+	public ApiKey getApiKey() {
 		return apiKey;
 	}
 
-	public void setApi(String apiKey) {
+	public void setApi(ApiKey apiKey) {
 		this.apiKey = apiKey;
 	}
 

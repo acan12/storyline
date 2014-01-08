@@ -10,10 +10,5 @@ import app.xzone.storyline.model.Story;
 
 public interface IApi {
 	
-	
-	public Story[] getMyStories() throws ClientProtocolException,
-	IOException;
-	
-	public String registerApi(String  params) throws ClientProtocolException,
-	IOException;
+	public String registerApi(String  params) throws ClientProtocolException,IOException;
 }
