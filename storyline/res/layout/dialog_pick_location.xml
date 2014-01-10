@@ -36,7 +36,6 @@
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:padding="10dp"
-        android:onClick="submitLocation"
         android:text="Ok" />
 
 </LinearLayout>

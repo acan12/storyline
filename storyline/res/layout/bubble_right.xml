@@ -105,8 +105,7 @@
                     android:id="@+id/location"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:text="Jakarta" />
+                    android:layout_marginLeft="30dp" />
 
                 <TextView
                     android:id="@+id/bubble_note"
@@ -114,7 +113,6 @@
                     android:layout_height="70dip"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="5dp"
-                    android:text="my message here commented please!! kjdlksjlkdjs kdjskljd djklsjd skld"
                     android:textColor="#636060" />
             </LinearLayout>
         </LinearLayout>

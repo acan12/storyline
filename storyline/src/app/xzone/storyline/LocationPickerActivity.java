@@ -13,7 +13,9 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -26,8 +28,8 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 
 public class LocationPickerActivity extends MapActivity {
-	int latt = 28426365;
-	int lngg = 77320393;
+	int latt = (int) (-6.175425 * 1e6);
+	int lngg = (int) ( 106.826858 * 1e6);
 
 	private MapView mapView;
 	private MapController controller;
@@ -109,6 +111,9 @@ public class LocationPickerActivity extends MapActivity {
 				lon = loc.getLongitude();
 				i++;
 			}
+			
+			System.out.println("----- new lat:"+lat);
+			System.out.println("----- new lon:"+lon);
 
 			GeoPoint newPoint = new GeoPoint((int) (lat * 1E6),
 					(int) (lon * 1E6));
@@ -119,32 +124,44 @@ public class LocationPickerActivity extends MapActivity {
 		}
 	}
 
-	public void submitLocation(View v) {
-		EditText nameLocation = (EditText) v.findViewById(R.id.valueNameLocation);
-		
-		
-		GeoPoint mapCenter = mapView.getProjection().fromPixels(mapView.getWidth() / 2, mapView.getHeight() / 2);
-		double lat = mapCenter.getLatitudeE6() / 1E6;
-		double lng = mapCenter.getLongitudeE6() / 1E6;
-		
-		// Prepare data intent
-		Intent data = new Intent();
-		data.putExtra("location", nameLocation.getText());
-		data.putExtra("lat", lat);
-		data.putExtra("lng", lng);
-		setResult(RESULT_OK, data);
-
-		finish();
-	}
 	
-	public void donePick(View v) throws IOException {
+	
+	public void picklocation(View v) throws IOException {
 		
-		Dialog dialog = new Dialog(this);
+		final Dialog dialog = new Dialog(this);
 		dialog.setTitle("Location Name");
 		dialog.setContentView(R.layout.dialog_pick_location);
 		
 		dialog.show();
 		
+		Button submitLocButton = (Button) dialog.findViewById(R.id.submitLocation);
+		submitLocButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				// TODO Auto-generated method stub
+				EditText nameLocation = (EditText) dialog.findViewById(R.id.valueNameLocation);
+				
+				
+				GeoPoint mapCenter = mapView.getProjection().fromPixels(mapView.getWidth() / 2, mapView.getHeight() / 2);
+				double lat = mapCenter.getLatitudeE6() / 1E6;
+				double lng = mapCenter.getLongitudeE6() / 1E6;
+				
+				// Prepare data intent
+//				System.out.println("------ nameLocation.getText():"+nameLocation.getText());
+//				System.out.println("------ lat:"+lat);
+//				System.out.println("------ lng:"+lng);
+				
+				Intent data = new Intent();
+				data.putExtra("location", "in "+nameLocation.getText().toString());
+				data.putExtra("lat", lat);
+				data.putExtra("lng", lng);
+				setResult(RESULT_OK, data);
+
+				dialog.dismiss();
+				finish();
+			}
+		});
 	}
 
 	public void cancelPick(View v) {

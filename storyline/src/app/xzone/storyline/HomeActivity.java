@@ -326,9 +326,10 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			if (resultCode == RESULT_OK && data != null) {
 				if (data.getExtras().containsKey("location")) {
 					String locname = data.getStringExtra("location");
-
+					
 					double[] coordinates = { data.getDoubleExtra("lat", 0d),
 							data.getDoubleExtra("lng", 0d) };
+					
 					TextView tv = (TextView) findViewById(R.id.locationEvent);
 					tv.setText(StringManipulation.ellipsis(locname, 30));
 					tv.setTag(coordinates);
