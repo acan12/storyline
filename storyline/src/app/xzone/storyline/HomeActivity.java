@@ -98,13 +98,6 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		DebugLive.liveLog("testing screensize device:"+width+"x"+height);
 		
 		
-		
-		// show current User
-//		KiiUser currentUser = KiiUser.getCurrentUser();
-		
-//		System.out.println("----->> -"+currentUser.getUsername());
-//		KiiUser.logOut();
-		
 		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
 
 		setContentView(R.layout.main);
@@ -308,8 +301,10 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		case Helper.REQUEST_CODE_IMAGE_CAMERA:
 			if (resultCode == RESULT_OK) {
 
-				Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-//				 preview.setImageBitmap(thumbnail);
+				System.out.println("---- entering image from camera -----");
+				Uri photoUri = (Uri) data.getExtras().get(MediaStore.EXTRA_OUTPUT);
+				ImageButton thumb = (ImageButton) findViewById(R.id.pic01);
+				thumb.setImageResource(R.drawable.calendar_orange);
 			}
 			break;
 

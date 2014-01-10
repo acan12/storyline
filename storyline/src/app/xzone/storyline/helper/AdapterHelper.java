@@ -1,5 +1,6 @@
 package app.xzone.storyline.helper;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -8,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -167,6 +170,12 @@ public class AdapterHelper {
 
 		View vi = inflater.inflate(R.layout.main_bubble_right, null);
 
+		// testing integrate with image from sdcard as external storage , must use layout: main_bubble_right_image.xml
+//		File imageFile = new File("/sdcard/Storyline/photos/image_001.jpg");
+//		ImageButton thumb = (ImageButton) vi.findViewById(R.id.pic01);
+//		BitmapDrawable d = new BitmapDrawable(vi.getResources(), imageFile.getAbsolutePath());
+//		thumb.setImageDrawable(d);
+		
 		// set view into event
 		event.setView(vi);
 
