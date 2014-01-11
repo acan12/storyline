@@ -38,9 +38,9 @@ public class EventHelper {
 		
 		Spinner sp02 = (Spinner) a.findViewById(R.id.transportSpinnerEvent);
 
-		TextView location = (TextView) a.findViewById(R.id.locationEvent);
 		TextView dateEvent = (TextView) a.findViewById(R.id.valueDateEvent);
 		TextView timeEvent = (TextView) a.findViewById(R.id.valueTimeEvent);
+		TextView location = (TextView) a.findViewById(R.id.locationEvent);
 
 		event.setView(event.getView());
 		event.setName(t01.getText().toString());
@@ -99,7 +99,7 @@ public class EventHelper {
 
 		tv01.setText(TimeUtil.dateFormat(date, "EEE MMM d, yyyy"));
 		tv02.setText(TimeUtil.dateFormat(date, "k:mm a"));
-
+		tv03.setText(e.getLocname());
 	}
 
 }
