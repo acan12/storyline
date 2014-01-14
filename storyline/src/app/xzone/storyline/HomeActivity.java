@@ -90,14 +90,6 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 
 		
-		
-		DebugLive.init(this);
-		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-		int width = metrics.widthPixels;
-		int height = metrics.heightPixels;
-		DebugLive.liveLog("testing screensize device:"+width+"x"+height);
-		
-		
 		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
 
 		setContentView(R.layout.main);
