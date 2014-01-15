@@ -22,6 +22,7 @@ public class ImageAdapter {
 	private static ImageAdapter imageAdapter;
 	private static File imageFolder;
 	private static String photoDir = "photos";
+	private static String facebookDir = "facebook";
 	private static DecimalFormat formatter = new DecimalFormat("000");
 
 	private static String rootPath;
@@ -95,6 +96,16 @@ public class ImageAdapter {
 		gallery.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
 
 		a.startActivityForResult(gallery, Helper.REQUEST_CODE_IMAGE_GALLERY);
+	}
+	
+	public static String cachedBitmap(Context context, Bitmap bmp){
+		rootPath = Environment.getExternalStorageDirectory() + "/"
+				+ AppAdapter.getInstance(context).getAppName();
+		String facebookPath = rootPath + facebookDir;
+		
+		//cache image into sdcard
+		
+		return null;
 	}
 
 }

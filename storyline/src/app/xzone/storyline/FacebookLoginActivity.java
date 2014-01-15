@@ -5,7 +5,9 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -58,13 +60,8 @@ public class FacebookLoginActivity extends Activity implements OnClickListener, 
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//		super.onActivityResult(requestCode, resultCode, data);
-		// Session.getActiveSession().onActivityResult(this, requestCode,
-		// resultCode, data);
 		fbManager.loginSuccess(data);
-		
-		Log.d(this.getClass().toString(),
-				"---- entering facebook activity onactivityresult ----");
+
 	}
 
 	
@@ -78,17 +75,25 @@ public class FacebookLoginActivity extends Activity implements OnClickListener, 
 			System.out.println("---- email user["+user.getId()+"]: "+user.getEmail());
 			
 			
+			// login success
+			Toast.makeText(this, "Login Success", 200).show();
+			
+			// save into preference
+			System.out.println("------ 1.getAvatarLink(user.getId()):"+getAvatarLink(user.getId()));
+			SharedPreferences.Editor editor = getSharedPreferences("facebook", Activity.MODE_WORLD_READABLE).edit();
+			editor.putString("facebook.me.avatar", getAvatarLink(user.getId()));
+			editor.commit();
+			
+			// go to homeactivity
+			Intent intent = new Intent(this, HomeActivity.class);
+			intent.setAction(Intent.ACTION_VIEW);
+			startActivity(intent);
 			
 		}catch(EasyFacebookError e){
 			e.printStackTrace();
 		}
 		
-		// login success
-		Toast.makeText(this, "Login Success", 200).show();
-		// go to homeactivity
-		Intent intent = new Intent(this, HomeActivity.class);
-		intent.setAction(Intent.ACTION_VIEW);
-		startActivity(intent);
+
 
 	}
 
@@ -101,6 +106,11 @@ public class FacebookLoginActivity extends Activity implements OnClickListener, 
 	@Override
 	public void loginFail() {
 		fbManager.displayToast("Login Failed!!!");
+	}
+	
+	
+	private String getAvatarLink(String id){
+		return "http://graph.facebook.com/"+id+"/picture?type=small";
 	}
 
 }
