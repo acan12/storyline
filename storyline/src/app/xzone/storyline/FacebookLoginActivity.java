@@ -45,13 +45,9 @@ public class FacebookLoginActivity extends Activity implements OnClickListener, 
 		switch (v.getId()) {
 		case R.id.fb_signin:
 
-			final ProgressDialog progressDialog = new ProgressDialog(this);
-			progressDialog.setCancelable(false);
-			progressDialog.setMessage("Authenticate ...");
-			progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
+			
 			// progressDialog.show();
-			FacebookAdapter.SigninWithFacebook(this, progressDialog, fbManager);
+			fbManager = FacebookAdapter.SigninWithFacebook(this, fbManager);
 
 			break;
 		}

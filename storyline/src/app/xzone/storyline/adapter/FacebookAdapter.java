@@ -55,8 +55,7 @@ public class FacebookAdapter {
 		  };
 	
 	
-	public static void SigninWithFacebook(final Activity a,
-			final ProgressDialog progress, FBLoginManager fbManager) {
+	public static FBLoginManager SigninWithFacebook(final Activity a, FBLoginManager fbManager) {
 		
 		fbManager = new FBLoginManager(a, R.layout.main, a.getResources().getString(R.string.facebook_app_id), permissions);
 		
@@ -65,6 +64,8 @@ public class FacebookAdapter {
 		}else{
 			fbManager.login();
 		}
+		
+		return fbManager;
 		
 	}
 

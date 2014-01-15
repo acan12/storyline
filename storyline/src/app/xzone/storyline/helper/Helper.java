@@ -102,7 +102,7 @@ public class Helper {
 //			avatar.setImageBitmap(bmp);
 //			avatar.setImageBitmap(CircleImage.getRoundedRectBitmap(bmp));
 			avatar.setImageBitmap(CircleImage.getRoundedCornerBitmap(activity, bmp, 
-					10, 30, 30, true, true, true, true));
+					30, 50, 50, true, true, true, true));
 			
 			
 		} catch (MalformedURLException e) {
