@@ -1,10 +1,24 @@
 package app.xzone.storyline.adapter;
 
 import com.easy.facebook.android.facebook.FBLoginManager;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.model.GraphUser;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+import app.xzone.storyline.HomeActivity;
+import app.xzone.storyline.MapPlaceActivity;
 import app.xzone.storyline.R;
+import app.xzone.storyline.component.ProgressCustomDialog;
 
 public class FacebookAdapter {
 	
@@ -57,7 +71,7 @@ public class FacebookAdapter {
 	
 	public static FBLoginManager SigninWithFacebook(final Activity a, FBLoginManager fbManager) {
 		
-		fbManager = new FBLoginManager(a, R.layout.main, a.getResources().getString(R.string.facebook_app_id), permissions);
+//		fbManager = new FBLoginManager(a, R.layout.main, a.getResources().getString(R.string.facebook_app_id), permissions);
 		
 		if(fbManager.existsSavedFacebook()){
 			fbManager.loadFacebook();
@@ -67,6 +81,54 @@ public class FacebookAdapter {
 		
 		return fbManager;
 		
+	}
+	
+	
+	public static Session openConnection(final Activity a){
+		return Session.openActiveSession(a, true, new Session.StatusCallback(){
+
+			@SuppressWarnings("deprecation")
+			@Override
+			public void call(Session session, SessionState state,
+					Exception exception) {
+				if(session.isOpened()){
+					
+					// make request to the /me API
+					Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
+						
+						@Override
+						public void onCompleted(GraphUser user, Response response) {
+							if(user != null){
+								TextView welcome = (TextView) a.findViewById(R.id.welcome);
+								welcome.setText("Hello "+user.getName()+ " !");
+								
+								// save fb avatar link 
+								SharedPreferences settings = a.getSharedPreferences("facebook", Activity.MODE_WORLD_READABLE);
+								SharedPreferences.Editor editor = settings.edit();
+								editor.putString("avatar", getAvatarLink(user.getId()));
+								editor.commit();
+								
+								Toast.makeText(a, "Login Success", 200).show();
+								
+//								// go to homeactivity
+								
+								Intent goTimeline = new Intent(a, HomeActivity.class);
+								a.startActivity(goTimeline);
+								a.finish();
+							}
+						}
+					});
+					
+				}
+				
+			}
+			
+		});
+		
+	}
+	
+	private static String getAvatarLink(String id){
+		return "http://graph.facebook.com/"+id+"/picture?type=small";
 	}
 
 }

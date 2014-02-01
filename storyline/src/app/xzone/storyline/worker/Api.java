@@ -19,7 +19,7 @@ public class Api implements IApi {
 	protected static final String DOMAIN_API_V1 = "http://10.0.2.2:4000/api/v1/";
 
 	// Collection of API Key
-	private final String REGISTER_API = "signin";
+	private final String API_REGISTER_EMAIL = "register";
 
 	// internal variable
 	private static Api api = null;
@@ -54,7 +54,7 @@ public class Api implements IApi {
 		List<NameValuePair> pair = new ArrayList<NameValuePair>();
 		pair.add(new BasicNameValuePair("token", param));
 
-		httpUtil = new HttpUtil(apiUrl.append(REGISTER_API).toString(), pair,
+		httpUtil = new HttpUtil(apiUrl.append(API_REGISTER_EMAIL).toString(), pair,
 				Method.POST);
 		String responseApi = httpUtil.sendRequest();
 

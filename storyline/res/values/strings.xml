@@ -5,8 +5,8 @@
     <string name="app_name">Storyline</string>
     <string name="info">Info</string>
     <string name="pick_story">Pick Story</string>
-    
     <string name="facebook_app_id">581391298600681</string>
+    <string name="facebook_button_label">Login</string>
     <string name="register">Register</string>
 
 </resources>

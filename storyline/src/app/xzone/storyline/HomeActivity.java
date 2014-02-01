@@ -1,5 +1,7 @@
 package app.xzone.storyline;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,20 +11,17 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -30,10 +29,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.adapter.ImageAdapter;
-//import app.xzone.storyline.adapter.KiiAdapter;
 import app.xzone.storyline.component.DateTimePicker;
 import app.xzone.storyline.component.PanelButtons;
 import app.xzone.storyline.component.ProgressCustomDialog;
@@ -43,17 +40,15 @@ import app.xzone.storyline.helper.EventHelper;
 import app.xzone.storyline.helper.Helper;
 import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
-import app.xzone.storyline.util.DebugLive;
 import app.xzone.storyline.util.StringManipulation;
-import app.xzone.storyline.worker.Api;
-import app.xzone.storyline.worker.AuthenticationWorker;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
-import com.kii.cloud.storage.KiiUser;
- 
+
+//import app.xzone.storyline.adapter.KiiAdapter;
+
 public class HomeActivity extends SlidingActivity implements OnClickListener {
- 
+
 	private Sliding popup;
 	private ImageButton listButton, allButton, storyButton;
 	private Button submitEventButton, cancelEventButton;
@@ -61,38 +56,28 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	private Dialog dialog;
 	private ProgressDialog progress = null;
 	private ViewGroup viewGroup;
-	
-	
+
 	private final Context context = this;
 	private DBAdapter db = null;
 	private Story story;
- 
-	private ArrayList<Event> events; // list of events consists previous event + draft event
+
+	private ArrayList<Event> events; // list of events consists previous event +
+										// draft event
 	private ArrayList<Event> prevEvents; // list of events consists saved event
 	private Map<String, String> params;
- 
 
 	int key1 = 0;
 	int key2 = 0;
 	private boolean showEditPanel;
 	private boolean showButtonsPanel = false;;
-	
-	
-	
-	@Override
-	public void onPause(){
-		super.onPause();
-		if(progress != null) progress.dismiss();
-	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		
-		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
-
 		setContentView(R.layout.main);
+
+		getSlidingMenu().setMode(SlidingMenu.LEFT_RIGHT);
 		setBehindContentView(R.layout.sliding_menu);
 		getSlidingMenu().setSecondaryMenu(R.layout.sliding_recomendation);
 		getSlidingMenu().setBehindOffset(80);
@@ -125,6 +110,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		setStoryWithParams(getIntent().getExtras());
 
 		// set ui
+		loadAvatarImageAsync();
 		Helper.buildUIMain(HomeActivity.this, story);
 		AdapterHelper.buildListViewAdapter(HomeActivity.this);
 
@@ -135,13 +121,11 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		if (story == null || story.getEvents() == null) {
 			Helper.modeEdit(this, viewGroup);
 			showEditPanel = true;
-	        
+
 		} else {
 			renderTimeline(story.getEvents());
 			showEditPanel = false;
 		}
-		
-		
 
 	}
 
@@ -195,8 +179,6 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		bubble.setVisibility(View.GONE);
 	}
 
-	
-
 	// event handler when cancel edit button clicked
 	public void saveEdit(View v) {
 
@@ -207,9 +189,9 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			return;
 
 		// save your story
-		if (story.hasObject()){
+		if (story.hasObject()) {
 			db.updateStoryRecord(story);
-		}else{
+		} else {
 			story.setId((int) db.insertStoryRecord(story));
 		}
 		// make empty collection for ready to fill
@@ -288,13 +270,14 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
+
 		switch (requestCode) {
 		case Helper.REQUEST_CODE_IMAGE_CAMERA:
 			if (resultCode == RESULT_OK) {
 
 				System.out.println("---- entering image from camera -----");
-				Uri photoUri = (Uri) data.getExtras().get(MediaStore.EXTRA_OUTPUT);
+				Uri photoUri = (Uri) data.getExtras().get(
+						MediaStore.EXTRA_OUTPUT);
 				ImageButton thumb = (ImageButton) findViewById(R.id.pic01);
 				thumb.setImageResource(R.drawable.calendar_orange);
 			}
@@ -318,10 +301,10 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			if (resultCode == RESULT_OK && data != null) {
 				if (data.getExtras().containsKey("location")) {
 					String locname = data.getStringExtra("location");
-					
+
 					double[] coordinates = { data.getDoubleExtra("lat", 0d),
 							data.getDoubleExtra("lng", 0d) };
-					
+
 					TextView tv = (TextView) findViewById(R.id.locationEvent);
 					tv.setText(StringManipulation.ellipsis(locname, 30));
 					tv.setTag(coordinates);
@@ -330,37 +313,36 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		}
 	}
 
-	
-// * Hide menu from standar android *	
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//
-//		MenuItem item01 = menu.add("Map").setOnMenuItemClickListener(
-//				new OnMenuItemClickListener() {
-//
-//					@Override
-//					public boolean onMenuItemClick(MenuItem item) {
-//						Intent intent = new Intent(HomeActivity.this,
-//								MapPlaceActivity.class);
-//						startActivity(intent);
-//
-//						return true;
-//					}
-//				});
-//
-//		MenuItem item02 = menu.add("Edit").setOnMenuItemClickListener(
-//				new OnMenuItemClickListener() {
-//
-//					@Override
-//					public boolean onMenuItemClick(MenuItem item) {
-//						Helper.modeEdit(HomeActivity.this, viewGroup);
-//
-//						return true;
-//					}
-//				});
-//		item01.setIcon(R.drawable.map);
-//		item02.setIcon(R.drawable.list);
-//		return true;
-//	}
+	// * Hide menu from standar android *
+	// public boolean onCreateOptionsMenu(Menu menu) {
+	//
+	// MenuItem item01 = menu.add("Map").setOnMenuItemClickListener(
+	// new OnMenuItemClickListener() {
+	//
+	// @Override
+	// public boolean onMenuItemClick(MenuItem item) {
+	// Intent intent = new Intent(HomeActivity.this,
+	// MapPlaceActivity.class);
+	// startActivity(intent);
+	//
+	// return true;
+	// }
+	// });
+	//
+	// MenuItem item02 = menu.add("Edit").setOnMenuItemClickListener(
+	// new OnMenuItemClickListener() {
+	//
+	// @Override
+	// public boolean onMenuItemClick(MenuItem item) {
+	// Helper.modeEdit(HomeActivity.this, viewGroup);
+	//
+	// return true;
+	// }
+	// });
+	// item01.setIcon(R.drawable.map);
+	// item02.setIcon(R.drawable.list);
+	// return true;
+	// }
 
 	@Override
 	public void onClick(View v) {
@@ -370,23 +352,24 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			// put your code here
 			toggle();
 			break;
-			
+
 		case R.id.allButton:
-			
+
 			// set show buttons panel
-			showButtonsPanel = PanelButtons.showPanel(this, R.id.footer_function, showButtonsPanel);
+			showButtonsPanel = PanelButtons.showPanel(this,
+					R.id.footer_function, showButtonsPanel);
 
 			// Hide the Panel
-	        Helper.modeNormal(HomeActivity.this, viewGroup);
-	        showEditPanel = false;
+			Helper.modeNormal(HomeActivity.this, viewGroup);
+			showEditPanel = false;
 			break;
 
 		case R.id.storyButton:
-			showSecondaryMenu(); 
+			showSecondaryMenu();
 			break;
 
 		case R.id.newStorySliding:
-			
+
 			progress = ProgressDialog.show(this, null, "Loading");
 			// routes to main activity
 			finish();
@@ -397,11 +380,13 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			break;
 
 		case R.id.pickDateEvent:
-			DateTimePicker.showDatePicker(context, findViewById(R.id.valueDateEvent));
+			DateTimePicker.showDatePicker(context,
+					findViewById(R.id.valueDateEvent));
 			break;
 
 		case R.id.pickTimeEvent:
-			DateTimePicker.showTimePicker(context, findViewById(R.id.valueTimeEvent));
+			DateTimePicker.showTimePicker(context,
+					findViewById(R.id.valueTimeEvent));
 			break;
 
 		case R.id.submitEventButton:
@@ -471,40 +456,72 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	}
 
 	// * routes to map page
-	public void goMap(View v){
+	public void goMap(View v) {
 		Intent intent = new Intent(HomeActivity.this, MapPlaceActivity.class);
 		startActivity(intent);
 	}
-	
-	// * pick image from camera device 
-	public void goCamera(View v){
+
+	// * pick image from camera device
+	public void goCamera(View v) {
 		ImageAdapter.takePhoto(this);
 	}
-	
-	public void goGallery(View v){
+
+	public void goGallery(View v) {
 		ImageAdapter.takePictureFile(this);
 	}
-	
-	
+
 	public void showNavigation(View v) {
 
-				
-				    
-		if(!showEditPanel) {
+		if (!showEditPanel) {
 			Helper.modeEdit(HomeActivity.this, viewGroup);
-	        
-	        showEditPanel = true;
-	        showButtonsPanel = PanelButtons.showPanel(this, R.id.footer_function, true);
-	    }
-	    else {
-	        // Hide the Panel
-	        Helper.modeNormal(HomeActivity.this, viewGroup);
-	        
-	        showEditPanel = false;
-	        showButtonsPanel = PanelButtons.showPanel(this, R.id.footer_function, true);
-	    }
-		
-		
-		
-	}	
+
+			showEditPanel = true;
+			showButtonsPanel = PanelButtons.showPanel(this,
+					R.id.footer_function, true);
+		} else {
+			// Hide the Panel
+			Helper.modeNormal(HomeActivity.this, viewGroup);
+
+			showEditPanel = false;
+			showButtonsPanel = PanelButtons.showPanel(this,
+					R.id.footer_function, true);
+		}
+
+	}
+
+	private void loadAvatarImageAsync() {
+		// Fetch data from shared preferences
+		SharedPreferences settings = getSharedPreferences("facebook",
+				Activity.MODE_WORLD_READABLE);
+		String avatarLink = settings.getString("avatar", "");
+
+		new DownloadImageTask((ImageView) findViewById(R.id.avatar))
+				.execute(avatarLink);
+	}
+
+	// # Async Task
+	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+		ImageView bmImage;
+
+		public DownloadImageTask(ImageView bmImage) {
+			this.bmImage = bmImage;
+		}
+
+		protected Bitmap doInBackground(String... urls) {
+			String urldisplay = urls[0];
+			Bitmap mIcon11 = null;
+			try {
+				InputStream in = new URL(urldisplay).openStream();
+				mIcon11 = BitmapFactory.decodeStream(in);
+			} catch (Exception e) {
+				Log.e("Error", e.getMessage());
+				e.printStackTrace();
+			}
+			return mIcon11;
+		}
+
+		protected void onPostExecute(Bitmap bmp) {
+			bmImage.setImageBitmap(bmp);
+		}
+	}
 }

@@ -31,21 +31,26 @@
         
     </LinearLayout>
     
+    <ProgressBar android:id="@+id/progressSignin"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:contentDescription="Signin..."
+            android:layout_gravity="center_vertical|center_horizontal"/>
+    
     <LinearLayout 
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="bottom">
-
-        <Button
-            android:id="@+id/fb_signin"
+		
+        <com.facebook.widget.LoginButton
+            android:id="@+id/fblogin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dip"
-            android:background="@color/bluesky"
             android:drawableLeft="@drawable/facebook_icon"
-            android:padding="10dip"
-            android:text="Sign In" />
-        
+            android:layout_margin="20dp" />
+       
     </LinearLayout>
         
 

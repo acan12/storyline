@@ -1,53 +1,56 @@
 package app.xzone.storyline;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 import app.xzone.storyline.adapter.FacebookAdapter;
+import app.xzone.storyline.component.ProgressCustomDialog;
 
-import com.easy.facebook.android.apicall.GraphApi;
-import com.easy.facebook.android.data.Images;
-import com.easy.facebook.android.data.Photo;
-import com.easy.facebook.android.data.User;
-import com.easy.facebook.android.error.EasyFacebookError;
 import com.easy.facebook.android.facebook.FBLoginManager;
-import com.easy.facebook.android.facebook.Facebook;
-import com.easy.facebook.android.facebook.LoginListener;
+import com.facebook.Session;
 
-public class FacebookLoginActivity extends Activity implements OnClickListener, LoginListener {
+public class FacebookLoginActivity extends Activity implements OnClickListener {
 
 	private FBLoginManager fbManager;
 	private Button fbButton;
+	private ProgressDialog progress;
+	private ProgressBar progressSignin;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.signin_facebook);
 
-		fbButton = (Button) findViewById(R.id.fb_signin);
+		fbButton = (Button) findViewById(R.id.fblogin);
 		fbButton.setOnClickListener(this);
-
+		
+		progressSignin = (ProgressBar) findViewById(R.id.progressSignin);
+		progressSignin.setVisibility(View.GONE);
+		
 	}
+	
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.fb_signin:
-
+		case R.id.fblogin:
 			
-			// progressDialog.show();
-			fbManager = FacebookAdapter.SigninWithFacebook(this, fbManager);
+			progressSignin.setVisibility(View.VISIBLE);
+			
+			Session session = FacebookAdapter.openConnection(this);
+			
+			
+			
+			 
+//			Intent intent = new Intent(this, HomeActivity.class);
+//			intent.setAction(Intent.ACTION_VIEW);
+//			startActivity(intent);
+//			finish();
 
 			break;
 		}
@@ -56,57 +59,10 @@ public class FacebookLoginActivity extends Activity implements OnClickListener, 
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		fbManager.loginSuccess(data);
-
-	}
-
-	
-	@Override
-	public void loginSuccess(Facebook facebook) {
-		GraphApi graphApi = new GraphApi(facebook);
-		User user = new User();
-		
-		try{
-			user = graphApi.getMyAccountInfo();
-			System.out.println("---- email user["+user.getId()+"]: "+user.getEmail());
-			
-			
-			// login success
-			Toast.makeText(this, "Login Success", 200).show();
-			
-			// save into preference
-			System.out.println("------ 1.getAvatarLink(user.getId()):"+getAvatarLink(user.getId()));
-			SharedPreferences.Editor editor = getSharedPreferences("facebook", Activity.MODE_WORLD_READABLE).edit();
-			editor.putString("facebook.me.avatar", getAvatarLink(user.getId()));
-			editor.commit();
-			
-			// go to homeactivity
-			Intent intent = new Intent(this, HomeActivity.class);
-			intent.setAction(Intent.ACTION_VIEW);
-			startActivity(intent);
-			
-		}catch(EasyFacebookError e){
-			e.printStackTrace();
-		}
-		
-
-
-	}
-
-	@Override
-	public void logoutSuccess() {
-		fbManager.displayToast("Logout Success");
-		
-	}
-
-	@Override
-	public void loginFail() {
-		fbManager.displayToast("Login Failed!!!");
-	}
-	
-	
-	private String getAvatarLink(String id){
-		return "http://graph.facebook.com/"+id+"/picture?type=small";
+		// fbManager.loginSuccess(data);
+		super.onActivityResult(requestCode, resultCode, data);
+		Session.getActiveSession().onActivityResult(this, requestCode,
+				resultCode, data);
 	}
 
 }

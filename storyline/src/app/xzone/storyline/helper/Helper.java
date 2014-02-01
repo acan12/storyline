@@ -1,8 +1,5 @@
 package app.xzone.storyline.helper;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
@@ -11,23 +8,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import app.xzone.storyline.HomeActivity;
 import app.xzone.storyline.R;
 import app.xzone.storyline.adapter.DBAdapter;
-import app.xzone.storyline.component.CircleImage;
 import app.xzone.storyline.component.DateTimePicker;
 import app.xzone.storyline.component.PanelButtons;
 import app.xzone.storyline.model.Story;
@@ -86,35 +78,7 @@ public class Helper {
 		else
 			tv.setText(TimeUtil.dateFormat(
 					TimeUtil.fromEpochFormat(story.getEndDate())).toString());
-		
-		
-		// show avatar in menu left sliding , retrieve from sharedPreferences
-		SharedPreferences prefs = activity.getSharedPreferences("facebook", Activity.MODE_WORLD_READABLE);
-		String avatarLink = prefs.getString("facebook.me.avatar", null);
-		
-		// set avatar image from URL facebook
-		ImageView avatar = (ImageView) activity.findViewById(R.id.avatar);
-		URL imageValue;
-		try {
-			imageValue = new URL(avatarLink);
-			Bitmap bmp = BitmapFactory.decodeStream(imageValue.openConnection().getInputStream());
-//			Bitmap bmp = BitmapFactory.decodeResource(activity.getResources(), R.drawable.demo_pic);
-//			avatar.setImageBitmap(bmp);
-//			avatar.setImageBitmap(CircleImage.getRoundedRectBitmap(bmp));
-			avatar.setImageBitmap(CircleImage.getRoundedCornerBitmap(activity, bmp, 
-					30, 50, 50, true, true, true, true));
-			
-			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+
 	}
 
 	public static void buildUIStoryPopup(final Story story,

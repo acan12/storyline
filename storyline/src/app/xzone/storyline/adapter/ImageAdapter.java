@@ -3,18 +3,13 @@ package app.xzone.storyline.adapter;
 import java.io.File;
 import java.text.DecimalFormat;
 
-import org.apache.http.conn.ManagedClientConnection;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.MediaStore.MediaColumns;
 import app.xzone.storyline.helper.Helper;
 
 public class ImageAdapter {
@@ -26,14 +21,14 @@ public class ImageAdapter {
 	private static DecimalFormat formatter = new DecimalFormat("000");
 
 	private static String rootPath;
-	
-	public ImageAdapter(Context context){
+
+	public ImageAdapter(Context context) {
 		this.context = context;
-		
+
 	}
-	
-	public ImageAdapter getInstance(Context context){
-		if(context == null){
+
+	public ImageAdapter getInstance(Context context) {
+		if (context == null) {
 			imageAdapter = new ImageAdapter(context);
 		}
 		return imageAdapter;
@@ -45,7 +40,7 @@ public class ImageAdapter {
 
 		rootPath = Environment.getExternalStorageDirectory() + File.separator
 				+ AppAdapter.getInstance(a).getAppName();
-		String photoPath = rootPath + File.separator +photoDir;
+		String photoPath = rootPath + File.separator + photoDir;
 		// storing file
 		int imageNum = 1;
 		// Create Directory App
@@ -62,10 +57,9 @@ public class ImageAdapter {
 			output = new File(imageFolder, fileName);
 		}
 		Uri uriSavedImage = Uri.fromFile(output);
-		 
-//		Bitmap bmp = BitmapFactory.decodeFile(output.getPath());
-		camera.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
 
+		// Bitmap bmp = BitmapFactory.decodeFile(output.getPath());
+		camera.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
 
 		a.startActivityForResult(camera, Helper.REQUEST_CODE_IMAGE_CAMERA);
 	}
@@ -97,14 +91,14 @@ public class ImageAdapter {
 
 		a.startActivityForResult(gallery, Helper.REQUEST_CODE_IMAGE_GALLERY);
 	}
-	
-	public static String cachedBitmap(Context context, Bitmap bmp){
+
+	public static String cachedBitmap(Context context, Bitmap bmp) {
 		rootPath = Environment.getExternalStorageDirectory() + "/"
 				+ AppAdapter.getInstance(context).getAppName();
 		String facebookPath = rootPath + facebookDir;
-		
-		//cache image into sdcard
-		
+
+		// cache image into sdcard
+
 		return null;
 	}
 

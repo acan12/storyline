@@ -53,11 +53,11 @@
 
         <ImageView 
             android:id="@+id/avatar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20pt"
+            android:layout_height="20pt"
             android:layout_gravity="left|center_vertical"
             android:layout_margin="5dp"
-            android:src="@drawable/demo_pic" />
+            android:src="@drawable/unknown" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
