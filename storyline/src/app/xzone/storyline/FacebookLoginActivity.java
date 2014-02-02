@@ -9,14 +9,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import app.xzone.storyline.adapter.FacebookAdapter;
-import app.xzone.storyline.component.ProgressCustomDialog;
 
-import com.easy.facebook.android.facebook.FBLoginManager;
 import com.facebook.Session;
 
 public class FacebookLoginActivity extends Activity implements OnClickListener {
 
-	private FBLoginManager fbManager;
 	private Button fbButton;
 	private ProgressDialog progress;
 	private ProgressBar progressSignin;
@@ -41,17 +38,8 @@ public class FacebookLoginActivity extends Activity implements OnClickListener {
 		case R.id.fblogin:
 			
 			progressSignin.setVisibility(View.VISIBLE);
-			
 			Session session = FacebookAdapter.openConnection(this);
 			
-			
-			
-			 
-//			Intent intent = new Intent(this, HomeActivity.class);
-//			intent.setAction(Intent.ACTION_VIEW);
-//			startActivity(intent);
-//			finish();
-
 			break;
 		}
 
@@ -59,7 +47,6 @@ public class FacebookLoginActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// fbManager.loginSuccess(data);
 		super.onActivityResult(requestCode, resultCode, data);
 		Session.getActiveSession().onActivityResult(this, requestCode,
 				resultCode, data);
