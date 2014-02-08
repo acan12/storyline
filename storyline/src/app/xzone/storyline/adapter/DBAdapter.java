@@ -148,7 +148,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 		String query = "SELECT * FROM stories ORDER BY id desc";
 
 		Cursor c = sqliteDB.rawQuery(query, null);
-
+		
 		while (c.moveToNext()) {
 			int id = c.getInt(c.getColumnIndex("id"));
 			story = getStoryRecord(id);
@@ -168,6 +168,9 @@ public class DBAdapter extends SQLiteOpenHelper {
 		if (c != null && c.moveToLast()) {
 			return getStoryRecord(c.getLong(0));
 		}
+		
+		this.close();
+		
 		return null;
 	}
 

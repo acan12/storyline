@@ -168,7 +168,8 @@ public class AdapterHelper {
 		LayoutInflater inflater = (LayoutInflater) a.getApplicationContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		View vi = inflater.inflate(R.layout.main_bubble_right, null);
+//		View vi = inflater.inflate(R.layout.main_bubble_right, null);
+		View vi = inflater.inflate(R.layout.main_bubble_right_images, null);
 
 		// testing integrate with image from sdcard as external storage , must use layout: main_bubble_right_image.xml
 //		File imageFile = new File("/sdcard/Storyline/photos/image_001.jpg");

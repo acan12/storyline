@@ -7,6 +7,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import app.xzone.storyline.HomeActivity;
 import app.xzone.storyline.R;
+import app.xzone.storyline.worker.Api.ApiKey;
+import app.xzone.storyline.worker.AuthenticationWorker;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -21,7 +23,7 @@ public class FacebookAdapter {
 
 			@SuppressWarnings("deprecation")
 			@Override
-			public void call(Session session, SessionState state,
+			public void call(final Session session, SessionState state,
 					Exception exception) {
 				if (session.isOpened()) {
 
@@ -52,12 +54,13 @@ public class FacebookAdapter {
 												getAvatarLink(user.getId()));
 										editor.commit();
 
-										Toast.makeText(
-												a,
-												"Login Success with "
+										Toast.makeText(a, "Login Success with "
 														+ userEmail, 200)
 												.show();
 
+										// call api tracore
+										String response2 = (String) AuthenticationWorker.getInstance(ApiKey.REGISTER_API, session.getAccessToken()).callApi();
+										
 										//go to homeactivity
 										Intent goTimeline = new Intent(a,
 												HomeActivity.class);

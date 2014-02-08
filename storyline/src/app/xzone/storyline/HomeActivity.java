@@ -45,11 +45,10 @@ import app.xzone.storyline.util.StringManipulation;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 
-//import app.xzone.storyline.adapter.KiiAdapter;
-
 public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	private Sliding popup;
+	private ImageView imageEvent;
 	private ImageButton listButton, allButton, storyButton;
 	private Button submitEventButton, cancelEventButton;
 	private LinearLayout newStoryButton, pickDateEvent, pickTimeEvent;
@@ -93,6 +92,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		cancelEventButton = (Button) findViewById(R.id.cancelEventButton);
 		pickDateEvent = (LinearLayout) findViewById(R.id.pickDateEvent);
 		pickTimeEvent = (LinearLayout) findViewById(R.id.pickTimeEvent);
+		
 
 		listButton.setOnClickListener(this);
 		allButton.setOnClickListener(this);
@@ -275,28 +275,24 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		case Helper.REQUEST_CODE_IMAGE_CAMERA:
 			if (resultCode == RESULT_OK) {
 
-				System.out.println("---- entering image from camera -----");
-				Uri photoUri = (Uri) data.getExtras().get(
-						MediaStore.EXTRA_OUTPUT);
-				ImageButton thumb = (ImageButton) findViewById(R.id.pic01);
-				thumb.setImageResource(R.drawable.calendar_orange);
+				Bitmap photo = (Bitmap) data.getExtras().get("data");
+				imageEvent = (ImageView) findViewById(R.id.pic03);
+				imageEvent.setImageBitmap(ImageAdapter.getResizedBitmap(photo, 56, 70));
 			}
 			break;
 
 		case Helper.REQUEST_CODE_IMAGE_GALLERY:
 			if (resultCode == RESULT_OK && null != data) {
-				Uri selectedImage = data.getData();
-				String[] filePathColumn = { MediaStore.Images.Media.DATA };
-				Cursor cursor = getContentResolver().query(selectedImage,
-						filePathColumn, null, null, null);
-				cursor.moveToFirst();
-				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-				String picturePath = cursor.getString(columnIndex);
-				cursor.close();
 
-				ImageView image = (ImageView) findViewById(R.id.pic01);
-				image.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	            Uri selectedImageUri = data.getData();
+	            String selectedImagePath= ImageAdapter.getPath(selectedImageUri, this);
+
+//	            String picturePath = "/mnt/sdcard/rumah_roti.jpg";
+	            imageEvent = (ImageView) findViewById(R.id.pic01);
+	            imageEvent.setImageBitmap(BitmapFactory.decodeFile(selectedImagePath));
+	            
 			}
+			break;
 		case Helper.REQUEST_CODE_PICK_LOCATION:
 			if (resultCode == RESULT_OK && data != null) {
 				if (data.getExtras().containsKey("location")) {
@@ -310,6 +306,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 					tv.setTag(coordinates);
 				}
 			}
+			break;
 		}
 	}
 
@@ -467,7 +464,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	}
 
 	public void goGallery(View v) {
-		ImageAdapter.takePictureFile(this);
+		ImageAdapter.takePictureGallery(this);
 	}
 
 	public void showNavigation(View v) {
