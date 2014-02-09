@@ -32,7 +32,7 @@ import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
 import app.xzone.storyline.util.TimeUtil;
 
-public class AdapterHelper {
+public class ListViewHelper {
 	private static ListView list;
 	private static LinearLayout ll;
 	private static LazyAdapter adapter;
@@ -170,6 +170,8 @@ public class AdapterHelper {
 
 //		View vi = inflater.inflate(R.layout.main_bubble_right, null);
 		View vi = inflater.inflate(R.layout.main_bubble_right_images, null);
+		
+		HorizontalListHelper.buildHorizontalView(vi);
 
 		// testing integrate with image from sdcard as external storage , must use layout: main_bubble_right_image.xml
 //		File imageFile = new File("/sdcard/Storyline/photos/image_001.jpg");

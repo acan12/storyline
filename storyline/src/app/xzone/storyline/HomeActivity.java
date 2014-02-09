@@ -35,7 +35,7 @@ import app.xzone.storyline.component.DateTimePicker;
 import app.xzone.storyline.component.PanelButtons;
 import app.xzone.storyline.component.ProgressCustomDialog;
 import app.xzone.storyline.component.Sliding;
-import app.xzone.storyline.helper.AdapterHelper;
+import app.xzone.storyline.helper.ListViewHelper;
 import app.xzone.storyline.helper.EventHelper;
 import app.xzone.storyline.helper.Helper;
 import app.xzone.storyline.model.Event;
@@ -112,7 +112,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		// set ui
 		loadAvatarImageAsync();
 		Helper.buildUIMain(HomeActivity.this, story);
-		AdapterHelper.buildListViewAdapter(HomeActivity.this);
+		ListViewHelper.buildListViewAdapter(HomeActivity.this);
 
 		// set array event collection
 		events = (ArrayList<Event>) prevEvents.clone();
@@ -163,7 +163,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		for (int i = 0; i < items.size(); i++) {
 
-			viewGroup = AdapterHelper.buildBubbleEventAdapter(this,
+			viewGroup = ListViewHelper.buildBubbleEventAdapter(this,
 					items.get(i), true);
 		}
 		Helper.modeNormal(this, viewGroup);
@@ -213,7 +213,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		}
 
 		Helper.modeNormal(this, viewGroup);
-		AdapterHelper.buildListViewAdapter(HomeActivity.this);
+		ListViewHelper.buildListViewAdapter(HomeActivity.this);
 
 	}
 
@@ -271,13 +271,22 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
+		// initialize image container
+		LinearLayout bubbleImage = (LinearLayout) findViewById(R.id.bubble_image_header);
+		
+		
 		switch (requestCode) {
 		case Helper.REQUEST_CODE_IMAGE_CAMERA:
 			if (resultCode == RESULT_OK) {
 
 				Bitmap photo = (Bitmap) data.getExtras().get("data");
-				imageEvent = (ImageView) findViewById(R.id.pic03);
-				imageEvent.setImageBitmap(ImageAdapter.getResizedBitmap(photo, 56, 70));
+				
+	            Bitmap bmp = ImageAdapter.getResizedBitmap(photo, 56, 70);
+	            
+	            imageEvent = new ImageView(this);
+	            imageEvent.setImageBitmap(bmp);
+	            imageEvent.setPadding(5, 1, 5, 3);
+	            bubbleImage.addView(imageEvent, 0);
 			}
 			break;
 
@@ -286,10 +295,15 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	            Uri selectedImageUri = data.getData();
 	            String selectedImagePath= ImageAdapter.getPath(selectedImageUri, this);
-
-//	            String picturePath = "/mnt/sdcard/rumah_roti.jpg";
-	            imageEvent = (ImageView) findViewById(R.id.pic01);
-	            imageEvent.setImageBitmap(BitmapFactory.decodeFile(selectedImagePath));
+	            
+	            Bitmap bmp = ImageAdapter.getResizedBitmap(BitmapFactory.decodeFile(selectedImagePath), 56, 70);
+	            
+	            imageEvent = new ImageView(this);
+	            imageEvent.setImageBitmap(bmp);
+	            imageEvent.setPadding(5, 1, 5, 3);
+	            
+	            
+	            bubbleImage.addView(imageEvent, 0);
 	            
 			}
 			break;
@@ -408,7 +422,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 					ex.printStackTrace();
 				}
 
-				viewGroup = AdapterHelper.updateBubbleEvent(this, event);
+				viewGroup = ListViewHelper.updateBubbleEvent(this, event);
 
 				// replace with modified event
 				int index = events.indexOf(event);
@@ -425,7 +439,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
 				}
-				viewGroup = AdapterHelper.buildBubbleEventAdapter(this, event,
+				viewGroup = ListViewHelper.buildBubbleEventAdapter(this, event,
 						false);
 
 				events.add(event);

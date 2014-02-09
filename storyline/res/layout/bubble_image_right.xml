@@ -13,83 +13,20 @@
         android:orientation="vertical" >
 
         <HorizontalScrollView
-            android:id="@+id/scrollView1"
+            android:id="@+id/scrollView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:fillViewport="true"
-            android:isScrollContainer="true" >
+            android:isScrollContainer="true"  >
 
             <LinearLayout
-                android:id="@+id/buble_header"
+                android:id="@+id/bubble_image_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal" >
-
-                <ImageButton
-                    android:id="@+id/pic01"
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:background="@null"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/demo_pic" />
-
-                <ImageButton
-                    android:id="@+id/pic02"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:background="@null"
-                    android:src="@drawable/demo_pic" />
-
-                <ImageButton
-                    android:id="@+id/pic03"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:background="@null"
-                    android:src="@drawable/demo_pic" />
-
-                <ImageButton
-                    android:id="@+id/pic04"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:background="@null"
-                    android:src="@drawable/demo_pic" />
-
-                <ImageButton
-                    android:id="@+id/pic05"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:background="@null"
-                    android:src="@drawable/demo_pic" />
-
-                <ImageButton
-                    android:id="@+id/pic06"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:background="@null"
-                    android:src="@drawable/demo_pic" />
-
-                <ImageButton
-                    android:id="@+id/pic07"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:background="@null"
-                    android:src="@drawable/demo_pic" />
+                
             </LinearLayout>
         </HorizontalScrollView>
     </RelativeLayout>

@@ -59,7 +59,7 @@ public class FacebookAdapter {
 												.show();
 
 										// call api tracore
-										String response2 = (String) AuthenticationWorker.getInstance(ApiKey.REGISTER_API, session.getAccessToken()).callApi();
+//										String response2 = (String) AuthenticationWorker.getInstance(ApiKey.REGISTER_API, session.getAccessToken()).callApi();
 										
 										//go to homeactivity
 										Intent goTimeline = new Intent(a,

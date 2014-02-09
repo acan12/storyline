@@ -43,80 +43,57 @@ public class ImageAdapter {
 
 	public static void takePhoto(Activity a){
 		Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		
+		rootPath = Environment.getExternalStorageDirectory() + File.separator + AppAdapter.getInstance(a).getAppName();
+		String photoPath = rootPath + File.separator + photoDir;
+		
+		// storing file
+		int imageNum = 1;
+		
+		// Create Directory App
+		imageFolder = new File(photoPath);
+		imageFolder.mkdirs();
+
+		String fileName = "image_" + String.valueOf(formatter.format(imageNum)) + ".jpg";
+		File output = new File(imageFolder, fileName);
+		while (output.exists()) {
+			imageNum++;
+			fileName = "image_" + String.valueOf(formatter.format(imageNum)) + ".jpg";
+			output = new File(imageFolder, fileName);
+		}
+		Uri uriSavedImage = Uri.fromFile(output);
+		System.out.println("------ uri camera:"+uriSavedImage);
+		
 		a.startActivityForResult(camera, Helper.REQUEST_CODE_IMAGE_CAMERA);
 	}
 	
-//	public static void takePhoto2(Activity a) {
-//		Intent camera = new Intent(
-//				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//
-//		rootPath = Environment.getExternalStorageDirectory() + File.separator
-//				+ AppAdapter.getInstance(a).getAppName();
-//		String photoPath = rootPath + File.separator + photoDir;
-//		// storing file
-//		int imageNum = 1;
-//		// Create Directory App
-//		imageFolder = new File(photoPath);
-//		imageFolder.mkdirs();
-//
-//		String fileName = "image_" + String.valueOf(formatter.format(imageNum))
-//				+ ".jpg";
-//		File output = new File(imageFolder, fileName);
-//		while (output.exists()) {
-//			imageNum++;
-//			fileName = "image_" + String.valueOf(formatter.format(imageNum))
-//					+ ".jpg";
-//			output = new File(imageFolder, fileName);
-//		}
-////		Uri uriSavedImage = Uri.fromFile(output);
-//
-//		Bitmap bmp = BitmapFactory.decodeFile(output.getPath());
-////		camera.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-//
-//		ImageView imageEvent = (ImageView) a.findViewById(R.id.pic01);
-//		imageEvent.setImageBitmap(bmp);
-//
-//		a.startActivityForResult(camera, Helper.REQUEST_CODE_IMAGE_CAMERA);
-//	}
-
-
 	public static void takePictureGallery(Activity a){
 
 		Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		
+		rootPath = Environment.getExternalStorageDirectory() + "/" + AppAdapter.getInstance(a).getAppName();
+		String photoPath = rootPath + File.separator + photoDir;
+		
+		// storing file
+		int imageNum = 1;
+		
+		// Create Directory App
+		imageFolder = new File(photoPath);
+		imageFolder.mkdirs();
+
+		String fileName = "image_" + String.valueOf(formatter.format(imageNum)) + ".jpg";
+		File output = new File(imageFolder, fileName);
+		while (output.exists()) {
+			imageNum++;
+			fileName = "image_" + String.valueOf(formatter.format(imageNum)) + ".jpg";
+			output = new File(imageFolder, fileName);
+		}
+		
+		Uri uriSavedImage = Uri.fromFile(output);
+		System.out.println("------ uri gallery:"+uriSavedImage);
+		
 		a.startActivityForResult(i, Helper.REQUEST_CODE_IMAGE_GALLERY);
 	}
-
-//	public static void takePictureFile(Activity a) {
-//		Intent gallery = new Intent(Intent.ACTION_PICK,
-//				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//
-//		rootPath = Environment.getExternalStorageDirectory() + "/"
-//				+ AppAdapter.getInstance(a).getAppName();
-//		String photoPath = rootPath + File.separator + photoDir;
-//		// storing file
-//		int imageNum = 1;
-//		// Create Directory App
-//		imageFolder = new File(photoPath);
-//		imageFolder.mkdirs();
-//
-//		String fileName = "image_" + String.valueOf(formatter.format(imageNum))
-//				+ ".jpg";
-//		File output = new File(imageFolder, fileName);
-//		while (output.exists()) {
-//			imageNum++;
-//			fileName = "image_" + String.valueOf(formatter.format(imageNum))
-//					+ ".jpg";
-//			output = new File(imageFolder, fileName);
-//		}
-//		
-//		System.out.println("------outlet path: "+output.getPath());
-//		Uri uriSavedImage = Uri.fromFile(output);
-//		
-//		System.out.println("---- urisaveimage: "+uriSavedImage.toString());
-//		gallery.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-//
-//		a.startActivityForResult(gallery, Helper.REQUEST_CODE_IMAGE_GALLERY);
-//	}
 
 	public static String cachedBitmap(Context context, Bitmap bmp) {
 		rootPath = Environment.getExternalStorageDirectory() + "/"
