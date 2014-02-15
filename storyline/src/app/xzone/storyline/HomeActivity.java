@@ -292,9 +292,9 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	            bubbleImage.addView(imageEvent, 0);
 	            
 	         // store into file 
-	            System.out.println("---- store file");
 	            try {
-					ImageAdapter.copyFile(bmp, this);
+	            	Event event = EventHelper.getEventFromTag(this);
+					ImageAdapter.copyFile(photo, event, this);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -321,7 +321,8 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	            // store into file 
 	            System.out.println("---- store file");
 	            try {
-					ImageAdapter.copyFile(bmp, this);
+	            	Event event = EventHelper.getEventFromTag(this);
+					ImageAdapter.copyFile(bmp, event, this);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

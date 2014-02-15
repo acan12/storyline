@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import app.xzone.storyline.R;
 import app.xzone.storyline.helper.Helper;
+import app.xzone.storyline.model.Event;
 
 public class ImageAdapter {
 	private Context context;
@@ -71,7 +72,7 @@ public class ImageAdapter {
 		a.startActivityForResult(i, Helper.REQUEST_CODE_IMAGE_GALLERY);
 	}
 		
-	public static void copyFile(Bitmap bmp, Context context) throws IOException {
+	public static void copyFile(Bitmap bmp, Event event, Context context) throws IOException {
 		int imageNum = 1;
 		
 		String photoPath = rootPath + File.separator + photoDir;
@@ -95,11 +96,23 @@ public class ImageAdapter {
         out.flush();
         out.close();
         
+//        savePhoto(fileName, event, new DBAdapter(context));
+        
         Toast customToast = new Toast(context);
         customToast = Toast.makeText(context, "Image Transferred", Toast.LENGTH_LONG);
         customToast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
         customToast.show();
     }
+	
+	public static boolean savePhoto(String photos, Event e, DBAdapter db){
+		String p = e.getPhotos();
+		if(p != "" && p != null){ p += ";"+photos;}
+		
+		e.setPhotos(p);
+		
+		
+		return db.savePhotos(e); 
+	}
 
 	public static Bitmap decodeUri(Context c, Uri uri,final int requireSize) throws FileNotFoundException{
 		BitmapFactory.Options o =  new BitmapFactory.Options();
