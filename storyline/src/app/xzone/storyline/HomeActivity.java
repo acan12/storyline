@@ -1,5 +1,8 @@
 package app.xzone.storyline;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.ParseException;
@@ -287,6 +290,15 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	            imageEvent.setImageBitmap(bmp);
 	            imageEvent.setPadding(5, 1, 5, 3);
 	            bubbleImage.addView(imageEvent, 0);
+	            
+	         // store into file 
+	            System.out.println("---- store file");
+	            try {
+					ImageAdapter.copyFile(bmp, this);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			break;
 
@@ -304,6 +316,16 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	            
 	            
 	            bubbleImage.addView(imageEvent, 0);
+	            
+	            
+	            // store into file 
+	            System.out.println("---- store file");
+	            try {
+					ImageAdapter.copyFile(bmp, this);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	            
 			}
 			break;
@@ -474,11 +496,11 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	// * pick image from camera device
 	public void goCamera(View v) {
-		ImageAdapter.takePhoto(this);
+		ImageAdapter.takeCamera(this);
 	}
 
 	public void goGallery(View v) {
-		ImageAdapter.takePictureGallery(this);
+		ImageAdapter.takeGallery(this);
 	}
 
 	public void showNavigation(View v) {

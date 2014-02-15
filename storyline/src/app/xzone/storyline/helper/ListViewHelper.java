@@ -171,7 +171,7 @@ public class ListViewHelper {
 //		View vi = inflater.inflate(R.layout.main_bubble_right, null);
 		View vi = inflater.inflate(R.layout.main_bubble_right_images, null);
 		
-		HorizontalListHelper.buildHorizontalView(vi);
+//		HorizontalListHelper.buildHorizontalView(vi);
 
 		// testing integrate with image from sdcard as external storage , must use layout: main_bubble_right_image.xml
 //		File imageFile = new File("/sdcard/Storyline/photos/image_001.jpg");

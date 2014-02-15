@@ -19,6 +19,7 @@ public class Event extends BaseModel implements Serializable, Cloneable {
 
 	// Location coordinates when event occur + location name
 	private String locname;
+	private String photos;
 	private double lat;
 	private double lng;
 
@@ -204,6 +205,20 @@ public class Event extends BaseModel implements Serializable, Cloneable {
 	 */
 	public void setStory(Story story) {
 		this.story = story;
+	}
+
+	/**
+	 * @return the photos
+	 */
+	public String getPhotos() {
+		return photos;
+	}
+
+	/**
+	 * @param photos the photos to set
+	 */
+	public void setPhotos(String photos) {
+		this.photos = photos;
 	}
 
 }

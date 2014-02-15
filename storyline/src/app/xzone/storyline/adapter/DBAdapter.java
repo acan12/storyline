@@ -33,6 +33,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 	private static final String FIELD_LOCNAME = "locname";
 	private static final String FIELD_LAT = "lat";
 	private static final String FIELD_LNG = "lng";
+	private static final String FIELD_PHOTOS = "photos";
 
 	private static final String FIELD_START_DATE = "start_date";
 	private static final String FIELD_START_TIME = "start_time";
@@ -57,7 +58,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 			+ FIELD_NAME + " text not null, " + FIELD_MESSAGE
 			+ " text not null, " + FIELD_TRANSPORT + " text, " + FIELD_STATUS
 			+ " integer default 0, " + FIELD_SHARED + " integer default 0, "
-			+ FIELD_LOCNAME + " text, " + FIELD_LAT + " double, " + FIELD_LNG
+			+ FIELD_LOCNAME + " text, " + FIELD_PHOTOS + " text not null, " + FIELD_LAT + " double, " + FIELD_LNG
 			+ " double, " + FIELD_START_DATE + " integer, " + FIELD_START_TIME
 			+ " text," + FIELD_FR_EVENT_STORY + " integer," + "FOREIGN KEY("
 			+ FIELD_FR_EVENT_STORY + ") REFERENCES story(id) ) ;";
@@ -110,10 +111,10 @@ public class DBAdapter extends SQLiteOpenHelper {
 		initialValues.put(FIELD_STATUS, event.getStatus());
 		initialValues.put(FIELD_SHARED, event.getShared());
 		initialValues.put(FIELD_LOCNAME, event.getLocname());
+		initialValues.put(FIELD_PHOTOS, event.getPhotos());
 		initialValues.put(FIELD_LAT, event.getLat());
 		initialValues.put(FIELD_LNG, event.getLng());
 		initialValues.put(FIELD_START_DATE, event.getStartDate());
-		// initialValues.put(FIELD_START_TIME, event.getStartTime());
 		initialValues.put(FIELD_FR_EVENT_STORY, Integer.valueOf(storyId));
 
 		long rowid = sqliteDB.insert(DATABASE_TABLE_EVENT, null, initialValues);
@@ -214,6 +215,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 				event.setStatus(c.getInt(c.getColumnIndex("status")));
 				event.setShared(c.getInt(c.getColumnIndex("shared")));
 				event.setLocname(c.getString(c.getColumnIndex("locname")));
+				event.setPhotos(c.getString(c.getColumnIndex("photos")));
 				event.setLat(c.getLong(c.getColumnIndex("lat")));
 				event.setLng(c.getLong(c.getColumnIndex("lng")));
 				event.setStartDate(c.getLong(c.getColumnIndex("start_date")));
@@ -228,7 +230,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 		} else {
 			story = null;
 		}
-
+		this.close();
 		return story;
 	}
 
@@ -237,11 +239,12 @@ public class DBAdapter extends SQLiteOpenHelper {
 		Cursor mCursor = sqliteDB.query(true, DATABASE_TABLE_EVENT,
 				new String[] { FIELD_ID, FIELD_NAME, FIELD_MESSAGE,
 						FIELD_TRANSPORT, FIELD_STATUS, FIELD_SHARED,
-						FIELD_LOCNAME, FIELD_LAT, FIELD_LNG, FIELD_START_DATE,
+						FIELD_LOCNAME, FIELD_PHOTOS, FIELD_LAT, FIELD_LNG, FIELD_START_DATE,
 						FIELD_START_TIME, FIELD_END_DATE, FIELD_END_TIME,
 						FIELD_FR_EVENT_STORY }, FIELD_ID + "=" + rowId, null,
 				null, null, null, null);
 
+		this.close();
 		return mCursor;
 	}
 
@@ -275,6 +278,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 		initialValues.put(FIELD_STATUS, event.getStatus());
 		initialValues.put(FIELD_SHARED, event.getShared());
 		initialValues.put(FIELD_LOCNAME, event.getLocname());
+		initialValues.put(FIELD_PHOTOS, event.getPhotos());
 		initialValues.put(FIELD_LAT, event.getShared());
 		initialValues.put(FIELD_LNG, event.getShared());
 		initialValues.put(FIELD_START_DATE, event.getStartDate());

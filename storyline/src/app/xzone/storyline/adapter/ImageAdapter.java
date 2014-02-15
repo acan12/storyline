@@ -1,7 +1,12 @@
 package app.xzone.storyline.adapter;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 
 import android.app.Activity;
@@ -15,7 +20,9 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.Gravity;
 import android.widget.ImageView;
+import android.widget.Toast;
 import app.xzone.storyline.R;
 import app.xzone.storyline.helper.Helper;
 
@@ -25,6 +32,7 @@ public class ImageAdapter {
 	private static File imageFolder;
 	private static String photoDir = "photos";
 	private static String facebookDir = "facebook";
+	private static File sdcardDir = Environment.getExternalStorageDirectory(); 
 	private static DecimalFormat formatter = new DecimalFormat("000");
 
 	private static String rootPath;
@@ -41,69 +49,57 @@ public class ImageAdapter {
 		return imageAdapter;
 	}
 
-	public static void takePhoto(Activity a){
-		Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		
-		rootPath = Environment.getExternalStorageDirectory() + File.separator + AppAdapter.getInstance(a).getAppName();
+	public static void takeCamera(Activity a){
+		rootPath = sdcardDir + File.separator + AppAdapter.getInstance(a).getAppName();
 		String photoPath = rootPath + File.separator + photoDir;
 		
-		// storing file
-		int imageNum = 1;
-		
+		Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		// Create Directory App
 		imageFolder = new File(photoPath);
 		imageFolder.mkdirs();
-
-		String fileName = "image_" + String.valueOf(formatter.format(imageNum)) + ".jpg";
-		File output = new File(imageFolder, fileName);
-		while (output.exists()) {
-			imageNum++;
-			fileName = "image_" + String.valueOf(formatter.format(imageNum)) + ".jpg";
-			output = new File(imageFolder, fileName);
-		}
-		Uri uriSavedImage = Uri.fromFile(output);
-		System.out.println("------ uri camera:"+uriSavedImage);
-		
 		a.startActivityForResult(camera, Helper.REQUEST_CODE_IMAGE_CAMERA);
 	}
 	
-	public static void takePictureGallery(Activity a){
-
-		Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-		
-		rootPath = Environment.getExternalStorageDirectory() + "/" + AppAdapter.getInstance(a).getAppName();
+	public static void takeGallery(Activity a) {
+		rootPath = sdcardDir + File.separator + AppAdapter.getInstance(a).getAppName();
 		String photoPath = rootPath + File.separator + photoDir;
 		
-		// storing file
+		Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		// Create Directory App
+		imageFolder = new File(photoPath);
+		imageFolder.mkdirs();
+		a.startActivityForResult(i, Helper.REQUEST_CODE_IMAGE_GALLERY);
+	}
+		
+	public static void copyFile(Bitmap bmp, Context context) throws IOException {
 		int imageNum = 1;
+		
+		String photoPath = rootPath + File.separator + photoDir;
+		String fileName = "image_" + String.valueOf(formatter.format(imageNum))+ ".jpg";
 		
 		// Create Directory App
 		imageFolder = new File(photoPath);
 		imageFolder.mkdirs();
-
-		String fileName = "image_" + String.valueOf(formatter.format(imageNum)) + ".jpg";
-		File output = new File(imageFolder, fileName);
+		
+		
+		File output = new File (photoPath, fileName);
+		
 		while (output.exists()) {
-			imageNum++;
-			fileName = "image_" + String.valueOf(formatter.format(imageNum)) + ".jpg";
+			
+			fileName = "image_" + String.valueOf(formatter.format(++imageNum)) + ".jpg";
 			output = new File(imageFolder, fileName);
+			
 		}
-		
-		Uri uriSavedImage = Uri.fromFile(output);
-		System.out.println("------ uri gallery:"+uriSavedImage);
-		
-		a.startActivityForResult(i, Helper.REQUEST_CODE_IMAGE_GALLERY);
-	}
-
-	public static String cachedBitmap(Context context, Bitmap bmp) {
-		rootPath = Environment.getExternalStorageDirectory() + "/"
-				+ AppAdapter.getInstance(context).getAppName();
-		String facebookPath = rootPath + facebookDir;
-
-		// cache image into sdcard
-
-		return null;
-	}
+        FileOutputStream out = new FileOutputStream(output);
+        bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+        out.flush();
+        out.close();
+        
+        Toast customToast = new Toast(context);
+        customToast = Toast.makeText(context, "Image Transferred", Toast.LENGTH_LONG);
+        customToast.setGravity(Gravity.CENTER|Gravity.CENTER, 0, 0);
+        customToast.show();
+    }
 
 	public static Bitmap decodeUri(Context c, Uri uri,final int requireSize) throws FileNotFoundException{
 		BitmapFactory.Options o =  new BitmapFactory.Options();

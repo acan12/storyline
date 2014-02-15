@@ -47,6 +47,7 @@ public class EventHelper {
 		event.setMessage(t02.getText().toString());
 		event.setTransportation(sp02.getSelectedItem().toString());
 		event.setLocname(location.getText().toString());
+		event.setPhotos("");
 		
 		int hour = Integer
 				.parseInt(timeEvent.getText().toString().split(":")[0]);
