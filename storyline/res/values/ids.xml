@@ -2,5 +2,4 @@
 <resources>
     <item name="selected_view" type="id"/>
     <item name="removeStory" type="id"/>
-    
 </resources>

@@ -1,18 +1,17 @@
 package app.xzone.storyline.helper;
 
-import java.io.File;
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -26,7 +25,7 @@ import android.widget.Toast;
 import app.xzone.storyline.R;
 import app.xzone.storyline.adapter.DBAdapter;
 import app.xzone.storyline.adapter.LazyAdapter;
-import app.xzone.storyline.component.ProgressCustomDialog;
+import app.xzone.storyline.component.PanelButtons;
 import app.xzone.storyline.component.Sliding;
 import app.xzone.storyline.model.Event;
 import app.xzone.storyline.model.Story;
@@ -36,6 +35,8 @@ public class ListViewHelper {
 	private static ListView list;
 	private static LinearLayout ll;
 	private static LazyAdapter adapter;
+	private static boolean isUpload = true;
+	private static boolean showButtonsPanel = false;;
 
 	public static void buildListViewAdapter(final Activity a) {
 		DBAdapter db = new DBAdapter(a.getApplicationContext());
@@ -193,13 +194,34 @@ public class ListViewHelper {
 					EventHelper.buildUISliding(a, event);
 
 				}
-
-				// Put here the code handle event when bubble clicked
-				// Intent i = new Intent(
-				// Intent.ACTION_PICK,
-				// android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-				// a.startActivityForResult(i,
-				// Helper.REQUEST_CODE_IMAGE_GALLERY);
+			}
+		});
+		
+		vi.setOnLongClickListener(new OnLongClickListener() {
+			
+			@Override
+			public boolean onLongClick(View v) {
+				if (Helper.getCurrentMode(a) == Helper.MODE_NORMAL) {
+					Toast.makeText(a, "dodoll long press", 100).show();
+					ImageButton btn = (ImageButton) a.findViewById(R.id.allButton);
+//					btn.performClick();			
+					
+					if(isUpload){
+						showButtonsPanel = PanelButtons.showPanel(a,
+								R.id.footer_function, true);
+						v.setBackgroundColor(Color.GRAY);
+						isUpload = false;
+						
+					}else{
+						showButtonsPanel = PanelButtons.showPanel(a,
+								R.id.footer_function, false);
+						v.setBackgroundColor(Color.TRANSPARENT);
+						isUpload = true;
+						
+					}
+				}
+				
+				return true;
 			}
 		});
 

@@ -387,16 +387,16 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			toggle();
 			break;
 
-		case R.id.allButton:
-
-			// set show buttons panel
-			showButtonsPanel = PanelButtons.showPanel(this,
-					R.id.footer_function, showButtonsPanel);
-
-			// Hide the Panel
-			Helper.modeNormal(HomeActivity.this, viewGroup);
-			showEditPanel = false;
-			break;
+//		case R.id.allButton:
+//
+//			// set show buttons panel
+//			showButtonsPanel = PanelButtons.showPanel(this,
+//					R.id.footer_function, showButtonsPanel);
+//
+//			// Hide the Panel
+//			Helper.modeNormal(HomeActivity.this, viewGroup);
+//			showEditPanel = false;
+//			break;
 
 		case R.id.storyButton:
 			showSecondaryMenu();
@@ -508,19 +508,14 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		if (!showEditPanel) {
 			Helper.modeEdit(HomeActivity.this, viewGroup);
-
 			showEditPanel = true;
-			showButtonsPanel = PanelButtons.showPanel(this,
-					R.id.footer_function, true);
+			
 		} else {
 			// Hide the Panel
 			Helper.modeNormal(HomeActivity.this, viewGroup);
-
 			showEditPanel = false;
-			showButtonsPanel = PanelButtons.showPanel(this,
-					R.id.footer_function, true);
+			
 		}
-
 	}
 
 	private void loadAvatarImageAsync() {

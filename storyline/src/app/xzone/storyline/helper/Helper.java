@@ -247,7 +247,7 @@ public class Helper {
 			}
 		});
 
-		PanelButtons.showPanel(ac, R.id.footer, true);
+		PanelButtons.showPanel(ac, R.id.footer, false);
 
 		View v = null;
 
@@ -335,7 +335,7 @@ public class Helper {
 			}
 		});
 
-		PanelButtons.showPanel(ac, R.id.footer, false);
+		PanelButtons.showPanel(ac, R.id.footer, true);
 
 		View v = ac.findViewById(R.id.addDateStoryButton);
 		v.setVisibility(View.VISIBLE);

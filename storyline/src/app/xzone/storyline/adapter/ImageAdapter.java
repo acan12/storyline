@@ -82,9 +82,7 @@ public class ImageAdapter {
 		imageFolder = new File(photoPath);
 		imageFolder.mkdirs();
 		
-		
 		File output = new File (photoPath, fileName);
-		
 		while (output.exists()) {
 			
 			fileName = "image_" + String.valueOf(formatter.format(++imageNum)) + ".jpg";

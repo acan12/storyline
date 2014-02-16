@@ -99,7 +99,6 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:background="@null"
-                android:onClick="showNavigation"
             	android:layout_margin="5dp" 
                 android:src="@drawable/all" />
             
