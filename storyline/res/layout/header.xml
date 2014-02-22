@@ -48,7 +48,7 @@
                 android:id="@+id/titleStory"
                 android:layout_width="130dip"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:textColor="@color/yellow"
                 android:textSize="13dip"
 				android:maxLines="2"
@@ -84,15 +84,15 @@
             	android:layout_margin="5dp" 
                 android:src="@drawable/mode_normal" />
             
-            <ImageView
+            <!-- <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/divider_header" />
+                android:src="@drawable/divider_header" /> -->
             
-            <ImageButton 
+            <!-- <ImageButton 
                 android:id="@+id/allButton"
                 android:layout_width="wrap_content"
                 android:layout_height="74dp"
@@ -100,7 +100,7 @@
                 android:layout_weight="1"
                 android:background="@null"
             	android:layout_margin="5dp" 
-                android:src="@drawable/all" />
+                android:src="@drawable/all" /> -->
             
             <ImageView
                 android:layout_width="wrap_content"
@@ -112,7 +112,7 @@
 
             <ImageButton
                 android:id="@+id/storyButton"
-                android:layout_width="40dp"
+                android:layout_width="20dp"
                 android:layout_height="61dp"
                 android:layout_gravity="center_vertical|center_horizontal"
                 android:layout_marginRight="2dp"

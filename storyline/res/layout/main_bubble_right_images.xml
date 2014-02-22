@@ -21,20 +21,21 @@
         android:paddingBottom="20dp"
         android:src="@drawable/pointer" />
 
-
+	<!-- Bubble Event -->
     <include
-        android:id="@+id/bubble_image"
+        android:id="@+id/bubble_event_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="30dp"
+        android:visibility="gone"
         layout="@layout/bubble_image_right" />
 
     <include
-        android:id="@+id/bubble_event"
+        android:id="@+id/bubble_event_body"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bubble_image"
+        android:layout_below="@id/bubble_event_header"
         android:layout_marginLeft="20dp"
         layout="@layout/bubble_right" />
 

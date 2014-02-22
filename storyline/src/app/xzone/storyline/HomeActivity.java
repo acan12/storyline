@@ -25,6 +25,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
@@ -52,7 +53,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	private Sliding popup;
 	private ImageView imageEvent;
-	private ImageButton listButton, allButton, storyButton;
+	private ImageButton listButton, storyButton;
 	private Button submitEventButton, cancelEventButton;
 	private LinearLayout newStoryButton, pickDateEvent, pickTimeEvent;
 	private Dialog dialog;
@@ -88,7 +89,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		popup.setVisibility(View.GONE);
 
 		listButton = (ImageButton) findViewById(R.id.menuListButton);
-		allButton = (ImageButton) findViewById(R.id.allButton);
+//		allButton = (ImageButton) findViewById(R.id.allButton);
 		storyButton = (ImageButton) findViewById(R.id.storyButton);
 		newStoryButton = (LinearLayout) findViewById(R.id.newStorySliding);
 		submitEventButton = (Button) findViewById(R.id.submitEventButton);
@@ -98,7 +99,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		
 
 		listButton.setOnClickListener(this);
-		allButton.setOnClickListener(this);
+//		allButton.setOnClickListener(this);
 		storyButton.setOnClickListener(this);
 		newStoryButton.setOnClickListener(this);
 		submitEventButton.setOnClickListener(this);
@@ -274,13 +275,19 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
+		View vi = ListViewHelper.getCurrentView();
 		// initialize image container
-		LinearLayout bubbleImage = (LinearLayout) findViewById(R.id.bubble_image_header);
+		View bubbleEventHeader = (LinearLayout) vi.findViewById(R.id.bubble_event_header);
+		LinearLayout bubbleImage = (LinearLayout) bubbleEventHeader.findViewById(R.id.bubble_image);
 		
 		
 		switch (requestCode) {
 		case Helper.REQUEST_CODE_IMAGE_CAMERA:
 			if (resultCode == RESULT_OK) {
+				
+				if(bubbleEventHeader.getVisibility() == View.GONE){
+					bubbleEventHeader.setVisibility(View.VISIBLE); 
+				}
 
 				Bitmap photo = (Bitmap) data.getExtras().get("data");
 				
@@ -304,7 +311,11 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		case Helper.REQUEST_CODE_IMAGE_GALLERY:
 			if (resultCode == RESULT_OK && null != data) {
-
+				
+				if(bubbleEventHeader.getVisibility() == View.GONE){
+					bubbleEventHeader.setVisibility(View.VISIBLE); 
+				}
+				
 	            Uri selectedImageUri = data.getData();
 	            String selectedImagePath= ImageAdapter.getPath(selectedImageUri, this);
 	            
@@ -313,13 +324,9 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	            imageEvent = new ImageView(this);
 	            imageEvent.setImageBitmap(bmp);
 	            imageEvent.setPadding(5, 1, 5, 3);
-	            
-	            
 	            bubbleImage.addView(imageEvent, 0);
 	            
-	            
 	            // store into file 
-	            System.out.println("---- store file");
 	            try {
 	            	Event event = EventHelper.getEventFromTag(this);
 					ImageAdapter.copyFile(bmp, event, this);
@@ -386,17 +393,6 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			// put your code here
 			toggle();
 			break;
-
-//		case R.id.allButton:
-//
-//			// set show buttons panel
-//			showButtonsPanel = PanelButtons.showPanel(this,
-//					R.id.footer_function, showButtonsPanel);
-//
-//			// Hide the Panel
-//			Helper.modeNormal(HomeActivity.this, viewGroup);
-//			showEditPanel = false;
-//			break;
 
 		case R.id.storyButton:
 			showSecondaryMenu();

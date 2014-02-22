@@ -252,7 +252,7 @@ public class Helper {
 		View v = null;
 
 		if (viewGroup != null) {
-			v = (View) ac.findViewById(R.id.bubbleEvent);
+			v = (View) ac.findViewById(R.id.bubble_right);
 			v.setClickable(false);
 
 		}

@@ -20,6 +20,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import app.xzone.storyline.R;
@@ -37,6 +38,7 @@ public class ListViewHelper {
 	private static LazyAdapter adapter;
 	private static boolean isUpload = true;
 	private static boolean showButtonsPanel = false;;
+	private static View currentView = null;
 
 	public static void buildListViewAdapter(final Activity a) {
 		DBAdapter db = new DBAdapter(a.getApplicationContext());
@@ -201,21 +203,27 @@ public class ListViewHelper {
 			
 			@Override
 			public boolean onLongClick(View v) {
+				currentView = v;
 				if (Helper.getCurrentMode(a) == Helper.MODE_NORMAL) {
-					Toast.makeText(a, "dodoll long press", 100).show();
-					ImageButton btn = (ImageButton) a.findViewById(R.id.allButton);
-//					btn.performClick();			
 					
 					if(isUpload){
 						showButtonsPanel = PanelButtons.showPanel(a,
 								R.id.footer_function, true);
-						v.setBackgroundColor(Color.GRAY);
+						RelativeLayout bm = (RelativeLayout) v.findViewById(R.id.bubble_image_right);
+						RelativeLayout br = (RelativeLayout) v.findViewById(R.id.bubble_right);
+						
+						bm.setBackgroundResource(R.drawable.bubble_image_selected);
+						br.setBackgroundResource(R.drawable.bubble_right_selected);
 						isUpload = false;
 						
 					}else{
 						showButtonsPanel = PanelButtons.showPanel(a,
 								R.id.footer_function, false);
-						v.setBackgroundColor(Color.TRANSPARENT);
+						RelativeLayout bm = (RelativeLayout) v.findViewById(R.id.bubble_image_right);
+						RelativeLayout br = (RelativeLayout) v.findViewById(R.id.bubble_right);
+						
+						bm.setBackgroundResource(R.drawable.bubble_image);
+						br.setBackgroundResource(R.drawable.bubble_right);
 						isUpload = true;
 						
 					}
@@ -284,8 +292,6 @@ public class ListViewHelper {
 											"Failed to remove!!", 10).show();
 								}
 
-								//
-								// bubble.setBackgroundColor(Color.GRAY);
 							}
 						});
 
@@ -365,5 +371,9 @@ public class ListViewHelper {
 				ViewGroup.LayoutParams.WRAP_CONTENT));
 
 		return parent;
+	}
+	
+	public static View getCurrentView(){
+		return currentView;
 	}
 }

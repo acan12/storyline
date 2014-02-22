@@ -5,11 +5,11 @@
     android:orientation="horizontal" >
 
     <RelativeLayout
-        android:id="@+id/bubbleEvent"
+        android:id="@+id/bubble_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
-        android:background="@drawable/bubble_big_right"
+        android:background="@drawable/bubble_right"
         android:orientation="vertical" >
 
         <LinearLayout
