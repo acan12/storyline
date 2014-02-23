@@ -12,7 +12,7 @@
         <include
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
-        	layout="@layout/header_map" />
+        	layout="@layout/map_header" />
             
 		<LinearLayout android:id="@+id/linearLayout1" 
 		     android:scrollbars="vertical" 
@@ -22,7 +22,7 @@
 		     android:layout_width="fill_parent">
 		     <com.google.android.maps.MapView
 		         xmlns:android="http://schemas.android.com/apk/res/android"
-		         android:id="@+id/mapview"
+		         android:id="@+id/map_view"
 		         android:clickable="true" 
 		         android:apiKey="04ToJMcHjUZdchyN6jzzLyAF3u5pCP4AaAmbKOA" 
 		         android:background="#ffffff" 

@@ -3,6 +3,8 @@ package app.xzone.storyline.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.widget.TextView;
 import android.widget.Toast;
 import app.xzone.storyline.HomeActivity;
@@ -40,8 +42,9 @@ public class FacebookAdapter {
 										TextView welcome = (TextView) a
 												.findViewById(R.id.welcome);
 										welcome.setText("Hello "
-												+ user.getName() + " ! \n "
-												+ userEmail);
+												+ user.getName());
+										welcome.setTextColor(Color.BLACK);
+										welcome.setTypeface(null, Typeface.BOLD_ITALIC);
 
 										// save fb avatar link
 										SharedPreferences settings = a
@@ -54,9 +57,7 @@ public class FacebookAdapter {
 												getAvatarLink(user.getId()));
 										editor.commit();
 
-										Toast.makeText(a, "Login Success with "
-														+ userEmail, 200)
-												.show();
+										Toast.makeText(a, "Login Success ", 200).show();
 
 										// call api tracore
 //										String response2 = (String) AuthenticationWorker.getInstance(ApiKey.REGISTER_API, session.getAccessToken()).callApi();

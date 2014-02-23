@@ -67,7 +67,7 @@
 	            android:src="@drawable/divider_header" />
 	
 	        <ImageButton
-	            android:id="@+id/addStoryButton"
+	            android:id="@+id/food_button"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_vertical"
@@ -76,7 +76,7 @@
 	            android:src="@drawable/resto_restaurant_chinese" />
 	        
 	        <ImageButton
-	            android:id="@+id/mapButton"
+	            android:id="@+id/oil_station_button"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_vertical"
@@ -85,7 +85,7 @@
 	            android:src="@drawable/transport_fillingstation" />
 	        
 	        <ImageButton
-	            android:id="@+id/mapButton"
+	            android:id="@+id/bus_button"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_vertical"
@@ -94,7 +94,7 @@
 	            android:src="@drawable/transport_bus" />
 	        
 	        <ImageButton
-	            android:id="@+id/mapButton"
+	            android:id="@+id/sport_button"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_vertical"
@@ -103,7 +103,7 @@
 	            android:src="@drawable/sport_beachvolleyball" />
 	        
 	        <ImageButton
-	            android:id="@+id/mapButton"
+	            android:id="@+id/health_button"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center_vertical"
