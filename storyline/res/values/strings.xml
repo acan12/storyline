@@ -11,6 +11,8 @@
     
     <string name="key_tag_event">TagEvent</string>
     
+    <string name="label_add_event">Add event</string>
+    
     <!-- resource images :bubble -->
     <string	name="bubble_img_transportation">transportation_icon</string>
     <string	name="bubble_img_clock">time_icon</string>

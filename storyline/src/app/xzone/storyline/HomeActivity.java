@@ -225,9 +225,11 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		// rollback events as global var into equal with saved events
 		events.clear();
+		
 		for (int i = 0; i < prevEvents.size(); i++) {
 			events.add(prevEvents.get(i));
 		}
+		 
 	}
 
 	public void showNewEvent(View v) {

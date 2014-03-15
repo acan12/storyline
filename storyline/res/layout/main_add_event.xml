@@ -15,21 +15,26 @@
         android:id="@+id/pointer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="110dp"
         android:layout_marginLeft="9dip"
         android:paddingBottom="30dp"
         android:src="@drawable/pointer" />
-
-    <ImageButton
+        
+     <TextView
         android:id="@+id/addEventButton"
         android:layout_width="wrap_content"
-        android:layout_height="35dip"
-        android:layout_marginTop="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="105dp"
         android:layout_toRightOf="@+id/pointer"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:paddingLeft="12dp"
+        android:paddingTop="5dp"
         android:onClick="showNewEvent"
-        android:background="@null"
+        android:clickable="true"
         android:contentDescription="@string/long_button_orange"
-        android:src="@drawable/long_button_orange_no_text"
+        android:background="@drawable/long_button_orange_no_text"
         android:visibility="gone" />
 
 </RelativeLayout>

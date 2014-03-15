@@ -50,22 +50,27 @@
                       android:layout_height="wrap_content"
                       android:src="@drawable/start_point" />
 
-                  <ImageButton
-                      android:id="@+id/addDateStoryButton"
+                 <TextView
+                      android:id="@+id/top_storydate_button"
+                      android:text="Tap Your Story"
                       android:layout_width="wrap_content"
-                      android:layout_height="35dip"
+                      android:layout_height="wrap_content"
+                      android:textColor="@android:color/white"
+                      android:textStyle="bold"
+                      android:textSize="10dp"
+                      android:paddingLeft="12dp"
+                      android:paddingTop="5dp"
+                      android:visibility="visible"
                       android:onClick="addStoryPopup"
-                      android:background="@null"
-                      android:src="@drawable/long_button_green"
-                      android:visibility="gone" />
-
+                      android:clickable="true"
+                      android:background="@drawable/long_button_green_no_text" />
+                  
                   <TextView
                       android:id="@+id/infoStart"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_marginLeft="5dp"
                       android:layout_marginTop="5dp"
-                      android:text=""
                       android:textColor="@color/black" />
               </LinearLayout>
 
@@ -115,16 +120,22 @@
                       android:layout_alignParentLeft="true"
                       android:layout_alignParentTop="true"
                       android:src="@drawable/end_point" />
-
-                  <ImageButton
-                      android:id="@+id/addDateStoryButton02"
+             
+                  <TextView
+                      android:id="@+id/bottom_storydate_button"
+                      android:text="Tap Your Story"
                       android:layout_width="wrap_content"
-                      android:layout_height="35dip"
-                      android:layout_toRightOf="@+id/endPoint"
+                      android:layout_height="wrap_content"
+                      android:textColor="@android:color/white"
+                      android:textStyle="bold"
+                      android:textSize="10dp"
+                      android:paddingLeft="12dp"
+                      android:paddingTop="5dp"
+                      android:visibility="visible"
                       android:onClick="addStoryPopup"
-                      android:background="@null"
-                      android:src="@drawable/long_button_orange"
-                      android:visibility="gone" />
+                      android:clickable="true"
+                      android:background="@drawable/long_button_orange_no_text" />
+                  
 
                   <TextView
                       android:id="@+id/infoEnd"
@@ -132,7 +143,6 @@
                       android:layout_height="wrap_content"
                       android:layout_marginLeft="5dp"
                       android:layout_marginTop="5dp"
-                      android:text=""
                       android:textColor="@color/black" />
               </LinearLayout>
           </LinearLayout>

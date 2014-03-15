@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -256,12 +257,13 @@ public class Helper {
 			v.setClickable(false);
 
 		}
-		v = ac.findViewById(R.id.addDateStoryButton);
-		v.setVisibility(View.GONE);
-		v = ac.findViewById(R.id.addDateStoryButton02);
-		v.setVisibility(View.GONE);
-		v = ac.findViewById(R.id.addEventButton);
-		v.setVisibility(View.GONE);
+		ac.findViewById(R.id.top_storydate_button).setVisibility(View.GONE);
+		ac.findViewById(R.id.infoStart).setVisibility(View.VISIBLE);
+		
+		ac.findViewById(R.id.bottom_storydate_button).setVisibility(View.GONE);
+		ac.findViewById(R.id.infoEnd).setVisibility(View.VISIBLE);
+		
+		ac.findViewById(R.id.addEventButton).setVisibility(View.GONE);
 
 		// hide pointer add new event button
 		if (viewGroup != null) {
@@ -336,14 +338,31 @@ public class Helper {
 		});
 
 		PanelButtons.showPanel(ac, R.id.footer, true);
+		
+//		top Button
+		ac.findViewById(R.id.infoStart).setVisibility(View.GONE);
+		TextView tv = (TextView) ac.findViewById(R.id.infoStart);
+		String date = tv.getText().toString();	// date start
+		
+		if(!date.equals("")) ((TextView) ac.findViewById(R.id.top_storydate_button)).setText(date);
+		ac.findViewById(R.id.top_storydate_button).setVisibility(View.VISIBLE);
+		
+		
+		
+//		bottom Button
+		ac.findViewById(R.id.infoEnd).setVisibility(View.GONE);
+		tv = (TextView) ac.findViewById(R.id.infoEnd);
+		date = tv.getText().toString();	// date end
+		
+		if(!date.equals(""))  ((TextView) ac.findViewById(R.id.bottom_storydate_button)).setText(date);
+		ac.findViewById(R.id.bottom_storydate_button).setVisibility(View.VISIBLE);
+		
+		
+//		middle button
+		ac.findViewById(R.id.addEventButton).setVisibility(View.VISIBLE);
+		((TextView) ac.findViewById(R.id.addEventButton)).setText(ac.getResources().getString(R.string.label_add_event));
 
-		View v = ac.findViewById(R.id.addDateStoryButton);
-		v.setVisibility(View.VISIBLE);
-		v = ac.findViewById(R.id.addDateStoryButton02);
-		v.setVisibility(View.VISIBLE);
-		v = ac.findViewById(R.id.addEventButton);
-		v.setVisibility(View.VISIBLE);
-
+		
 		if (viewGroup != null) {
 
 			Button deleteEvent;
