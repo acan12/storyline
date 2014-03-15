@@ -14,5 +14,6 @@
     <!-- resource images :bubble -->
     <string	name="bubble_img_transportation">transportation_icon</string>
     <string	name="bubble_img_clock">time_icon</string>
+    <string name="long_button_orange">long button orange</string>
 
 </resources>

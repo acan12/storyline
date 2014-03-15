@@ -27,7 +27,9 @@
         android:layout_marginTop="110dp"
         android:layout_toRightOf="@+id/pointer"
         android:onClick="showNewEvent"
-        android:src="@drawable/notif"
+        android:background="@null"
+        android:contentDescription="@string/long_button_orange"
+        android:src="@drawable/long_button_orange_no_text"
         android:visibility="gone" />
 
 </RelativeLayout>

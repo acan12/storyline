@@ -12,6 +12,7 @@
       <include
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:visibility="visible"
           layout="@layout/sliding_menutop_layout" />
  
       <TextView
@@ -54,7 +55,8 @@
                       android:layout_width="wrap_content"
                       android:layout_height="35dip"
                       android:onClick="addStoryPopup"
-                      android:src="@drawable/notif"
+                      android:background="@null"
+                      android:src="@drawable/long_button_green"
                       android:visibility="gone" />
 
                   <TextView
@@ -120,7 +122,8 @@
                       android:layout_height="35dip"
                       android:layout_toRightOf="@+id/endPoint"
                       android:onClick="addStoryPopup"
-                      android:src="@drawable/notif"
+                      android:background="@null"
+                      android:src="@drawable/long_button_orange"
                       android:visibility="gone" />
 
                   <TextView

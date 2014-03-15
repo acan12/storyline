@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:gravity="bottom"
         android:visibility="visible"
-        android:background="@android:color/darker_gray" >
+        android:background="@null" >
 
         <LinearLayout 
             android:layout_width="fill_parent"

@@ -260,11 +260,6 @@ public class ListViewHelper {
 		final View vi2 = vi;
 
 		// set pointer_full show information event already pass
-//		ImageView pointer = (ImageView) vi.findViewById(R.id.pointer);
-//		if (event.getStartDate() <= System.currentTimeMillis()) {
-//			pointer.setImageResource(R.drawable.pointer_fill);
-//		}
-		
 		setCurrentlyPointer(event, vi);
 
 		Button deleteEvent = (Button) vi.findViewById(R.id.delete_event);
