@@ -1,13 +1,13 @@
 package app.xzone.storyline.helper;
 
 import java.util.ArrayList;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -59,7 +58,7 @@ public class ListViewHelper {
 				Story selectedStory = (Story) adapter.getItem(position);
 
 				ProgressDialog.show(a, null, "Loading ...");
-				
+
 				// routes to main activity
 				a.finish();
 				Intent intent = a.getIntent();
@@ -72,6 +71,27 @@ public class ListViewHelper {
 		});
 	}
 
+	public static void setCurrentlyPointer(Event event, View vi) {
+	
+		View v = vi.findViewById(R.id.bubble_event_header);
+		int pointer_id = (v.getVisibility() == View.VISIBLE) ? R.id.pointer_2 : R.id.pointer_1;
+		int pointer_id_hide = (v.getVisibility() == View.VISIBLE) ? R.id.pointer_1 : R.id.pointer_2;
+		
+		ImageView pointer = (ImageView) vi.findViewById(pointer_id);
+		pointer.setVisibility(View.VISIBLE);
+		
+		ImageView pointer_hide = (ImageView) vi.findViewById(pointer_id_hide);
+		pointer_hide.setVisibility(View.GONE);
+		
+		
+		if (event.getStartDate() <= System.currentTimeMillis()) {
+			pointer.setImageResource(R.drawable.pointer_fill);
+		} else {
+			pointer.setImageResource(R.drawable.pointer);
+		}
+		
+	}
+	
 	public static ViewGroup updateBubbleEvent(final Activity a,
 			final Event event) {
 
@@ -79,13 +99,8 @@ public class ListViewHelper {
 
 		View vi = event.getView();
 
-		// set pointer_full show information event already pass
-		ImageView pointer = (ImageView) vi.findViewById(R.id.pointer);
-		if (event.getStartDate() <= System.currentTimeMillis()) {
-			pointer.setImageResource(R.drawable.pointer_fill);
-		} else {
-			pointer.setImageResource(R.drawable.pointer);
-		}
+		// set pointer_full show event information submitted
+		setCurrentlyPointer(event, vi);
 
 		vi.setOnClickListener(new OnClickListener() {
 
@@ -171,17 +186,19 @@ public class ListViewHelper {
 		LayoutInflater inflater = (LayoutInflater) a.getApplicationContext()
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-//		View vi = inflater.inflate(R.layout.main_bubble_right, null);
+		// View vi = inflater.inflate(R.layout.main_bubble_right, null);
 		View vi = inflater.inflate(R.layout.main_bubble_right_images, null);
-		
-//		HorizontalListHelper.buildHorizontalView(vi);
 
-		// testing integrate with image from sdcard as external storage , must use layout: main_bubble_right_image.xml
-//		File imageFile = new File("/sdcard/Storyline/photos/image_001.jpg");
-//		ImageButton thumb = (ImageButton) vi.findViewById(R.id.pic01);
-//		BitmapDrawable d = new BitmapDrawable(vi.getResources(), imageFile.getAbsolutePath());
-//		thumb.setImageDrawable(d);
-		
+		// HorizontalListHelper.buildHorizontalView(vi);
+
+		// testing integrate with image from sdcard as external storage , must
+		// use layout: main_bubble_right_image.xml
+		// File imageFile = new File("/sdcard/Storyline/photos/image_001.jpg");
+		// ImageButton thumb = (ImageButton) vi.findViewById(R.id.pic01);
+		// BitmapDrawable d = new BitmapDrawable(vi.getResources(),
+		// imageFile.getAbsolutePath());
+		// thumb.setImageDrawable(d);
+
 		// set view into event
 		event.setView(vi);
 
@@ -198,37 +215,44 @@ public class ListViewHelper {
 				}
 			}
 		});
-		
+
 		vi.setOnLongClickListener(new OnLongClickListener() {
-			
+
 			@Override
 			public boolean onLongClick(View v) {
+
+				v.setTag(event);
 				currentView = v;
+
 				if (Helper.getCurrentMode(a) == Helper.MODE_NORMAL) {
-					
-					if(isUpload){
+
+					if (isUpload) {
 						showButtonsPanel = PanelButtons.showPanel(a,
 								R.id.footer_function, true);
-						RelativeLayout bm = (RelativeLayout) v.findViewById(R.id.bubble_image_right);
-						RelativeLayout br = (RelativeLayout) v.findViewById(R.id.bubble_right);
-						
+						RelativeLayout bm = (RelativeLayout) v
+								.findViewById(R.id.bubble_image_right);
+						RelativeLayout br = (RelativeLayout) v
+								.findViewById(R.id.bubble_right);
+
 						bm.setBackgroundResource(R.drawable.bubble_image_selected);
 						br.setBackgroundResource(R.drawable.bubble_right_selected);
 						isUpload = false;
-						
-					}else{
+
+					} else {
 						showButtonsPanel = PanelButtons.showPanel(a,
 								R.id.footer_function, false);
-						RelativeLayout bm = (RelativeLayout) v.findViewById(R.id.bubble_image_right);
-						RelativeLayout br = (RelativeLayout) v.findViewById(R.id.bubble_right);
-						
+						RelativeLayout bm = (RelativeLayout) v
+								.findViewById(R.id.bubble_image_right);
+						RelativeLayout br = (RelativeLayout) v
+								.findViewById(R.id.bubble_right);
+
 						bm.setBackgroundResource(R.drawable.bubble_image);
 						br.setBackgroundResource(R.drawable.bubble_right);
 						isUpload = true;
-						
+
 					}
 				}
-				
+
 				return true;
 			}
 		});
@@ -236,10 +260,12 @@ public class ListViewHelper {
 		final View vi2 = vi;
 
 		// set pointer_full show information event already pass
-		ImageView pointer = (ImageView) vi.findViewById(R.id.pointer);
-		if (event.getStartDate() <= System.currentTimeMillis()) {
-			pointer.setImageResource(R.drawable.pointer_fill);
-		}
+//		ImageView pointer = (ImageView) vi.findViewById(R.id.pointer);
+//		if (event.getStartDate() <= System.currentTimeMillis()) {
+//			pointer.setImageResource(R.drawable.pointer_fill);
+//		}
+		
+		setCurrentlyPointer(event, vi);
 
 		Button deleteEvent = (Button) vi.findViewById(R.id.delete_event);
 		if (showRemoveEvent)
@@ -372,8 +398,9 @@ public class ListViewHelper {
 
 		return parent;
 	}
-	
-	public static View getCurrentView(){
+
+	public static View getCurrentView() {
 		return currentView;
 	}
+
 }

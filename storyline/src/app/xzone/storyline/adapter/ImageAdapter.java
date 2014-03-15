@@ -94,7 +94,7 @@ public class ImageAdapter {
 		out.flush();
 		out.close();
 
-		// savePhoto(fileName, event, new DBAdapter(context));
+		savePhoto(fileName, event, new DBAdapter(context));
 
 		Toast customToast = new Toast(context);
 		customToast = Toast.makeText(context, "Image Transferred",
@@ -104,7 +104,7 @@ public class ImageAdapter {
 	}
 
 	public static boolean savePhoto(String photos, Event e, DBAdapter db) {
-		String p = e.getPhotos();
+		String p = "";
 		if (p != "" && p != null) {
 			p += ";" + photos;
 		}

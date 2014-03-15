@@ -292,14 +292,19 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	            imageEvent.setPadding(5, 1, 5, 3);
 	            bubbleImage.addView(imageEvent, 0);
 	            
+	            Event event = (Event) vi.getTag();
+	            
+	            ListViewHelper.setCurrentlyPointer(event, vi);
+	            
 	         // store into file 
 	            try {
-	            	Event event = EventHelper.getEventFromTag(this);
 					ImageAdapter.copyFile(photo, event, this);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+	            
+	            
 			}
 			break;
 
@@ -320,9 +325,13 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	            imageEvent.setPadding(5, 1, 5, 3);
 	            bubbleImage.addView(imageEvent, 0);
 	            
+	            Event event = (Event) vi.getTag();
+	            
+	            ListViewHelper.setCurrentlyPointer(event, vi);
+	            
 	            // store into file 
 	            try {
-	            	Event event = EventHelper.getEventFromTag(this);
+	            	
 					ImageAdapter.copyFile(bmp, event, this);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

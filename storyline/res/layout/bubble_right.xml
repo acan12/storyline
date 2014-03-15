@@ -30,25 +30,27 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/clock_black_small" />
+                    android:contentDescription="@string/bubble_img_clock"
+                    android:src="@drawable/clock" />
 
                 <TextView
                     android:id="@+id/date_note"
-                    android:layout_width="180dip"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="25dp"
                     android:layout_marginTop="5dp"
-                    android:text="Mon 12 July 2013"
+                    android:text=""
                     android:textStyle="bold"
                     android:textColor="@color/plum" />
                 
 
                 <LinearLayout
                     android:id="@+id/bubble_header_right"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+					android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_marginTop="5dip"
+                    android:layout_marginRight="12dp"
                     android:orientation="horizontal" >
 
                     <Button
@@ -57,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:background="@null"
-                        android:visibility="invisible"
+                        android:visibility="visible"
                         android:drawableLeft="@drawable/delete" />
                 </LinearLayout>
             </LinearLayout>
@@ -97,7 +99,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="30dp"
-                    android:text="titttlleeee"
+                    android:text=""
                     android:textColor="#078cbe"
                     android:textStyle="bold" />
 
@@ -122,6 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:contentDescription="@string/bubble_img_transportation"
             android:src="@drawable/pointer_plane" />
 
 

@@ -8,5 +8,11 @@
     <string name="facebook_app_id">581391298600681</string>
     <string name="facebook_button_label">Login</string>
     <string name="register">Register</string>
+    
+    <string name="key_tag_event">TagEvent</string>
+    
+    <!-- resource images :bubble -->
+    <string	name="bubble_img_transportation">transportation_icon</string>
+    <string	name="bubble_img_clock">time_icon</string>
 
 </resources>
