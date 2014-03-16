@@ -103,17 +103,30 @@ public class ImageAdapter {
 		customToast.show();
 	}
 
-	public static boolean savePhoto(String photos, Event e, DBAdapter db) {
-		String p = "";
-		if (p != "" && p != null) {
-			p += ";" + photos;
-		}
+	public static boolean savePhoto(String photo, Event e, DBAdapter db) {
+		
+		String fphotos = e.getPhotos();
+		if(fphotos.equals("")){ fphotos = photo; }
+		else{ fphotos += ";"+photo; }
+		
+		e.setPhotos(fphotos);
 
-		e.setPhotos(p);
-
-		return db.savePhotos(e);
+		return db.savePhoto(e);
 	}
 
+	public static String[] getPhotosPath(Event e){
+		String[] paths = e.getPhotos().split(";"); 
+		if(!e.getPhotos().equals("")){
+			if(paths.length == 0){
+				return new String[]{e.getPhotos()};
+			}else{
+				return paths;
+			}
+		}
+		
+		return null;
+	}
+	
 	public static Bitmap decodeUri(Context c, Uri uri, final int requireSize)
 			throws FileNotFoundException {
 		BitmapFactory.Options o = new BitmapFactory.Options();

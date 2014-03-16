@@ -1,5 +1,6 @@
 package app.xzone.storyline.helper;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import app.xzone.storyline.R;
 import app.xzone.storyline.adapter.DBAdapter;
+import app.xzone.storyline.adapter.ImageAdapter;
 import app.xzone.storyline.adapter.LazyAdapter;
 import app.xzone.storyline.component.PanelButtons;
 import app.xzone.storyline.component.Sliding;
@@ -193,7 +195,18 @@ public class ListViewHelper {
 
 		// testing integrate with image from sdcard as external storage , must
 		// use layout: main_bubble_right_image.xml
-		// File imageFile = new File("/sdcard/Storyline/photos/image_001.jpg");
+		String[] paths = ImageAdapter.getPhotosPath(event);
+		System.out.println("---- paths : "+paths.length);
+		
+//		if(paths != null){
+//			String fPath = "";
+//			for(String f : paths){
+//				fPath = "/sdcard/Storyline/photos/"+f;
+//				File imageFile = new File(fPath);
+//			}
+//			
+//		}
+//		 File imageFile = new File("/sdcard/Storyline/photos/image_001.jpg");
 		// ImageButton thumb = (ImageButton) vi.findViewById(R.id.pic01);
 		// BitmapDrawable d = new BitmapDrawable(vi.getResources(),
 		// imageFile.getAbsolutePath());

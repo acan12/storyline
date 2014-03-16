@@ -292,7 +292,7 @@ public class DBAdapter extends SQLiteOpenHelper {
 		return rows;
 	}
 	
-	public boolean savePhotos(Event event){
+	public boolean savePhoto(Event event){
 		this.open();
 		
 		ContentValues initialValues = new ContentValues();

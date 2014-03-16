@@ -490,7 +490,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		startActivityForResult(intent, Helper.REQUEST_CODE_PICK_LOCATION);
 	}
 
-	// * routes to map page
+	// * go to map page
 	public void goMap(View v) {
 		Intent intent = new Intent(HomeActivity.this, MapPlaceActivity.class);
 		startActivity(intent);
