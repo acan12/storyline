@@ -9,6 +9,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -162,7 +165,11 @@ public class ListViewHelper {
 		// set title of event
 		title.setText(event.getName());
 		// set location name
-		loc.setText(event.getLocname());
+		if(event.getLocname() == null)
+			loc.setVisibility(View.GONE);
+		else
+			loc.setText(event.getLocname());
+		
 		// set bubble note
 		note.setText(event.getMessage());
 		// set bubble date
@@ -195,8 +202,10 @@ public class ListViewHelper {
 
 		// testing integrate with image from sdcard as external storage , must
 		// use layout: main_bubble_right_image.xml
+		
 		String[] paths = ImageAdapter.getPhotosPath(event);
-		System.out.println("---- paths : "+paths.length);
+		
+		if(paths != null) ImageAdapter.buildPhotosLayout(event, vi, a);
 		
 //		if(paths != null){
 //			String fPath = "";
@@ -406,6 +415,7 @@ public class ListViewHelper {
 
 		return parent;
 	}
+
 
 	public static View getCurrentView() {
 		return currentView;

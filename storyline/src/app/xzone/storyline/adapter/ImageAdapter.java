@@ -16,10 +16,21 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.sax.StartElementListener;
 import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+import app.xzone.storyline.GalleryPhotosActivity;
+import app.xzone.storyline.HomeActivity;
+import app.xzone.storyline.MapPlaceActivity;
+import app.xzone.storyline.R;
+import app.xzone.storyline.component.ProgressCustomDialog;
 import app.xzone.storyline.helper.Helper;
 import app.xzone.storyline.model.Event;
+import app.xzone.storyline.model.Story;
 
 public class ImageAdapter {
 	private Context context;
@@ -177,5 +188,69 @@ public class ImageAdapter {
 				.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 		cursor.moveToFirst();
 		return cursor.getString(column_index);
+	}
+	
+	public static Bitmap[] getPhotosEvent(Event event){
+		if(event.equals(null)) return null;
+		
+		Bitmap[] bmps = new Bitmap[20];
+		String[] fnames = event.getPhotos().split(";");
+		if(fnames.equals("")) fnames = new String[]{event.getPhotos()};
+		
+		int idx = 0;
+		for(String fname : fnames){
+			File imageFile = new File("/sdcard/Storyline/photos/"+fname);
+			Bitmap photo = BitmapFactory.decodeFile(	imageFile.getAbsolutePath() 	);
+			bmps[idx] = photo;
+					
+			idx++;
+		}
+		return bmps;
+	}
+	
+	public static void buildPhotosLayout(Event event, View vi, Activity a){
+		String[] fnames = event.getPhotos().split(";");
+		if(fnames.equals("")) fnames = new String[]{event.getPhotos()};
+		
+		for(String fname : fnames){
+			
+			File imageFile = new File("/sdcard/Storyline/photos/"+fname);
+			
+			Bitmap photo = BitmapFactory.decodeFile(	imageFile.getAbsolutePath() 	);
+			setPhotoLayout(photo, vi, event, a);
+		}
+		
+	}
+	
+	public static void setPhotoLayout(Bitmap photo, View vi, final Event event, final Activity a) {
+		// initialize image container
+		View bubbleEventHeader = (LinearLayout) vi.findViewById(R.id.bubble_event_header);
+		LinearLayout bubbleImage = (LinearLayout) bubbleEventHeader.findViewById(R.id.bubble_image);
+		
+		if(bubbleEventHeader.getVisibility() == View.GONE){
+			bubbleEventHeader.setVisibility(View.VISIBLE); 
+		}
+		
+        
+        Bitmap bmp = ImageAdapter.getResizedBitmap(photo, 56, 70);
+        
+        ImageView imageEvent = new ImageView(a);
+        imageEvent.setImageBitmap(bmp);
+        imageEvent.setPadding(5, 1, 5, 3);
+        bubbleImage.addView(imageEvent, 0);
+        
+        // go to gallery photos
+        imageEvent.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(a, GalleryPhotosActivity.class);
+				
+				intent.putExtra("app.event.photos", event);
+				a.startActivity(intent);
+			}
+		});
+        
 	}
 }

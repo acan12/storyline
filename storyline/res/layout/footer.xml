@@ -26,13 +26,13 @@
 	            android:onClick="saveEdit"
 	            android:text="Save" />
 	        
-	        <Button 
+<!-- 	        <Button 
 	            android:layout_toRightOf="@+id/cancelButton"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:onClick="cancelEdit"
-	            android:text="Cancel" />
+	            android:text="Cancel" /> -->
 	        
 		</LinearLayout>
     </RelativeLayout>

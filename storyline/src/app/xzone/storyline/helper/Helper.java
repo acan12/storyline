@@ -65,7 +65,11 @@ public class Helper {
 		else
 			tv.setText(StringManipulation.ellipsis(story.getName()
 					.toUpperCase(), 100));
-
+		
+		tv = (TextView) activity.findViewById(R.id.top_storydate_button);
+		if(story != null) {		tv.setText(TimeUtil.dateFormat(TimeUtil.fromEpochFormat(story.getStartDate())).toString()); 	}
+		
+		
 		tv = (TextView) activity.findViewById(R.id.infoStart);
 		if (story == null)
 			tv.setText("");
@@ -73,12 +77,13 @@ public class Helper {
 			tv.setText(TimeUtil.dateFormat(
 					TimeUtil.fromEpochFormat(story.getStartDate())).toString());
 
+		tv = (TextView) activity.findViewById(R.id.bottom_storydate_button);
+		if(story != null) {	tv.setText(		TimeUtil.dateFormat(TimeUtil.fromEpochFormat(story.getEndDate())).toString()	); }
+		
+		
 		tv = (TextView) activity.findViewById(R.id.infoEnd);
-		if (story == null)
-			tv.setText("");
-		else
-			tv.setText(TimeUtil.dateFormat(
-					TimeUtil.fromEpochFormat(story.getEndDate())).toString());
+		if (story == null)	tv.setText("");
+		else tv.setText(TimeUtil.dateFormat(	TimeUtil.fromEpochFormat(story.getEndDate())).toString()	);
 
 	}
 

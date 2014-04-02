@@ -272,30 +272,29 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		View vi = ListViewHelper.getCurrentView();
-		// initialize image container
-		View bubbleEventHeader = (LinearLayout) vi.findViewById(R.id.bubble_event_header);
-		LinearLayout bubbleImage = (LinearLayout) bubbleEventHeader.findViewById(R.id.bubble_image);
-		
 		
 		switch (requestCode) {
 		case Helper.REQUEST_CODE_IMAGE_CAMERA:
 			if (resultCode == RESULT_OK) {
 				
-				if(bubbleEventHeader.getVisibility() == View.GONE){
-					bubbleEventHeader.setVisibility(View.VISIBLE); 
-				}
-
-				Bitmap photo = (Bitmap) data.getExtras().get("data");
 				
-	            Bitmap bmp = ImageAdapter.getResizedBitmap(photo, 56, 70);
-	            
-	            imageEvent = new ImageView(this);
-	            imageEvent.setImageBitmap(bmp);
-	            imageEvent.setPadding(5, 1, 5, 3);
-	            bubbleImage.addView(imageEvent, 0);
+//				if(bubbleEventHeader.getVisibility() == View.GONE){
+//					bubbleEventHeader.setVisibility(View.VISIBLE); 
+//				}
+//
+//				Bitmap photo = (Bitmap) data.getExtras().get("data");
+//				
+//	            Bitmap bmp = ImageAdapter.getResizedBitmap(photo, 56, 70);
+//	            
+//	            imageEvent = new ImageView(this);
+//	            imageEvent.setImageBitmap(bmp);
+//	            imageEvent.setPadding(5, 1, 5, 3);
+//	            bubbleImage.addView(imageEvent, 0);
 	            
 	            Event event = (Event) vi.getTag();
-	            
+	            Bitmap photo = (Bitmap) data.getExtras().get("data");
+				ImageAdapter.setPhotoLayout(photo, vi, event, this);
+				
 	            ListViewHelper.setCurrentlyPointer(event, vi);
 	            
 	         // store into file 
@@ -313,28 +312,34 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		case Helper.REQUEST_CODE_IMAGE_GALLERY:
 			if (resultCode == RESULT_OK && null != data) {
 				
-				if(bubbleEventHeader.getVisibility() == View.GONE){
-					bubbleEventHeader.setVisibility(View.VISIBLE); 
-				}
+				Uri selectedImageUri = data.getData();
+				Bitmap photo = BitmapFactory.decodeFile(	ImageAdapter.getPath(selectedImageUri, this) 	);
+	            
 				
-	            Uri selectedImageUri = data.getData();
-	            String selectedImagePath= ImageAdapter.getPath(selectedImageUri, this);
-	            
-	            Bitmap bmp = ImageAdapter.getResizedBitmap(BitmapFactory.decodeFile(selectedImagePath), 56, 70);
-	            
-	            imageEvent = new ImageView(this);
-	            imageEvent.setImageBitmap(bmp);
-	            imageEvent.setPadding(5, 1, 5, 3);
-	            bubbleImage.addView(imageEvent, 0);
+				
+//				if(bubbleEventHeader.getVisibility() == View.GONE){
+//					bubbleEventHeader.setVisibility(View.VISIBLE); 
+//				}
+//				
+//	            Uri selectedImageUri = data.getData();
+//	            String selectedImagePath= ImageAdapter.getPath(selectedImageUri, this);
+//	            
+//	            Bitmap bmp = ImageAdapter.getResizedBitmap(BitmapFactory.decodeFile(selectedImagePath), 56, 70);
+//	            
+//	            imageEvent = new ImageView(this);
+//	            imageEvent.setImageBitmap(bmp);
+//	            imageEvent.setPadding(5, 1, 5, 3);
+//	            bubbleImage.addView(imageEvent, 0);
 	            
 	            Event event = (Event) vi.getTag();
+	            ImageAdapter.setPhotoLayout(photo, vi, event, this);
 	            
 	            ListViewHelper.setCurrentlyPointer(event, vi);
 	            
 	            // store into file 
 	            try {
 	            	
-					ImageAdapter.copyFile(bmp, event, this);
+					ImageAdapter.copyFile(photo, event, this);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -540,13 +545,13 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		protected Bitmap doInBackground(String... urls) {
 			String urldisplay = urls[0];
 			Bitmap mIcon11 = null;
-			try {
-				InputStream in = new URL(urldisplay).openStream();
-				mIcon11 = BitmapFactory.decodeStream(in);
-			} catch (Exception e) {
-				Log.e("Error", e.getMessage());
-				e.printStackTrace();
-			}
+//			try {
+//				InputStream in = new URL(urldisplay).openStream();
+//				mIcon11 = BitmapFactory.decodeStream(in);
+//			} catch (Exception e) {
+//				Log.e("Error", e.getMessage());
+//				e.printStackTrace();
+//			}
 			return mIcon11;
 		}
 
