@@ -193,8 +193,9 @@ public class ImageAdapter {
 	public static Bitmap[] getPhotosEvent(Event event){
 		if(event.equals(null)) return null;
 		
-		Bitmap[] bmps = new Bitmap[20];
+		
 		String[] fnames = event.getPhotos().split(";");
+		Bitmap[] bmps = new Bitmap[fnames.length];
 		if(fnames.equals("")) fnames = new String[]{event.getPhotos()};
 		
 		int idx = 0;
