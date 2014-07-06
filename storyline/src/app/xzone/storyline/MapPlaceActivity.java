@@ -5,8 +5,8 @@ import android.text.Layout;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import app.xzone.storyline.adapter.MapAdapter;
-import app.xzone.storyline.factory.IMapFactory;
+import app.core.adapter.MapAdapter;
+import app.data.factory.IMapFactory;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;

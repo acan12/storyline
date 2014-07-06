@@ -5,7 +5,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
-    <app.xzone.storyline.component.Sliding
+    <app.core.component.Sliding
         android:id="@+id/sliding"
         android:layout_width="fill_parent"
         android:layout_height="350dp"
@@ -166,6 +166,6 @@
             android:layout_height="wrap_content"
             android:text="Done" />
         -->
-    </app.xzone.storyline.component.Sliding>
+    </app.core.component.Sliding>
 
 </LinearLayout>

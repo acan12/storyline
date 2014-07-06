@@ -9,9 +9,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.Toast;
-import app.xzone.storyline.adapter.ImageAdapter;
-import app.xzone.storyline.adapter.ImageGalleryAdapter;
-import app.xzone.storyline.model.Event;
+import app.core.adapter.ImageAdapter;
+import app.core.adapter.ImageGalleryAdapter;
+import app.core.model.Event;
 
 public class GalleryPhotosActivity extends Activity{
 	@Override

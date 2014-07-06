@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <!-- end -->
-        
+        <!-- <activity android:name=".HomeActivity"></activity> -->
         <activity android:name=".LocationPickerActivity"></activity>
         <activity android:name=".GalleryPhotosActivity"></activity>
         <activity android:name=".MapPlaceActivity"></activity>

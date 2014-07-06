@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import app.xzone.storyline.adapter.FacebookAdapter;
+import app.core.adapter.FacebookAdapter;
 
 import com.facebook.Session;
 

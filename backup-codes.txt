@@ -1,6 +1,6 @@
+[HomeActivity.java] >>
 package app.xzone.storyline;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.ParseException;
@@ -13,11 +13,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,17 +30,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import app.core.adapter.DBAdapter;
-import app.core.adapter.ImageAdapter;
-import app.core.component.DateTimePicker;
-import app.core.component.ProgressCustomDialog;
-import app.core.component.Sliding;
-import app.core.model.Event;
-import app.core.model.Story;
-import app.ui.helper.EventHelper;
-import app.ui.helper.Helper;
-import app.ui.helper.ListViewHelper;
-import app.util.StringManipulation;
+import app.xzone.storyline.adapter.DBAdapter;
+import app.xzone.storyline.adapter.ImageAdapter;
+import app.xzone.storyline.component.DateTimePicker;
+import app.xzone.storyline.component.PanelButtons;
+import app.xzone.storyline.component.ProgressCustomDialog;
+import app.xzone.storyline.component.Sliding;
+import app.xzone.storyline.helper.AdapterHelper;
+import app.xzone.storyline.helper.EventHelper;
+import app.xzone.storyline.helper.Helper;
+import app.xzone.storyline.model.Event;
+import app.xzone.storyline.model.Story;
+import app.xzone.storyline.util.StringManipulation;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
@@ -47,7 +50,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	private Sliding popup;
 	private ImageView imageEvent;
-	private ImageButton listButton, storyButton;
+	private ImageButton listButton, allButton, storyButton;
 	private Button submitEventButton, cancelEventButton;
 	private LinearLayout newStoryButton, pickDateEvent, pickTimeEvent;
 	private Dialog dialog;
@@ -83,17 +86,17 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		popup.setVisibility(View.GONE);
 
 		listButton = (ImageButton) findViewById(R.id.menuListButton);
-//		allButton = (ImageButton) findViewById(R.id.allButton);
+		allButton = (ImageButton) findViewById(R.id.allButton);
 		storyButton = (ImageButton) findViewById(R.id.storyButton);
 		newStoryButton = (LinearLayout) findViewById(R.id.newStorySliding);
 		submitEventButton = (Button) findViewById(R.id.submitEventButton);
 		cancelEventButton = (Button) findViewById(R.id.cancelEventButton);
 		pickDateEvent = (LinearLayout) findViewById(R.id.pickDateEvent);
 		pickTimeEvent = (LinearLayout) findViewById(R.id.pickTimeEvent);
-		
+		imageEvent = (ImageView) findViewById(R.id.pic01);
 
 		listButton.setOnClickListener(this);
-//		allButton.setOnClickListener(this);
+		allButton.setOnClickListener(this);
 		storyButton.setOnClickListener(this);
 		newStoryButton.setOnClickListener(this);
 		submitEventButton.setOnClickListener(this);
@@ -110,7 +113,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		// set ui
 		loadAvatarImageAsync();
 		Helper.buildUIMain(HomeActivity.this, story);
-		ListViewHelper.buildListViewAdapter(HomeActivity.this);
+		AdapterHelper.buildListViewAdapter(HomeActivity.this);
 
 		// set array event collection
 		events = (ArrayList<Event>) prevEvents.clone();
@@ -161,7 +164,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		for (int i = 0; i < items.size(); i++) {
 
-			viewGroup = ListViewHelper.buildBubbleEventAdapter(this,
+			viewGroup = AdapterHelper.buildBubbleEventAdapter(this,
 					items.get(i), true);
 		}
 		Helper.modeNormal(this, viewGroup);
@@ -211,7 +214,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		}
 
 		Helper.modeNormal(this, viewGroup);
-		ListViewHelper.buildListViewAdapter(HomeActivity.this);
+		AdapterHelper.buildListViewAdapter(HomeActivity.this);
 
 	}
 
@@ -225,11 +228,9 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 		// rollback events as global var into equal with saved events
 		events.clear();
-		
 		for (int i = 0; i < prevEvents.size(); i++) {
 			events.add(prevEvents.get(i));
 		}
-		 
 	}
 
 	public void showNewEvent(View v) {
@@ -271,80 +272,42 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 
-		View vi = ListViewHelper.getCurrentView();
-		
 		switch (requestCode) {
 		case Helper.REQUEST_CODE_IMAGE_CAMERA:
 			if (resultCode == RESULT_OK) {
-				
-				
-//				if(bubbleEventHeader.getVisibility() == View.GONE){
-//					bubbleEventHeader.setVisibility(View.VISIBLE); 
-//				}
-//
-//				Bitmap photo = (Bitmap) data.getExtras().get("data");
-//				
-//	            Bitmap bmp = ImageAdapter.getResizedBitmap(photo, 56, 70);
-//	            
-//	            imageEvent = new ImageView(this);
-//	            imageEvent.setImageBitmap(bmp);
-//	            imageEvent.setPadding(5, 1, 5, 3);
-//	            bubbleImage.addView(imageEvent, 0);
-	            
-	            Event event = (Event) vi.getTag();
-	            Bitmap photo = (Bitmap) data.getExtras().get("data");
-				ImageAdapter.setPhotoLayout(photo, vi, event, this);
-				
-	            ListViewHelper.setCurrentlyPointer(event, vi);
-	            
-	         // store into file 
-	            try {
-					ImageAdapter.copyFile(photo, event, this);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	            
-	            
+
+				System.out.println("---- entering image from camera -----");
+//				Uri photoUri = (Uri) data.getExtras().get(
+//						MediaStore.EXTRA_OUTPUT);
+
+//				Bitmap thumbnail = (Bitmap) data.getExtras().get(MediaStore.EXTRA_OUTPUT);
+//				imageEvent.setImageBitmap(thumbnail);
 			}
 			break;
 
 		case Helper.REQUEST_CODE_IMAGE_GALLERY:
 			if (resultCode == RESULT_OK && null != data) {
-				
-				Uri selectedImageUri = data.getData();
-				Bitmap photo = BitmapFactory.decodeFile(	ImageAdapter.getPath(selectedImageUri, this) 	);
-	            
-				
-				
-//				if(bubbleEventHeader.getVisibility() == View.GONE){
-//					bubbleEventHeader.setVisibility(View.VISIBLE); 
-//				}
-//				
-//	            Uri selectedImageUri = data.getData();
-//	            String selectedImagePath= ImageAdapter.getPath(selectedImageUri, this);
-//	            
-//	            Bitmap bmp = ImageAdapter.getResizedBitmap(BitmapFactory.decodeFile(selectedImagePath), 56, 70);
-//	            
-//	            imageEvent = new ImageView(this);
-//	            imageEvent.setImageBitmap(bmp);
-//	            imageEvent.setPadding(5, 1, 5, 3);
-//	            bubbleImage.addView(imageEvent, 0);
-	            
-	            Event event = (Event) vi.getTag();
-	            ImageAdapter.setPhotoLayout(photo, vi, event, this);
-	            
-	            ListViewHelper.setCurrentlyPointer(event, vi);
-	            
-	            // store into file 
-	            try {
-	            	
-					ImageAdapter.copyFile(photo, event, this);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	            
+
+	            Uri selectedImageUri = data.getData();
+	            String selectedImagePath= ImageAdapter.getPath(selectedImageUri, this);
+
+	            System.out.println("----- selectedImagePath: "+selectedImagePath);
+	            imageEvent.setImageURI(selectedImageUri);
+
+
+
+//				Uri selectedImage = data.getData();
+//				String[] filePathColumn = { MediaStore.Images.Media.DATA };
+//				Cursor cursor = getContentResolver().query(selectedImage,
+//						filePathColumn, null, null, null);
+//				cursor.moveToFirst();
+//				int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+//				String picturePath = cursor.getString(columnIndex);
+//				cursor.close();
+// 
+//				System.out.println("------------  picturePath: "+picturePath);
+////				imageEvent.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+//				imageEvent.setImageBitmap(ImageAdapter.getResizedBitmap(BitmapFactory.decodeFile(picturePath), 76, 100));
 			}
 			break;
 		case Helper.REQUEST_CODE_PICK_LOCATION:
@@ -404,6 +367,17 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			toggle();
 			break;
 
+		case R.id.allButton:
+
+			// set show buttons panel
+			showButtonsPanel = PanelButtons.showPanel(this,
+					R.id.footer_function, showButtonsPanel);
+
+			// Hide the Panel
+			Helper.modeNormal(HomeActivity.this, viewGroup);
+			showEditPanel = false;
+			break;
+
 		case R.id.storyButton:
 			showSecondaryMenu();
 			break;
@@ -451,7 +425,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 					ex.printStackTrace();
 				}
 
-				viewGroup = ListViewHelper.updateBubbleEvent(this, event);
+				viewGroup = AdapterHelper.updateBubbleEvent(this, event);
 
 				// replace with modified event
 				int index = events.indexOf(event);
@@ -468,7 +442,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 					// TODO Auto-generated catch block
 					ex.printStackTrace();
 				}
-				viewGroup = ListViewHelper.buildBubbleEventAdapter(this, event,
+				viewGroup = AdapterHelper.buildBubbleEventAdapter(this, event,
 						false);
 
 				events.add(event);
@@ -495,7 +469,7 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 		startActivityForResult(intent, Helper.REQUEST_CODE_PICK_LOCATION);
 	}
 
-	// * go to map page
+	// * routes to map page
 	public void goMap(View v) {
 		Intent intent = new Intent(HomeActivity.this, MapPlaceActivity.class);
 		startActivity(intent);
@@ -503,25 +477,30 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 
 	// * pick image from camera device
 	public void goCamera(View v) {
-		ImageAdapter.takeCamera(this);
+		ImageAdapter.takePhoto(this);
 	}
 
 	public void goGallery(View v) {
-		ImageAdapter.takeGallery(this);
+		ImageAdapter.takePictureGallery(this);
 	}
 
 	public void showNavigation(View v) {
 
 		if (!showEditPanel) {
 			Helper.modeEdit(HomeActivity.this, viewGroup);
+
 			showEditPanel = true;
-			
+			showButtonsPanel = PanelButtons.showPanel(this,
+					R.id.footer_function, true);
 		} else {
 			// Hide the Panel
 			Helper.modeNormal(HomeActivity.this, viewGroup);
+
 			showEditPanel = false;
-			
+			showButtonsPanel = PanelButtons.showPanel(this,
+					R.id.footer_function, true);
 		}
+
 	}
 
 	private void loadAvatarImageAsync() {
@@ -559,4 +538,182 @@ public class HomeActivity extends SlidingActivity implements OnClickListener {
 			bmImage.setImageBitmap(bmp);
 		}
 	}
+}
+  
+  
+[ImageAdapter.java] >>
+package app.xzone.storyline.adapter;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
+import android.graphics.Matrix;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.widget.ImageView;
+import app.xzone.storyline.R;
+import app.xzone.storyline.helper.Helper;
+
+public class ImageAdapter {
+	private Context context;
+	private static ImageAdapter imageAdapter;
+	private static File imageFolder;
+	private static String photoDir = "photos";
+	private static String facebookDir = "facebook";
+	private static DecimalFormat formatter = new DecimalFormat("000");
+
+	private static String rootPath;
+
+	public ImageAdapter(Context context) {
+		this.context = context;
+
+	}
+
+	public ImageAdapter getInstance(Context context) {
+		if (context == null) {
+			imageAdapter = new ImageAdapter(context);
+		}
+		return imageAdapter;
+	}
+
+	public static void takePhoto(Activity a) {
+		Intent camera = new Intent(
+				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+
+		rootPath = Environment.getExternalStorageDirectory() + File.separator
+				+ AppAdapter.getInstance(a).getAppName();
+		String photoPath = rootPath + File.separator + photoDir;
+		// storing file
+		int imageNum = 1;
+		// Create Directory App
+		imageFolder = new File(photoPath);
+		imageFolder.mkdirs();
+
+		String fileName = "image_" + String.valueOf(formatter.format(imageNum))
+				+ ".jpg";
+		File output = new File(imageFolder, fileName);
+		while (output.exists()) {
+			imageNum++;
+			fileName = "image_" + String.valueOf(formatter.format(imageNum))
+					+ ".jpg";
+			output = new File(imageFolder, fileName);
+		}
+//		Uri uriSavedImage = Uri.fromFile(output);
+
+		Bitmap bmp = BitmapFactory.decodeFile(output.getPath());
+//		camera.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+
+		ImageView imageEvent = (ImageView) a.findViewById(R.id.pic01);
+		imageEvent.setImageBitmap(bmp);
+
+		a.startActivityForResult(camera, Helper.REQUEST_CODE_IMAGE_CAMERA);
+	}
+
+
+	public static void takePictureGallery(Activity a){
+
+		Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		a.startActivityForResult(i, Helper.REQUEST_CODE_IMAGE_GALLERY);
+	}
+
+//	public static void takePictureFile(Activity a) {
+//		Intent gallery = new Intent(Intent.ACTION_PICK,
+//				android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//
+//		rootPath = Environment.getExternalStorageDirectory() + "/"
+//				+ AppAdapter.getInstance(a).getAppName();
+//		String photoPath = rootPath + File.separator + photoDir;
+//		// storing file
+//		int imageNum = 1;
+//		// Create Directory App
+//		imageFolder = new File(photoPath);
+//		imageFolder.mkdirs();
+//
+//		String fileName = "image_" + String.valueOf(formatter.format(imageNum))
+//				+ ".jpg";
+//		File output = new File(imageFolder, fileName);
+//		while (output.exists()) {
+//			imageNum++;
+//			fileName = "image_" + String.valueOf(formatter.format(imageNum))
+//					+ ".jpg";
+//			output = new File(imageFolder, fileName);
+//		}
+//		
+//		System.out.println("------outlet path: "+output.getPath());
+//		Uri uriSavedImage = Uri.fromFile(output);
+//		
+//		System.out.println("---- urisaveimage: "+uriSavedImage.toString());
+//		gallery.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+//
+//		a.startActivityForResult(gallery, Helper.REQUEST_CODE_IMAGE_GALLERY);
+//	}
+
+	public static String cachedBitmap(Context context, Bitmap bmp) {
+		rootPath = Environment.getExternalStorageDirectory() + "/"
+				+ AppAdapter.getInstance(context).getAppName();
+		String facebookPath = rootPath + facebookDir;
+
+		// cache image into sdcard
+
+		return null;
+	}
+
+	public static Bitmap decodeUri(Context c, Uri uri,final int requireSize) throws FileNotFoundException{
+		BitmapFactory.Options o =  new BitmapFactory.Options();
+		o.inJustDecodeBounds = true;
+
+		BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
+
+		int width_tmp = o.outWidth, height_tmp = o.outHeight;
+		int scale = 1;
+		while(true){
+			if(width_tmp / 2 < requireSize || height_tmp /2 < requireSize)
+				break;
+			width_tmp /=2;
+			height_tmp /=2;
+			scale *=2;
+		}
+
+		BitmapFactory.Options o2 = new BitmapFactory.Options();
+		o2.inSampleSize =scale;
+		return BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
+	}
+
+
+	public static Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+	    int width = bm.getWidth();
+	    int height = bm.getHeight();
+	    float scaleWidth = ((float) newWidth) / width;
+	    float scaleHeight = ((float) newHeight) / height;
+
+	    // create a matrix for the manipulation
+	    Matrix matrix = new Matrix();
+
+	    // resize the bit map
+	    matrix.postScale(scaleWidth, scaleHeight);
+
+	    // recreate the new Bitmap
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+
+	    return resizedBitmap;
+	}
+
+
+	public static String getPath(Uri uri, Activity a)
+    {    
+	    String[] projection={MediaStore.Images.Media.DATA}; 
+	    Cursor cursor= a.managedQuery(uri,projection,null,null,null);
+	    int column_index=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA); 
+	    cursor.moveToFirst(); 
+	    return cursor.getString(column_index); 
+	}  
 }
